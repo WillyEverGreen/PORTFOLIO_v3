@@ -3,107 +3,95 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Sai Dipak Balkawade | Developer Portfolio</title>
-  <meta name="description" content="Sai Dipak Balkawade is a developer from Mumbai building AI tools, scrapers and web apps with React, TypeScript, Python and Node.js." />
-  <meta name="theme-color" content="#07090c" />
-  <meta property="og:title" content="Sai Dipak Balkawade | Developer Portfolio" />
-  <meta property="og:description" content="AI tools, scrapers and web apps. Browse live projects built with React, TypeScript, Python and Node.js." />
+  <title>Sai Dipak Balkawade | Developer from Mumbai</title>
+  <meta name="description" content="I'm Sai Dipak Balkawade, a third-year engineering student in Mumbai. I build web apps, scrapers and small AI tools. Here is some of my work." />
+  <meta name="theme-color" content="#f3ede2" />
+  <meta property="og:title" content="Sai Dipak Balkawade | Developer from Mumbai" />
+  <meta property="og:description" content="Web apps, scrapers and small AI tools. Have a look at what I've built." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="img/recode.jpg" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="grain" aria-hidden="true"></div>
   <div class="progress" aria-hidden="true"><span></span></div>
-  <div class="cursor" aria-hidden="true"><span></span></div>
 
-  <!-- Preloader -->
+  <!-- Greeting screen -->
   <div class="loader" id="loader" aria-hidden="true">
-    <div class="loader__inner">
-      <div class="loader__name" id="loaderName">SAI DIPAK</div>
-      <div class="loader__count"><span id="loaderCount">0</span><i>%</i></div>
-    </div>
-    <div class="loader__bar"><span id="loaderBar"></span></div>
+    <p class="loader__word" id="loaderWord">Hello</p>
   </div>
 
   <header class="nav" id="nav">
-    <a class="nav__logo magnetic" href="#top" aria-label="Back to top">SD<span>.</span></a>
-    <nav class="nav__links" aria-label="Primary">
+    <a class="nav__name" href="#top">Sai Dipak</a>
+    <nav class="nav__links" aria-label="Main">
       <a href="#about" data-link>About</a>
       <a href="#work" data-link>Work</a>
-      <a href="#stack" data-link>Stack</a>
+      <a href="#stack" data-link>Tools</a>
       <a href="#contact" data-link>Contact</a>
     </nav>
-    <a class="btn btn--small magnetic" href="#contact"><span>Let's talk</span></a>
+    <a class="nav__mail" href="mailto:saidipak.dev@gmail.com">Email me</a>
   </header>
 
   <main id="top">
     <!-- HERO -->
     <section class="hero" id="hero">
-      <div class="orb orb--a" aria-hidden="true"></div>
-      <div class="orb orb--b" aria-hidden="true"></div>
-      <div class="hero__grid" aria-hidden="true"></div>
+      <div class="badge" aria-hidden="true">
+        <svg viewBox="0 0 200 200" class="badge__ring">
+          <defs><path id="circle" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0" /></defs>
+          <text><textPath href="#circle" textLength="480" lengthAdjust="spacing">open to internships * open to internships * </textPath></text>
+        </svg>
+        <span class="badge__dot"></span>
+      </div>
 
       <div class="hero__inner">
-        <p class="chip" data-hero="fade"><i></i> Open to internships and collaborations</p>
-        <h1 class="hero__title" aria-label="Sai Dipak Balkawade">
-          <span class="line"><span class="line__in" data-split>Sai Dipak</span></span>
-          <span class="line"><span class="line__in line__in--outline" data-split>Balkawade</span></span>
+        <p class="hero__hello" data-hero>Mumbai, India</p>
+        <h1 class="hero__title">
+          <span class="line"><span class="line__in">Hi, I'm <span class="scribble">Sai<svg viewBox="0 0 300 24" aria-hidden="true"><path d="M3 14 C 40 3, 70 22, 110 11 S 190 4, 225 14 S 280 18, 297 8" /></svg></span>.</span></span>
+          <span class="line"><span class="line__in">I build web apps</span></span>
+          <span class="line"><span class="line__in">and <em>developer tools.</em></span></span>
         </h1>
-        <p class="hero__sub" data-hero="fade">
-          Developer from Mumbai building <em>AI tools</em>, <em>scrapers</em> and <em>web apps</em> that people can actually use.
+        <p class="hero__sub" data-hero>
+          I'm a third-year engineering student. I like scrapers, small AI tools, and anything that saves someone a boring hour.
         </p>
-        <div class="hero__cta" data-hero="fade">
-          <a class="btn magnetic" href="#work"><span>See my work</span></a>
-          <a class="btn btn--ghost magnetic" href="https://github.com/WillyEverGreen" target="_blank" rel="noopener"><span>GitHub ↗</span></a>
+        <div class="hero__cta" data-hero>
+          <a class="btn" href="#work">See my work</a>
+          <a class="btn btn--line" href="https://github.com/WillyEverGreen" target="_blank" rel="noopener">GitHub</a>
         </div>
       </div>
 
-      <div class="hero__meta" data-hero="fade">
-        <span>Mumbai, India</span>
-        <span class="clock" id="clock">--:--</span>
-        <span class="scroll"><i></i> Scroll</span>
-      </div>
-    </section>
-
-    <!-- MARQUEE -->
-    <section class="marquee" aria-label="Skills ticker">
-      <div class="marquee__row" data-dir="-1">
-        <div class="marquee__track">
-          <span>React</span><b>✦</b><span>TypeScript</span><b>✦</b><span>Python</span><b>✦</b><span>Node.js</span><b>✦</b><span>Next.js</span><b>✦</b><span>Playwright</span><b>✦</b><span>MongoDB</span><b>✦</b><span>Cloudflare Workers</span><b>✦</b>
-        </div>
-      </div>
-      <div class="marquee__row marquee__row--alt" data-dir="1">
-        <div class="marquee__track">
-          <span>AI Tooling</span><b>✦</b><span>Web Scraping</span><b>✦</b><span>REST APIs</span><b>✦</b><span>Docker</span><b>✦</b><span>Redis</span><b>✦</b><span>Tailwind</span><b>✦</b><span>GSAP</span><b>✦</b><span>Three.js</span><b>✦</b>
-        </div>
+      <div class="hero__foot" data-hero>
+        <span id="clock">Mumbai</span>
+        <span class="scroll">Scroll down</span>
       </div>
     </section>
 
     <!-- ABOUT -->
     <section class="about section" id="about">
-      <p class="eyebrow" data-reveal>( 01 ) About</p>
-      <p class="about__text" id="aboutText">
-        I'm a third-year engineering student at Fr. Conceicao Rodrigues College of Engineering. I like turning messy problems into tidy tools: scrapers that crawl smarter, AI assistants that explain the law, and interfaces that feel good to use. When I'm not coding, I'm playing chess.
-      </p>
-
-      <div class="stats">
-        <div class="stat" data-reveal><b data-count="12">0</b><span>Live projects</span></div>
-        <div class="stat" data-reveal><b data-count="20">0</b><span>Public repos</span></div>
-        <div class="stat" data-reveal><b data-count="45" data-suffix="+">0</b><span>Stars on acon</span></div>
-        <div class="stat" data-reveal><b data-count="4">0</b><span>Languages in daily use</span></div>
+      <h2 class="label" data-reveal>About</h2>
+      <div class="about__grid">
+        <p class="about__text" id="aboutText">
+          I'm Sai. I study engineering at Fr. Conceicao Rodrigues College of Engineering in Mumbai, and most of my free time goes into building things. A scraper that knows when to stop crawling. An assistant that explains Indian law. A notes tool for people grinding LeetCode. I like it best when something I made is useful to a real person, even if that person is just me.
+        </p>
+        <aside class="now" data-reveal>
+          <h3>Right now</h3>
+          <dl>
+            <dt>Studying</dt><dd>Engineering, third year</dd>
+            <dt>Building</dt><dd>acon, a smarter crawler for web scrapers</dd>
+            <dt>Using</dt><dd>TypeScript, Python, React and Cloudflare Workers</dd>
+            <dt>Off screen</dt><dd>Playing chess</dd>
+          </dl>
+        </aside>
       </div>
     </section>
 
     <!-- WORK -->
     <section class="work" id="work">
       <div class="work__head section">
-        <p class="eyebrow" data-reveal>( 02 ) Selected work</p>
-        <h2 class="h2" data-reveal>Things I've built<br />and shipped.</h2>
+        <h2 class="label" data-reveal>Selected work</h2>
+        <p class="h2" data-reveal>A few things I've<br />built and put online.</p>
       </div>
 
       <div class="work__pin" id="workPin">
@@ -114,13 +102,13 @@
               <img src="img/legal-ai.jpg" alt="LegalAi landing page" loading="lazy" width="1200" height="750" />
             </a>
             <div class="card__body">
-              <span class="card__no">01</span>
+              <span class="card__no">1</span>
               <h3>LegalAi</h3>
-              <p>AI assistant for Indian law. Compares BNS with IPC, analyses documents and answers questions with sources.</p>
-              <ul class="tags"><li>React</li><li>FastAPI</li><li>NVIDIA NIM</li></ul>
+              <p>Ask questions about Indian criminal law and get answers with the relevant BNS and IPC sections. It can also compare the old and new codes and summarise documents.</p>
+              <p class="card__tags">React, FastAPI, NVIDIA NIM</p>
               <div class="card__links">
-                <a href="https://legal-ai-gateway.onrender.com" target="_blank" rel="noopener">Live ↗</a>
-                <a href="https://github.com/WillyEverGreen/LEGAL_AI" target="_blank" rel="noopener">Code ↗</a>
+                <a href="https://legal-ai-gateway.onrender.com" target="_blank" rel="noopener">Open site</a>
+                <a href="https://github.com/WillyEverGreen/LEGAL_AI" target="_blank" rel="noopener">Code</a>
               </div>
             </div>
           </article>
@@ -130,29 +118,29 @@
               <img src="img/recode.jpg" alt="ReCode landing page" loading="lazy" width="1200" height="750" />
             </a>
             <div class="card__body">
-              <span class="card__no">02</span>
+              <span class="card__no">2</span>
               <h3>ReCode</h3>
-              <p>Turns raw LeetCode submissions into structured revision notes, with complexity checks and Redis plus MongoDB caching.</p>
-              <ul class="tags"><li>TypeScript</li><li>React</li><li>MongoDB</li></ul>
+              <p>Paste a LeetCode solution and get clean revision notes, with the time and space complexity checked against known answers. Results are cached so repeat requests are fast.</p>
+              <p class="card__tags">TypeScript, React, MongoDB, Redis</p>
               <div class="card__links">
-                <a href="https://recode.sbs" target="_blank" rel="noopener">Live ↗</a>
-                <a href="https://github.com/WillyEverGreen/ReCode" target="_blank" rel="noopener">Code ↗</a>
+                <a href="https://recode.sbs" target="_blank" rel="noopener">Open site</a>
+                <a href="https://github.com/WillyEverGreen/ReCode" target="_blank" rel="noopener">Code</a>
               </div>
             </div>
           </article>
 
           <article class="card" data-card>
             <a class="card__media" href="https://loop-1-0.vercel.app" target="_blank" rel="noopener">
-              <img src="img/loop.jpg" alt="Loop SRE dashboard" loading="lazy" width="1200" height="750" />
+              <img src="img/loop.jpg" alt="Loop dashboard" loading="lazy" width="1200" height="750" />
             </a>
             <div class="card__body">
-              <span class="card__no">03</span>
+              <span class="card__no">3</span>
               <h3>Loop</h3>
-              <p>Autonomous SRE platform that predicts incidents, finds root causes and triggers automated remediation.</p>
-              <ul class="tags"><li>TypeScript</li><li>React</li><li>Dashboards</li></ul>
+              <p>A dashboard for watching services, catching incidents early and suggesting fixes. It's a demo of how an autonomous SRE tool could work.</p>
+              <p class="card__tags">TypeScript, React</p>
               <div class="card__links">
-                <a href="https://loop-1-0.vercel.app" target="_blank" rel="noopener">Live ↗</a>
-                <a href="https://github.com/WillyEverGreen/Loop_1.0" target="_blank" rel="noopener">Code ↗</a>
+                <a href="https://loop-1-0.vercel.app" target="_blank" rel="noopener">Open site</a>
+                <a href="https://github.com/WillyEverGreen/Loop_1.0" target="_blank" rel="noopener">Code</a>
               </div>
             </div>
           </article>
@@ -162,13 +150,13 @@
               <img src="img/spacescope.jpg" alt="SpaceScope landing page" loading="lazy" width="1200" height="750" />
             </a>
             <div class="card__body">
-              <span class="card__no">04</span>
+              <span class="card__no">4</span>
               <h3>SpaceScope</h3>
-              <p>Real-time satellite tracking, space weather and an AR sky viewer, all in the browser.</p>
-              <ul class="tags"><li>React</li><li>APIs</li><li>AR</li></ul>
+              <p>Follow the ISS and satellites live, check space weather, or point your phone at the sky to see what's up there.</p>
+              <p class="card__tags">React, public space APIs</p>
               <div class="card__links">
-                <a href="https://space-scope-lqli.vercel.app" target="_blank" rel="noopener">Live ↗</a>
-                <a href="https://github.com/WillyEverGreen/Space_Scope" target="_blank" rel="noopener">Code ↗</a>
+                <a href="https://space-scope-lqli.vercel.app" target="_blank" rel="noopener">Open site</a>
+                <a href="https://github.com/WillyEverGreen/Space_Scope" target="_blank" rel="noopener">Code</a>
               </div>
             </div>
           </article>
@@ -178,29 +166,29 @@
               <img src="img/journi.jpg" alt="JourniAI landing page" loading="lazy" width="1200" height="750" />
             </a>
             <div class="card__body">
-              <span class="card__no">05</span>
+              <span class="card__no">5</span>
               <h3>JourniAI</h3>
-              <p>AI trip planner that builds personalised day-by-day itineraries and budgets in seconds.</p>
-              <ul class="tags"><li>React</li><li>Firebase</li><li>LLMs</li></ul>
+              <p>Tell it where you're going and for how long, and it plans each day for you, with a rough budget.</p>
+              <p class="card__tags">React, Firebase, LLMs</p>
               <div class="card__links">
-                <a href="https://journi-ai-ai-trip-planner-anzy.vercel.app" target="_blank" rel="noopener">Live ↗</a>
-                <a href="https://github.com/WillyEverGreen/JOURNI-AI" target="_blank" rel="noopener">Code ↗</a>
+                <a href="https://journi-ai-ai-trip-planner-anzy.vercel.app" target="_blank" rel="noopener">Open site</a>
+                <a href="https://github.com/WillyEverGreen/JOURNI-AI" target="_blank" rel="noopener">Code</a>
               </div>
             </div>
           </article>
 
           <article class="card" data-card>
             <a class="card__media" href="https://clip.foo.ng" target="_blank" rel="noopener">
-              <img src="img/clip.jpg" alt="Clip file sharing app" loading="lazy" width="1200" height="750" />
+              <img src="img/clip.jpg" alt="Clip app" loading="lazy" width="1200" height="750" />
             </a>
             <div class="card__body">
-              <span class="card__no">06</span>
+              <span class="card__no">6</span>
               <h3>Clip</h3>
-              <p>Temporary text and file sharing with client-side encryption and a real-time live pad, running on Cloudflare.</p>
-              <ul class="tags"><li>TypeScript</li><li>Cloudflare</li><li>WebSockets</li></ul>
+              <p>Share text or files with a short link that expires. You can lock it with a password, or open a live pad that two people edit together.</p>
+              <p class="card__tags">TypeScript, Cloudflare Workers</p>
               <div class="card__links">
-                <a href="https://clip.foo.ng" target="_blank" rel="noopener">Live ↗</a>
-                <a href="https://github.com/WillyEverGreen/clip" target="_blank" rel="noopener">Code ↗</a>
+                <a href="https://clip.foo.ng" target="_blank" rel="noopener">Open site</a>
+                <a href="https://github.com/WillyEverGreen/clip" target="_blank" rel="noopener">Code</a>
               </div>
             </div>
           </article>
@@ -210,13 +198,13 @@
               <img src="img/crypto.jpg" alt="Virtual Cryptography Laboratory" loading="lazy" width="1200" height="750" />
             </a>
             <div class="card__body">
-              <span class="card__no">07</span>
+              <span class="card__no">7</span>
               <h3>Cryptography Lab</h3>
-              <p>Browser-based lab where students run ciphers, hashes and man-in-the-middle attacks using the Web Crypto API.</p>
-              <ul class="tags"><li>JavaScript</li><li>Web Crypto</li><li>Education</li></ul>
+              <p>A lab for my college security course. Run classic and modern ciphers, hashes and even a man in the middle attack, all in the browser.</p>
+              <p class="card__tags">JavaScript, Web Crypto API</p>
               <div class="card__links">
-                <a href="https://virtual-cryptography-lab.vercel.app" target="_blank" rel="noopener">Live ↗</a>
-                <a href="https://github.com/WillyEverGreen/css-virtual-lab" target="_blank" rel="noopener">Code ↗</a>
+                <a href="https://virtual-cryptography-lab.vercel.app" target="_blank" rel="noopener">Open site</a>
+                <a href="https://github.com/WillyEverGreen/css-virtual-lab" target="_blank" rel="noopener">Code</a>
               </div>
             </div>
           </article>
@@ -226,101 +214,96 @@
               <img src="img/rayeva.jpg" alt="Rayeva landing page" loading="lazy" width="1200" height="750" />
             </a>
             <div class="card__body">
-              <span class="card__no">08</span>
+              <span class="card__no">8</span>
               <h3>Rayeva</h3>
-              <p>Brand experience for a sustainable-living platform, with rich scroll animation and a polished storefront.</p>
-              <ul class="tags"><li>React</li><li>GSAP</li><li>Tailwind</li></ul>
+              <p>A brand website for a sustainable living platform. This one was mostly about layout, photography and scroll animation.</p>
+              <p class="card__tags">React, GSAP, Tailwind</p>
               <div class="card__links">
-                <a href="https://rayeva-kappa.vercel.app" target="_blank" rel="noopener">Live ↗</a>
-                <a href="https://github.com/WillyEverGreen/rayeva" target="_blank" rel="noopener">Code ↗</a>
+                <a href="https://rayeva-kappa.vercel.app" target="_blank" rel="noopener">Open site</a>
+                <a href="https://github.com/WillyEverGreen/rayeva" target="_blank" rel="noopener">Code</a>
               </div>
             </div>
           </article>
 
           <article class="card" data-card>
             <a class="card__media" href="https://8086-jade.vercel.app" target="_blank" rel="noopener">
-              <img src="img/8086.jpg" alt="8086 microprocessor simulator" loading="lazy" width="1200" height="750" />
+              <img src="img/8086.jpg" alt="8086 simulator" loading="lazy" width="1200" height="750" />
             </a>
             <div class="card__body">
-              <span class="card__no">09</span>
+              <span class="card__no">9</span>
               <h3>8086 Simulator</h3>
-              <p>Step-by-step 8086 microprocessor simulator with animated pipeline stages and register visualisation.</p>
-              <ul class="tags"><li>TypeScript</li><li>GSAP</li><li>Tailwind</li></ul>
+              <p>Step through 8086 instructions and watch each pipeline stage and register change as it happens.</p>
+              <p class="card__tags">TypeScript, React, GSAP</p>
               <div class="card__links">
-                <a href="https://8086-jade.vercel.app" target="_blank" rel="noopener">Live ↗</a>
-                <a href="https://github.com/WillyEverGreen/8086" target="_blank" rel="noopener">Code ↗</a>
+                <a href="https://8086-jade.vercel.app" target="_blank" rel="noopener">Open site</a>
+                <a href="https://github.com/WillyEverGreen/8086" target="_blank" rel="noopener">Code</a>
               </div>
             </div>
           </article>
 
           <article class="card card--more" data-card>
             <div class="card__more">
-              <p class="eyebrow">And more</p>
-              <h3>Still building.</h3>
+              <h3>And a few more.</h3>
               <ul>
-                <li><a href="https://willyevergreen-headlock.hf.space" target="_blank" rel="noopener">HeadLock <span>headless browser API</span></a></li>
-                <li><a href="https://cnmini-project.vercel.app" target="_blank" rel="noopener">Firewall Simulator <span>stateful L3/L4/L7</span></a></li>
-                <li><a href="https://pypi.org/project/acon-intel" target="_blank" rel="noopener">acon <span>scraper intelligence</span></a></li>
+                <li><a href="https://willyevergreen-headlock.hf.space" target="_blank" rel="noopener">HeadLock <span>a headless browser API</span></a></li>
+                <li><a href="https://cnmini-project.vercel.app" target="_blank" rel="noopener">Firewall Simulator <span>stateful packet filtering</span></a></li>
+                <li><a href="https://pypi.org/project/acon-intel" target="_blank" rel="noopener">acon <span>a crawler brain for scrapers</span></a></li>
               </ul>
-              <a class="btn magnetic" href="https://github.com/WillyEverGreen?tab=repositories" target="_blank" rel="noopener"><span>All repositories ↗</span></a>
+              <a class="btn" href="https://github.com/WillyEverGreen?tab=repositories" target="_blank" rel="noopener">All repositories</a>
             </div>
           </article>
         </div>
 
         <div class="work__ui" aria-hidden="true">
-          <span id="workCount">01</span><i></i><span>10</span>
+          <span id="workCount">1</span><span class="work__of">of 10</span>
           <div class="work__bar"><span id="workBar"></span></div>
         </div>
       </div>
     </section>
 
-    <!-- STACK -->
+    <!-- TOOLS -->
     <section class="stack section" id="stack">
-      <p class="eyebrow" data-reveal>( 03 ) Toolbox</p>
-      <h2 class="h2" data-reveal>What I build with.</h2>
+      <h2 class="label" data-reveal>Tools I use</h2>
       <div class="stack__grid">
-        <div class="panel" data-reveal>
+        <div class="col" data-reveal>
           <h3>Languages</h3>
-          <ul><li>TypeScript</li><li>JavaScript</li><li>Python</li><li>Dart</li><li>HTML &amp; CSS</li></ul>
+          <p>TypeScript, JavaScript, Python, Dart, HTML and CSS</p>
         </div>
-        <div class="panel" data-reveal>
-          <h3>Frontend</h3>
-          <ul><li>React</li><li>Next.js</li><li>Tailwind CSS</li><li>Vite</li><li>GSAP</li><li>Three.js</li></ul>
+        <div class="col" data-reveal>
+          <h3>Front end</h3>
+          <p>React, Next.js, Tailwind CSS, Vite, GSAP, Three.js</p>
         </div>
-        <div class="panel" data-reveal>
-          <h3>Backend and edge</h3>
-          <ul><li>Node.js</li><li>Express</li><li>FastAPI</li><li>Cloudflare Workers</li><li>MongoDB</li><li>Redis</li></ul>
+        <div class="col" data-reveal>
+          <h3>Back end</h3>
+          <p>Node.js, Express, FastAPI, Cloudflare Workers, MongoDB, Redis</p>
         </div>
-        <div class="panel" data-reveal>
-          <h3>Automation and DevOps</h3>
-          <ul><li>Playwright</li><li>Puppeteer</li><li>Docker</li><li>GitHub Actions</li><li>Vercel</li><li>Linux</li></ul>
+        <div class="col" data-reveal>
+          <h3>Automation and deploys</h3>
+          <p>Playwright, Puppeteer, Docker, GitHub Actions, Vercel, Linux</p>
         </div>
       </div>
     </section>
 
     <!-- CONTACT -->
     <section class="contact section" id="contact">
-      <p class="eyebrow" data-reveal>( 04 ) Contact</p>
-      <h2 class="contact__title">
-        <span class="line"><span class="line__in">Let's build</span></span>
-        <span class="line"><span class="line__in line__in--outline">something great.</span></span>
-      </h2>
-      <p class="contact__sub" data-reveal>Got an idea, an internship, or a game of chess in mind? My inbox is open.</p>
-      <div class="contact__cta" data-reveal>
-        <a class="btn btn--big magnetic" href="mailto:saidipak.dev@gmail.com"><span>saidipak.dev@gmail.com</span></a>
-      </div>
+      <h2 class="label" data-reveal>Contact</h2>
+      <p class="contact__title">
+        <span class="line"><span class="line__in">Want to build</span></span>
+        <span class="line"><span class="line__in">something <em>together?</em></span></span>
+      </p>
+      <p class="contact__sub" data-reveal>I'm looking for internships and happy to chat about projects. Email is the quickest way to reach me.</p>
+      <a class="contact__mail" href="mailto:saidipak.dev@gmail.com" data-reveal>saidipak.dev@gmail.com</a>
       <div class="socials" data-reveal>
-        <a class="magnetic" href="https://github.com/WillyEverGreen" target="_blank" rel="noopener">GitHub ↗</a>
-        <a class="magnetic" href="https://linkedin.com/in/sai-dipak-balkawade" target="_blank" rel="noopener">LinkedIn ↗</a>
-        <a class="magnetic" href="mailto:saidipak.dev@gmail.com">Email ↗</a>
+        <a href="https://github.com/WillyEverGreen" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://linkedin.com/in/sai-dipak-balkawade" target="_blank" rel="noopener">LinkedIn</a>
       </div>
     </section>
   </main>
 
   <footer class="footer">
-    <span>© <span id="year">2026</span> Sai Dipak Balkawade</span>
-    <span>Built with HTML, CSS and GSAP</span>
-    <a href="#top" class="magnetic">Back to top ↑</a>
+    <span>&copy; <span id="year">2026</span> Sai Dipak Balkawade</span>
+    <span>Made by hand with HTML, CSS and GSAP.</span>
+    <a href="#top">Back to top</a>
   </footer>
 
   <script src="vendor/gsap.min.js"></script>
