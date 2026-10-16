@@ -296,6 +296,228 @@
   })();
 
   /* =====================================================================
+     Mango the cat, paw prints and the "meow" easter egg
+  ===================================================================== */
+  (() => {
+    const PAW = '<svg viewBox="0 0 64 64" aria-hidden="true"><use href="#paw"/></svg>';
+    const rand = (a, b) => a + Math.random() * (b - a);
+    const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+    /* ----- paw prints that walk across the page between sections ----- */
+    const walks = $$("[data-pawwalk]");
+    walks.forEach((el) => {
+      el.innerHTML = Array.from({ length: 14 }, (_, i) => `<i style="--i:${i}">${PAW}</i>`).join("");
+    });
+    if ("IntersectionObserver" in window) {
+      const io = new IntersectionObserver(
+        (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); } }),
+        { threshold: 0.4 }
+      );
+      walks.forEach((el) => io.observe(el));
+    } else {
+      walks.forEach((el) => el.classList.add("is-in"));
+    }
+
+    /* ----- little effects ----- */
+    const makeSvg = (cls) => {
+      const w = document.createElement("div");
+      w.innerHTML = `<svg class="${cls}" viewBox="0 0 64 64" aria-hidden="true"><use href="#paw"/></svg>`;
+      return w.firstChild;
+    };
+
+    const pawBurst = (x, y) => {
+      if (reduceMotion) return;
+      for (let i = 0; i < 12; i++) {
+        const el = document.createElement("span");
+        el.className = "pop";
+        el.innerHTML = i % 3 === 0 ? "&#10084;&#xFE0E;" : PAW;
+        const ang = rand(-Math.PI * 0.95, -Math.PI * 0.05);
+        const dist = rand(70, 170);
+        el.style.setProperty("--x", x - 11 + "px");
+        el.style.setProperty("--y", y - 11 + "px");
+        el.style.setProperty("--dx", Math.cos(ang) * dist + "px");
+        el.style.setProperty("--dy", Math.sin(ang) * dist + "px");
+        el.style.setProperty("--rot", rand(-70, 70) + "deg");
+        el.style.animationDelay = i * 25 + "ms";
+        document.body.appendChild(el);
+        el.addEventListener("animationend", () => el.remove());
+      }
+    };
+
+    const pawRain = () => {
+      if (reduceMotion) return;
+      for (let i = 0; i < 20; i++) {
+        const el = makeSvg("rain-paw");
+        el.style.left = rand(0, 98) + "vw";
+        el.style.setProperty("--rot", rand(-200, 200) + "deg");
+        el.style.animationDelay = rand(0, 900) + "ms";
+        document.body.appendChild(el);
+        el.addEventListener("animationend", () => el.remove());
+      }
+    };
+
+    /* ----- paw trail behind the cursor ----- */
+    const pawBtn = $("#pawToggle");
+    let trailOn = true;
+    try { if (localStorage.getItem("paws") === "off") trailOn = false; } catch (e) { /* ignore */ }
+    const syncPaw = () => {
+      pawBtn.setAttribute("aria-pressed", String(trailOn));
+      pawBtn.textContent = "Paw trail: " + (trailOn ? "on" : "off");
+    };
+    syncPaw();
+    pawBtn.addEventListener("click", () => {
+      trailOn = !trailOn;
+      try { localStorage.setItem("paws", trailOn ? "on" : "off"); } catch (e) { /* ignore */ }
+      syncPaw();
+    });
+
+    if (finePointer && !reduceMotion) {
+      let lx = null, ly = null, side = 1, live = 0;
+      window.addEventListener(
+        "pointermove",
+        (e) => {
+          if (e.pointerType !== "mouse" || !trailOn || document.body.classList.contains("is-loading")) return;
+          if (lx === null) { lx = e.clientX; ly = e.clientY; return; }
+          const dx = e.clientX - lx, dy = e.clientY - ly;
+          if (Math.hypot(dx, dy) < 85 || live > 14) return;
+          const ang = Math.atan2(dy, dx);
+          const el = makeSvg("trail-paw");
+          el.style.setProperty("--tx", e.clientX - Math.sin(ang) * 9 * side - 11 + "px");
+          el.style.setProperty("--ty", e.clientY + Math.cos(ang) * 9 * side - 11 + "px");
+          el.style.setProperty("--r", (ang * 180) / Math.PI + 90 + "deg");
+          side *= -1;
+          document.body.appendChild(el);
+          live++;
+          el.addEventListener("animationend", () => { el.remove(); live--; });
+          lx = e.clientX; ly = e.clientY;
+        },
+        { passive: true }
+      );
+    }
+
+    /* ----- Mango ----- */
+    const wrap = $("#catWrap");
+    const catBtn = $("#cat");
+    const bubble = $("#catBubble");
+    const pupils = $$(".cat__pupil");
+    const head = $(".cat__head");
+    let bubbleTimer, sleepTimer, asleep = false;
+
+    const say = (text, ms = 2800) => {
+      bubble.textContent = text;
+      bubble.classList.add("is-on");
+      wrap.classList.add("is-up");
+      clearTimeout(bubbleTimer);
+      bubbleTimer = setTimeout(() => { bubble.classList.remove("is-on"); wrap.classList.remove("is-up"); }, ms);
+    };
+    const armSleep = () => {
+      clearTimeout(sleepTimer);
+      sleepTimer = setTimeout(() => {
+        asleep = true;
+        wrap.classList.add("is-asleep");
+        wrap.classList.remove("is-up");
+        bubble.classList.remove("is-on");
+      }, 14000);
+    };
+    const wake = (msg) => {
+      if (asleep) {
+        asleep = false;
+        wrap.classList.remove("is-asleep");
+        say(msg || "oh, hi!", 2200);
+      }
+      armSleep();
+    };
+
+    /* eyes and head follow the pointer */
+    window.addEventListener(
+      "pointermove",
+      (e) => {
+        wake();
+        const r = catBtn.getBoundingClientRect();
+        const cx = r.left + r.width * 0.5, cy = r.top + r.height * 0.38;
+        const dx = e.clientX - cx, dy = e.clientY - cy;
+        const d = Math.hypot(dx, dy) || 1;
+        const k = Math.min(1, d / 240);
+        pupils.forEach((p) => {
+          p.style.setProperty("--px", ((dx / d) * 3.1 * k).toFixed(2) + "px");
+          p.style.setProperty("--py", ((dy / d) * 3.1 * k).toFixed(2) + "px");
+        });
+        head.style.setProperty("--tilt", Math.max(-7, Math.min(7, (dx / window.innerWidth) * 18)).toFixed(1) + "deg");
+      },
+      { passive: true }
+    );
+    ["scroll", "touchstart"].forEach((ev) => window.addEventListener(ev, () => wake(), { passive: true }));
+
+    /* petting him */
+    const lines = ["mrrp!", "meow!", "purrrrr...", "feed me?", "*headbutt*", "again, again!"];
+    let li = 0;
+    catBtn.addEventListener("click", () => {
+      asleep = false;
+      wrap.classList.remove("is-asleep");
+      armSleep();
+      say(lines[li++ % lines.length]);
+      wrap.classList.remove("is-purr");
+      void wrap.offsetWidth;
+      wrap.classList.add("is-purr");
+      const r = catBtn.getBoundingClientRect();
+      pawBurst(r.left + r.width * 0.5, r.top + r.height * 0.25);
+    });
+
+    /* he comments on each section as you scroll past */
+    const talk = {
+      hero: "Hi! I'm Mango. I supervise here.",
+      about: "That's my human. He builds things. I nap.",
+      experience: "Hard worker. I would have napped.",
+      work: "Poke a card. Go on.",
+      skills: "So many tools. Zero fish.",
+      beyond: "He plays chess. I knock pieces off.",
+      contact: "Email my human. Treats welcome.",
+    };
+    const said = new Set(["hero"]);
+    if ("IntersectionObserver" in window) {
+      const sections = new IntersectionObserver(
+        (entries) =>
+          entries.forEach((e) => {
+            const id = e.target.id;
+            if (e.isIntersecting && talk[id] && !said.has(id) && wrap.classList.contains("is-here") && !asleep) {
+              said.add(id);
+              say(talk[id]);
+            }
+          }),
+        { rootMargin: "-45% 0px -45% 0px" }
+      );
+      Object.keys(talk).forEach((id) => { const s = document.getElementById(id); if (s) sections.observe(s); });
+    }
+
+    /* type "meow" anywhere */
+    let typed = "";
+    document.addEventListener("keydown", (e) => {
+      if (e.key.length !== 1 || e.ctrlKey || e.metaKey) return;
+      typed = (typed + e.key.toLowerCase()).slice(-4);
+      if (typed === "meow") {
+        typed = "";
+        wake("oh, hi!");
+        say("MEOW!", 2400);
+        pawRain();
+      }
+    });
+
+    /* he shows up once the greeting screen is gone */
+    const appear = () => {
+      if (document.body.classList.contains("is-loading")) { setTimeout(appear, 250); return; }
+      setTimeout(() => {
+        wrap.classList.add("is-here");
+        setTimeout(() => say(talk.hero, 3400), 900);
+        armSleep();
+      }, 700);
+    };
+    appear();
+
+    /* expose for the confetti on other buttons */
+    window.__pawBurst = pawBurst;
+  })();
+
+  /* =====================================================================
      No GSAP, or reduced motion: show the final state of everything
   ===================================================================== */
   if (!animate) {

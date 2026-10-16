@@ -68,7 +68,9 @@ code { font-family: ui-monospace, "SFMono-Regular", Menlo, monospace; font-size:
   transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 .nav.is-solid { background: var(--paper); border-bottom-color: var(--line); }
-.nav__name { font-family: var(--serif); font-size: 26px; line-height: 1; white-space: nowrap; display: inline-block; }
+.nav__name { font-family: var(--serif); font-size: 26px; line-height: 1; white-space: nowrap; display: inline-flex; align-items: center; gap: 8px; }
+.logo-paw { width: 18px; height: 18px; fill: var(--accent); transition: transform 0.4s var(--ease); }
+.nav__name:hover .logo-paw { transform: rotate(-24deg) scale(1.25); }
 .nav__links { display: flex; gap: clamp(14px, 2.2vw, 32px); font-size: 15px; }
 .nav__links a { position: relative; padding: 4px 0; white-space: nowrap; }
 .nav__links a::after { content: ""; position: absolute; left: 0; bottom: 0; width: 100%; height: 1.5px; background: currentColor; transform: scaleX(0); transform-origin: 0 50%; transition: transform 0.3s ease; }
@@ -133,6 +135,7 @@ em { font-style: italic; color: var(--accent); }
 .hero__sub { margin-top: 34px; max-width: 640px; font-size: clamp(18px, 1.7vw, 22px); color: var(--muted); }
 .hero__cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
 .hero__foot { position: absolute; left: var(--pad); right: var(--pad); bottom: 28px; display: flex; justify-content: space-between; font-size: 14px; color: var(--muted); }
+.hero__foot .scroll { position: absolute; left: 50%; transform: translateX(-50%); }
 
 .badge { position: absolute; right: var(--pad); top: 130px; width: clamp(110px, 12vw, 170px); aspect-ratio: 1; display: grid; place-items: center; }
 .badge__ring { position: absolute; inset: 0; width: 100%; height: 100%; animation: spin 22s linear infinite; }
@@ -291,7 +294,7 @@ em { font-style: italic; color: var(--accent); }
 .socials a { border-bottom: 1.5px solid var(--ink); padding-bottom: 2px; transition: color 0.2s, border-color 0.2s; }
 .socials a:hover { color: var(--accent); border-color: var(--accent); }
 
-.footer { display: flex; flex-wrap: wrap; gap: 10px 28px; justify-content: space-between; padding: 26px var(--pad); border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+.footer { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 28px; justify-content: space-between; padding: 26px calc(var(--pad) + clamp(96px, 11vw, 150px)) 26px var(--pad); border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
 .footer a:hover { color: var(--accent); }
 
 /* ---------- dialog ---------- */
@@ -346,4 +349,92 @@ em { font-style: italic; color: var(--accent); }
 @media (prefers-reduced-motion: reduce) {
   .badge__ring, .badge__dot, .sq.legal::after { animation: none; }
   .card, .card__media img, .win, .stat, .chips li, .now { transition: none; }
+}
+
+
+/* =====================================================================
+   Paws, sparkles and Mango the cat
+===================================================================== */
+.pawtoggle { padding: 5px 14px; border: 1.5px solid var(--line); border-radius: 999px; font-size: 13px; color: var(--muted); transition: color 0.2s, border-color 0.2s, background 0.2s; }
+.pawtoggle:hover { color: var(--ink); border-color: var(--ink); }
+.pawtoggle[aria-pressed="false"] { text-decoration: line-through; }
+
+/* twinkling sparkles in the hero */
+.spark { position: absolute; fill: var(--accent); pointer-events: none; transform-origin: 50% 50%; animation: twinkle 3.6s ease-in-out infinite; }
+.spark--a { width: 30px; right: 24%; top: 21%; }
+.spark--b { width: 18px; right: 12%; top: 46%; fill: var(--green); animation-delay: -1.2s; }
+.spark--c { width: 22px; right: 33%; top: 64%; fill: var(--highlight); animation-delay: -2.2s; }
+[data-theme="dark"] .spark--c { fill: #c9a94a; }
+@keyframes twinkle { 0%, 100% { transform: scale(0.5) rotate(0deg); opacity: 0.5; } 50% { transform: scale(1.15) rotate(35deg); opacity: 1; } }
+
+/* paw prints that "walk" between sections */
+.pawwalk { display: flex; justify-content: space-between; align-items: center; padding: 0 var(--pad); height: 70px; overflow: hidden; }
+.pawwalk i { display: block; width: 26px; height: 26px; opacity: 0; transform: translateY(var(--y, 0)) rotate(90deg) scale(0.3); transition: opacity 0.35s ease, transform 0.5s var(--ease); transition-delay: calc(var(--i) * 85ms); }
+.pawwalk i:nth-child(odd) { --y: -9px; }
+.pawwalk i:nth-child(even) { --y: 9px; }
+.pawwalk svg { width: 100%; height: 100%; fill: var(--accent); }
+.pawwalk.is-in i { opacity: 0.85; transform: translateY(var(--y, 0)) rotate(90deg) scale(1); }
+.pawwalk.is-in i:nth-child(3n) { opacity: 0.55; }
+
+/* footprints that follow the cursor */
+.trail-paw { position: fixed; left: 0; top: 0; z-index: 85; width: 22px; height: 22px; pointer-events: none; fill: var(--accent); opacity: 0; animation: trail 1.7s ease-out forwards; }
+@keyframes trail { 0% { opacity: 0.4; transform: translate(var(--tx), var(--ty)) rotate(var(--r)) scale(0.6); } 20% { opacity: 0.35; transform: translate(var(--tx), var(--ty)) rotate(var(--r)) scale(1); } 100% { opacity: 0; transform: translate(var(--tx), var(--ty)) rotate(var(--r)) scale(1); } }
+
+/* paws and hearts that pop out of the cat */
+.pop { position: fixed; left: 0; top: 0; z-index: 400; pointer-events: none; font-size: 18px; line-height: 1; color: var(--accent); animation: popout 1.05s cubic-bezier(.15, .8, .3, 1) forwards; }
+.pop svg { width: 22px; height: 22px; fill: currentColor; display: block; }
+@keyframes popout { 0% { opacity: 1; transform: translate(var(--x), var(--y)) scale(0.4) rotate(0deg); } 70% { opacity: 1; } 100% { opacity: 0; transform: translate(calc(var(--x) + var(--dx)), calc(var(--y) + var(--dy))) scale(1.1) rotate(var(--rot)); } }
+
+/* meow rain */
+.rain-paw { position: fixed; top: -50px; z-index: 390; width: 26px; height: 26px; fill: var(--accent); pointer-events: none; animation: rain 2.6s linear forwards; }
+@keyframes rain { to { transform: translateY(calc(100vh + 80px)) rotate(var(--rot)); } }
+
+/* ---------- Mango ---------- */
+.catwrap { position: fixed; right: clamp(6px, 2vw, 26px); bottom: 0; z-index: 90; width: clamp(100px, 11vw, 156px); pointer-events: none; opacity: 0; transform: translateY(60px); transition: opacity 0.7s ease, transform 0.9s var(--ease); }
+.catwrap.is-here { opacity: 1; transform: none; }
+.cat { display: block; width: 100%; padding: 0; pointer-events: auto; cursor: pointer; transform: translateY(38%); transition: transform 0.6s var(--ease); -webkit-tap-highlight-color: transparent; border-radius: 40% 40% 0 0; }
+.cat:hover, .cat:focus-visible, .catwrap.is-up .cat { transform: translateY(6%); }
+.cat__svg { display: block; width: 100%; height: auto; overflow: visible; }
+
+.cat__tail { transform-box: fill-box; transform-origin: 12% 96%; animation: wag 1.9s ease-in-out infinite; }
+@keyframes wag { 0%, 100% { transform: rotate(-7deg); } 50% { transform: rotate(11deg); } }
+.cat__body { transform-box: fill-box; transform-origin: 50% 100%; animation: breathe 3.2s ease-in-out infinite; }
+@keyframes breathe { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(1.02); } }
+.cat__head { transform-box: fill-box; transform-origin: 50% 85%; transform: rotate(var(--tilt, 0deg)); transition: transform 0.3s ease; }
+.cat__eye { transform-box: fill-box; transform-origin: 50% 50%; animation: blink 5.6s infinite; }
+@keyframes blink { 0%, 93%, 97%, 100% { transform: scaleY(1); } 95% { transform: scaleY(0.08); } }
+.cat__ear--r { transform-box: fill-box; transform-origin: 25% 100%; animation: twitch 7.5s infinite; }
+@keyframes twitch { 0%, 88%, 100% { transform: none; } 91% { transform: rotate(9deg); } 94% { transform: rotate(-5deg); } 97% { transform: rotate(4deg); } }
+.cat__pupil { transform: translate(var(--px, 0px), var(--py, 0px)); transition: transform 0.12s ease-out; }
+.cat__lid { opacity: 0; }
+
+.catwrap.is-purr .cat__svg { animation: purr 0.11s linear 7; }
+@keyframes purr { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(1.6px); } }
+
+.catwrap.is-asleep .cat__eye { animation: none; opacity: 0; }
+.catwrap.is-asleep .cat__lid { opacity: 1; }
+.catwrap.is-asleep .cat__tail { animation-duration: 5s; }
+.catwrap.is-asleep .cat__head { --tilt: 9deg; }
+.catwrap.is-asleep .cat { transform: translateY(26%); }
+
+.zzz { position: absolute; right: 14%; top: 4%; font-family: var(--serif); font-style: italic; color: var(--muted); pointer-events: none; }
+.zzz span { position: absolute; left: 0; top: 0; opacity: 0; font-size: 18px; }
+.catwrap.is-asleep .zzz span { animation: zzz 3s ease-in-out infinite; }
+.catwrap.is-asleep .zzz span:nth-child(2) { animation-delay: 1s; font-size: 22px; }
+.catwrap.is-asleep .zzz span:nth-child(3) { animation-delay: 2s; font-size: 28px; }
+@keyframes zzz { 0% { opacity: 0; transform: translate(0, 10px); } 25% { opacity: 1; } 100% { opacity: 0; transform: translate(18px, -34px); } }
+
+.cat__bubble { position: absolute; right: 38%; bottom: calc(100% - 8px); max-width: min(240px, 60vw); width: max-content; margin: 0; padding: 9px 15px; background: var(--paper-2); color: var(--ink); border: 1.5px solid var(--ink); border-radius: 16px 16px 4px 16px; font-size: 14px; line-height: 1.35; pointer-events: none; opacity: 0; transform: translateY(8px) scale(0.9); transform-origin: 100% 100%; transition: opacity 0.25s ease, transform 0.4s var(--ease); }
+.cat__bubble.is-on { opacity: 1; transform: none; }
+
+@media (max-width: 760px) {
+  .hero__foot .scroll { display: none; }
+  .catwrap { width: 92px; }
+  .spark--a { right: 10%; top: 17%; }
+  .spark--c { display: none; }
+  .footer { padding-right: calc(var(--pad) + 96px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .spark, .cat__tail, .cat__body, .cat__eye, .cat__ear--r, .catwrap.is-purr .cat__svg { animation: none; }
+  .pawwalk i { transition: none; }
 }

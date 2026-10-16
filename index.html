@@ -29,6 +29,15 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="paw" viewBox="0 0 64 64">
+      <path d="M32 33c-9 0-17 8-17 15 0 5 4 8 10 8 3 0 5-1 7-1s4 1 7 1c6 0 10-3 10-8 0-7-8-15-17-15z"/>
+      <ellipse cx="13" cy="27" rx="6" ry="8.5" transform="rotate(-24 13 27)"/>
+      <ellipse cx="25" cy="14" rx="6" ry="9" transform="rotate(-8 25 14)"/>
+      <ellipse cx="40" cy="14" rx="6" ry="9" transform="rotate(8 40 14)"/>
+      <ellipse cx="52" cy="27" rx="6" ry="8.5" transform="rotate(24 52 27)"/>
+    </symbol>
+  </svg>
   <div class="progress" aria-hidden="true"><span></span></div>
 
   <div class="loader" id="loader" aria-hidden="true">
@@ -36,7 +45,7 @@
   </div>
 
   <header class="nav" id="nav">
-    <a class="nav__name" href="#top" id="logo" aria-label="Sai Balkawade, back to top">Sai Balkawade</a>
+    <a class="nav__name" href="#top" id="logo" aria-label="Sai Balkawade, back to top">Sai Balkawade<svg class="logo-paw" aria-hidden="true"><use href="#paw"/></svg></a>
     <nav class="nav__links" aria-label="Main">
       <a href="#about" data-link>About</a>
       <a href="#experience" data-link>Experience</a>
@@ -77,6 +86,10 @@
         </svg>
         <span class="badge__dot"></span>
       </div>
+
+      <svg class="spark spark--a" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C13 8 16 11 24 12 16 13 13 16 12 24 11 16 8 13 0 12 8 11 11 8 12 0z"/></svg>
+      <svg class="spark spark--b" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C13 8 16 11 24 12 16 13 13 16 12 24 11 16 8 13 0 12 8 11 11 8 12 0z"/></svg>
+      <svg class="spark spark--c" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C13 8 16 11 24 12 16 13 13 16 12 24 11 16 8 13 0 12 8 11 11 8 12 0z"/></svg>
 
       <div class="hero__inner">
         <p class="hero__hello" data-hero>Computer engineering student, Mumbai</p>
@@ -126,6 +139,8 @@
         <div class="stat" data-reveal><b data-count="8.59" data-decimals="2">0</b><span>SGPA out of 10</span></div>
       </div>
     </section>
+
+    <div class="pawwalk" data-pawwalk aria-hidden="true"></div>
 
     <!-- EXPERIENCE -->
     <section class="experience section" id="experience">
@@ -374,6 +389,8 @@
       </div>
     </section>
 
+    <div class="pawwalk" data-pawwalk aria-hidden="true"></div>
+
     <!-- SKILLS -->
     <section class="skills section" id="skills">
       <h2 class="label" data-reveal>Skills</h2>
@@ -455,6 +472,8 @@
       </div>
     </section>
 
+    <div class="pawwalk" data-pawwalk aria-hidden="true"></div>
+
     <!-- CONTACT -->
     <section class="contact section" id="contact">
       <h2 class="label" data-reveal>Contact</h2>
@@ -477,9 +496,53 @@
 
   <footer class="footer">
     <span>&copy; <span id="year">2026</span> Sai Balkawade</span>
-    <span>Made by hand with HTML, CSS and GSAP.</span>
+    <span>Made by hand with HTML, CSS, GSAP and one very orange cat.</span>
+    <button class="pawtoggle" id="pawToggle" type="button" aria-pressed="true">Paw trail: on</button>
     <a href="#top">Back to top</a>
   </footer>
+
+  <!-- Mango the cat -->
+  <div class="catwrap" id="catWrap">
+    <p class="cat__bubble" id="catBubble" role="status" aria-live="polite"></p>
+    <div class="zzz" aria-hidden="true"><span>z</span><span>z</span><span>Z</span></div>
+    <button class="cat" id="cat" type="button" aria-label="Pet Mango, the orange cat">
+      <svg class="cat__svg" viewBox="0 0 200 230" aria-hidden="true" focusable="false">
+        <g class="cat__tail">
+          <path d="M150 226C190 220 202 172 180 128" fill="none" stroke="#f08a24" stroke-width="24" stroke-linecap="round"/>
+          <path d="M170 196q10-3 15-11M178 166q9-2 13-9" fill="none" stroke="#c9631a" stroke-width="5" stroke-linecap="round"/>
+        </g>
+        <g class="cat__body">
+          <path d="M38 232C38 160 66 126 100 126s62 34 62 106z" fill="#f08a24"/>
+          <path d="M52 180q12-6 18-2M52 198q12-6 18-2M148 180q-12-6-18-2M148 198q-12-6-18-2" fill="none" stroke="#c9631a" stroke-width="5" stroke-linecap="round"/>
+          <ellipse cx="100" cy="196" rx="25" ry="40" fill="#fbe3c0"/>
+          <rect x="70" y="204" width="24" height="30" rx="12" fill="#fbe3c0"/>
+          <rect x="106" y="204" width="24" height="30" rx="12" fill="#fbe3c0"/>
+          <path d="M82 218v10M118 218v10" stroke="#e5c9a3" stroke-width="2.5" stroke-linecap="round"/>
+        </g>
+        <g class="cat__head">
+          <path class="cat__ear cat__ear--l" d="M60 62L54 20l42 26z" fill="#f08a24"/>
+          <path d="M66 54l-3-21 21 13z" fill="#f4a6a0"/>
+          <path class="cat__ear cat__ear--r" d="M140 62l6-42-42 26z" fill="#f08a24"/>
+          <path d="M134 54l3-21-21 13z" fill="#f4a6a0"/>
+          <circle cx="100" cy="90" r="46" fill="#f08a24"/>
+          <path d="M100 46v16M86 49l3 14M114 49l-3 14" fill="none" stroke="#c9631a" stroke-width="5" stroke-linecap="round"/>
+          <ellipse cx="100" cy="108" rx="28" ry="19" fill="#fbe3c0"/>
+          <g class="cat__eye">
+            <ellipse cx="80" cy="88" rx="11" ry="12" fill="#fff"/>
+            <g transform="translate(80 88)"><g class="cat__pupil"><circle r="8" fill="#6aa84f"/><ellipse rx="3.2" ry="6.6" fill="#1c1b18"/><circle cx="-2.6" cy="-3.2" r="2" fill="#fff"/></g></g>
+          </g>
+          <g class="cat__eye">
+            <ellipse cx="120" cy="88" rx="11" ry="12" fill="#fff"/>
+            <g transform="translate(120 88)"><g class="cat__pupil"><circle r="8" fill="#6aa84f"/><ellipse rx="3.2" ry="6.6" fill="#1c1b18"/><circle cx="-2.6" cy="-3.2" r="2" fill="#fff"/></g></g>
+          </g>
+          <path class="cat__lid" d="M70 90q10 8 20 0M110 90q10 8 20 0" fill="none" stroke="#1c1b18" stroke-width="3" stroke-linecap="round"/>
+          <path d="M94 98h12l-6 7z" fill="#f4a6a0"/>
+          <path d="M100 105q-5 8-12 4M100 105q5 8 12 4" fill="none" stroke="#1c1b18" stroke-width="2.4" stroke-linecap="round"/>
+          <path d="M68 108L36 101M68 113L34 114M132 108l32-7M132 113l34 1" fill="none" stroke="#1c1b18" stroke-width="1.6" stroke-linecap="round" opacity=".55"/>
+        </g>
+      </svg>
+    </button>
+  </div>
 
   <!-- project detail dialog -->
   <dialog class="dialog" id="dialog" aria-labelledby="dialogTitle">
