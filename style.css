@@ -438,3 +438,114 @@ em { font-style: italic; color: var(--accent); }
   .spark, .cat__tail, .cat__body, .cat__eye, .cat__ear--r, .catwrap.is-purr .cat__svg { animation: none; }
   .pawwalk i { transition: none; }
 }
+
+
+/* =====================================================================
+   Mango's moods
+===================================================================== */
+.cat__svg .e-lidhalf, .cat__svg .e-brows, .cat__svg .e-happy, .cat__svg .e-love, .cat__svg .e-dizzy, .cat__svg .blush, .cat__svg .sweat { opacity: 0; transition: opacity 0.2s ease; }
+.cat__svg .m { opacity: 0; transition: opacity 0.15s ease; }
+.cat__svg .m-smile { opacity: 1; }
+.cat__eye ellipse:first-child { transform-box: fill-box; transform-origin: 50% 50%; transition: transform 0.2s ease; }
+.pup { transform-box: fill-box; transform-origin: 50% 50%; transition: transform 0.25s ease; }
+.cat__ear { transition: transform 0.3s ease; }
+.cat__ear--l { transform-box: fill-box; transform-origin: 75% 100%; }
+.cat__svg .spin { transform-box: fill-box; transform-origin: 50% 50%; animation: spin-eye 0.7s linear infinite; }
+@keyframes spin-eye { to { transform: rotate(360deg); } }
+
+/* night vision: big pupils when the dark theme is on */
+.catwrap[data-night="true"] .pup { transform: scale(1.55, 1.12); }
+
+/* happy and excited: ^ ^ eyes, blush, big smile */
+.catwrap:is([data-mood="happy"], [data-mood="excited"], [data-mood="love"], [data-mood="dizzy"]) .cat__eye { opacity: 0; animation: none; }
+.catwrap:is([data-mood="happy"], [data-mood="excited"]) .e-happy { opacity: 1; }
+.catwrap:is([data-mood="happy"], [data-mood="excited"], [data-mood="love"]) .blush { opacity: 0.8; }
+.catwrap:is([data-mood="happy"], [data-mood="excited"], [data-mood="love"]) .m-smile { opacity: 0; }
+.catwrap:is([data-mood="happy"], [data-mood="excited"], [data-mood="love"]) .m-big { opacity: 1; }
+.catwrap[data-mood="happy"] .cat__tail { animation-duration: 0.9s; }
+.catwrap[data-mood="excited"] .cat__tail { animation-duration: 0.4s; }
+.catwrap[data-mood="excited"] .cat__svg { animation: hop 0.45s ease-in-out 4; }
+@keyframes hop { 0%, 100% { transform: translateY(0); } 45% { transform: translateY(-14px); } }
+
+/* love: heart eyes */
+.catwrap[data-mood="love"] .e-love { opacity: 1; }
+.catwrap[data-mood="love"] .e-love path { transform-box: fill-box; transform-origin: 50% 60%; animation: heartbeat 0.7s ease-in-out infinite; }
+@keyframes heartbeat { 0%, 100% { transform: scale(1); } 40% { transform: scale(1.22); } }
+.catwrap[data-mood="love"] .cat__tail { animation-duration: 2.4s; }
+
+/* surprised: wide eyes, tiny pupils, open mouth, sweat drop */
+.catwrap[data-mood="surprised"] .cat__eye ellipse:first-child { transform: scale(1.2); }
+.catwrap[data-mood="surprised"] .pup { transform: scale(0.55, 0.6); }
+.catwrap[data-mood="surprised"] .m-smile { opacity: 0; }
+.catwrap[data-mood="surprised"] .m-open { opacity: 1; }
+.catwrap[data-mood="surprised"] .sweat { opacity: 1; }
+.catwrap[data-mood="surprised"] .cat__ear--l { transform: rotate(-7deg); }
+.catwrap[data-mood="surprised"] .cat__ear--r { animation: none; transform: rotate(7deg); }
+.catwrap[data-mood="surprised"] .cat__svg { animation: jolt 0.35s ease-out; }
+@keyframes jolt { 0% { transform: translateY(0); } 30% { transform: translateY(-12px); } 100% { transform: translateY(0); } }
+
+/* sleepy: half lids, a yawn, head droop */
+.catwrap[data-mood="sleepy"] { --mood-tilt: 7deg; }
+.catwrap[data-mood="sleepy"] .e-lidhalf { opacity: 1; }
+.catwrap[data-mood="sleepy"] .m-smile { opacity: 0; }
+.catwrap[data-mood="sleepy"] .m-open { opacity: 1; animation: yawn 1.6s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 20%; }
+@keyframes yawn { 0%, 100% { transform: scale(0.5); } 50% { transform: scale(1.15); } }
+.catwrap[data-mood="sleepy"] .cat__tail { animation-duration: 4s; }
+
+/* annoyed: heavy lids, brows, flat mouth, ears back, flicking tail */
+.catwrap[data-mood="annoyed"] .e-lidhalf, .catwrap[data-mood="annoyed"] .e-brows { opacity: 1; }
+.catwrap[data-mood="annoyed"] .m-smile { opacity: 0; }
+.catwrap[data-mood="annoyed"] .m-flat { opacity: 1; }
+.catwrap[data-mood="annoyed"] .cat__ear--l { transform: rotate(-17deg); }
+.catwrap[data-mood="annoyed"] .cat__ear--r { animation: none; transform: rotate(17deg); }
+.catwrap[data-mood="annoyed"] .cat__tail { animation: flick 0.32s ease-in-out infinite; }
+@keyframes flick { 0%, 100% { transform: rotate(-3deg); } 50% { transform: rotate(7deg); } }
+
+/* curious: head tilt, bigger eyes, one ear up */
+.catwrap[data-mood="curious"] { --mood-tilt: 13deg; }
+.catwrap[data-mood="curious"] .cat__eye ellipse:first-child { transform: scale(1.1); }
+.catwrap[data-mood="curious"] .pup { transform: scale(1.2, 1.05); }
+.catwrap[data-mood="curious"] .cat__ear--r { animation: none; transform: rotate(10deg) translateY(-2px); }
+
+/* dizzy: spiral eyes, wobbly mouth, swaying head */
+.catwrap[data-mood="dizzy"] .e-dizzy { opacity: 1; }
+.catwrap[data-mood="dizzy"] .sweat { opacity: 1; }
+.catwrap[data-mood="dizzy"] .m-smile { opacity: 0; }
+.catwrap[data-mood="dizzy"] .m-wavy { opacity: 1; }
+.catwrap[data-mood="dizzy"] .cat__head { animation: wobble 0.6s ease-in-out infinite; }
+@keyframes wobble { 0%, 100% { transform: rotate(-9deg); } 50% { transform: rotate(9deg); } }
+
+/* head tilt now adds the mood tilt on top of the pointer tilt */
+.cat__head { transform: rotate(calc(var(--tilt, 0deg) + var(--mood-tilt, 0deg))); }
+.catwrap.is-asleep { --mood-tilt: 9deg; }
+.catwrap.is-asleep .cat__head { --tilt: 0deg; }
+
+/* =====================================================================
+   Loader with a walking cat
+===================================================================== */
+.loader { overflow: hidden; }
+.loader__sub { position: absolute; left: 0; right: 0; top: calc(50% + clamp(40px, 8vw, 100px)); text-align: center; margin: 0; font-size: 14px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(243, 237, 226, 0.55); }
+.loader__sub::after { content: ""; display: inline-block; width: 1.4em; text-align: left; animation: dots 1.2s steps(4) infinite; }
+@keyframes dots { 0% { content: ""; } 25% { content: "."; } 50% { content: ".."; } 75% { content: "..."; } }
+@media (prefers-reduced-motion: reduce) {
+  .loader__sub::after, .cat__svg .spin { animation: none; }
+}
+
+/* the last loader word is the cat's */
+.loader__word.is-meow { color: #f08a24; font-style: italic; }
+
+/* sad: for when there is no fish */
+.cat__svg .e-sadbrows, .cat__svg .tear { opacity: 0; transition: opacity 0.2s ease; }
+.catwrap[data-mood="sad"] { --mood-tilt: -3deg; }
+.catwrap[data-mood="sad"] .e-sadbrows, .catwrap[data-mood="sad"] .tear { opacity: 1; }
+.catwrap[data-mood="sad"] .tear { animation: tear 1.6s ease-in infinite; }
+@keyframes tear { 0% { transform: translateY(0); opacity: 0.9; } 100% { transform: translateY(9px); opacity: 0; } }
+.catwrap[data-mood="sad"] .m-smile { opacity: 0; }
+.catwrap[data-mood="sad"] .m-sad { opacity: 1; }
+.catwrap[data-mood="sad"] .pup { transform: scale(1.2, 1.15); }
+.catwrap[data-mood="sad"] .cat__eye ellipse:first-child { transform: scale(1.06); }
+.catwrap[data-mood="sad"] .cat__ear--l { transform: rotate(-11deg); }
+.catwrap[data-mood="sad"] .cat__ear--r { animation: none; transform: rotate(11deg); }
+.catwrap[data-mood="sad"] .cat__tail { animation-duration: 5.5s; }
+
+.loader__sub.is-done::after { content: none; animation: none; }

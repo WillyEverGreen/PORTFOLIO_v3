@@ -8,7 +8,8 @@ Personal portfolio built with plain HTML, CSS and GSAP (ScrollTrigger). No frame
 - About, experience timeline and education, all taken from my resume
 - Pinned horizontal project gallery with a details dialog for every project
 - Skills, open source (20 merged Music Blocks PRs shown as squares that fill in), hackathon and chess results
-- Mango, an orange cat who follows your cursor with his eyes, comments on each section, falls asleep when you go idle and can be petted
+- Mango, an orange cat with ten expressions (happy, love, curious, sleepy, sad, annoyed, surprised, dizzy and more) that react to what you do: his eyes follow your cursor, he comments on each section, yawns and falls asleep when you go idle, gets grumpy if you pet him too much and dizzy if you scroll too fast
+- A loader that greets you in a few languages and ends with a cat's "Meow"
 - Paw prints that walk between sections, a paw trail behind the cursor (with an off switch in the footer), and a hidden surprise if you type "meow"
 - A small playable knight board, copy-email button with confetti, light and dark themes
 - Responsive, keyboard friendly, and respects `prefers-reduced-motion`

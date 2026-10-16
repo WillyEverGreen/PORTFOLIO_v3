@@ -401,29 +401,47 @@
     const bubble = $("#catBubble");
     const pupils = $$(".cat__pupil");
     const head = $(".cat__head");
-    let bubbleTimer, sleepTimer, asleep = false;
+    let bubbleTimer, sleepTimer, sleepyTimer, moodTimer, asleep = false, idleSleepy = false;
 
-    const say = (text, ms = 2800) => {
+    /* moods: neutral, happy, excited, love, surprised, sleepy, annoyed, curious, dizzy, sad */
+    const setMood = (mood, ms = 1800) => {
+      if (asleep && mood !== "surprised") return;
+      idleSleepy = false;
+      wrap.dataset.mood = mood;
+      clearTimeout(moodTimer);
+      if (mood !== "neutral") moodTimer = setTimeout(() => { wrap.dataset.mood = "neutral"; }, ms);
+    };
+
+    const say = (text, ms = 2800, mood) => {
       bubble.textContent = text;
       bubble.classList.add("is-on");
       wrap.classList.add("is-up");
       clearTimeout(bubbleTimer);
       bubbleTimer = setTimeout(() => { bubble.classList.remove("is-on"); wrap.classList.remove("is-up"); }, ms);
+      if (mood) setMood(mood, ms);
     };
+
     const armSleep = () => {
       clearTimeout(sleepTimer);
+      clearTimeout(sleepyTimer);
+      sleepyTimer = setTimeout(() => { if (!asleep) { setMood("sleepy", 4200); idleSleepy = true; } }, 10000);
       sleepTimer = setTimeout(() => {
         asleep = true;
+        wrap.dataset.mood = "neutral";
         wrap.classList.add("is-asleep");
         wrap.classList.remove("is-up");
         bubble.classList.remove("is-on");
       }, 14000);
     };
+
     const wake = (msg) => {
       if (asleep) {
         asleep = false;
         wrap.classList.remove("is-asleep");
+        setMood("surprised", 1100);
         say(msg || "oh, hi!", 2200);
+      } else if (idleSleepy) {
+        setMood("neutral");
       }
       armSleep();
     };
@@ -446,32 +464,103 @@
       },
       { passive: true }
     );
-    ["scroll", "touchstart"].forEach((ev) => window.addEventListener(ev, () => wake(), { passive: true }));
+    ["touchstart"].forEach((ev) => window.addEventListener(ev, () => wake(), { passive: true }));
 
-    /* petting him */
+    /* he is pleased to see you */
+    catBtn.addEventListener("mouseenter", () => { if (!asleep) setMood("happy", 1400); });
+
+    /* petting him: happy, and grumpy if you overdo it */
     const lines = ["mrrp!", "meow!", "purrrrr...", "feed me?", "*headbutt*", "again, again!"];
+    const clicks = [];
     let li = 0;
     catBtn.addEventListener("click", () => {
+      const wasAsleep = asleep;
       asleep = false;
       wrap.classList.remove("is-asleep");
       armSleep();
-      say(lines[li++ % lines.length]);
-      wrap.classList.remove("is-purr");
-      void wrap.offsetWidth;
-      wrap.classList.add("is-purr");
+      const now = Date.now();
+      clicks.push(now);
+      while (clicks.length && now - clicks[0] > 4000) clicks.shift();
       const r = catBtn.getBoundingClientRect();
-      pawBurst(r.left + r.width * 0.5, r.top + r.height * 0.25);
+      if (clicks.length >= 5) {
+        clicks.length = 0;
+        say("okay okay, that's enough!", 2800, "annoyed");
+      } else {
+        if (wasAsleep) {
+          setMood("surprised", 900);
+          setTimeout(() => setMood("happy", 1600), 950);
+          say("mrrp?!", 1800);
+        } else {
+          say(lines[li++ % lines.length], 2600, "happy");
+        }
+        wrap.classList.remove("is-purr");
+        void wrap.offsetWidth;
+        wrap.classList.add("is-purr");
+        pawBurst(r.left + r.width * 0.5, r.top + r.height * 0.25);
+      }
     });
+
+    /* he reacts to what you do */
+    const ready = () => wrap.classList.contains("is-here") && !asleep;
+
+    /* hovering a project card makes him curious */
+    let curiousCool = 0;
+    document.addEventListener(
+      "mouseover",
+      (e) => {
+        const card = e.target.closest && e.target.closest(".card[data-project]");
+        if (card && ready() && performance.now() > curiousCool && performance.now() > dizzyUntil) {
+          curiousCool = performance.now() + 4000;
+          setMood("curious", 1800);
+        }
+      },
+      { passive: true }
+    );
+    $$("[data-open]").forEach((b) =>
+      b.addEventListener("click", () => { if (ready()) say("ooh, details!", 2200, "curious"); })
+    );
+
+    /* copying the email makes him fall in love with the idea of treats */
+    $("#copyBtn").addEventListener("click", () => { if (ready()) say("Treats incoming!", 2600, "love"); });
+
+    /* theme change: night vision in the dark, squinting in the light */
+    const syncNight = () => { wrap.dataset.night = String(root.getAttribute("data-theme") === "dark"); };
+    syncNight();
+    $("#themeBtn").addEventListener("click", () => {
+      syncNight();
+      if (!ready()) return;
+      if (root.getAttribute("data-theme") === "dark") say("ooh, night vision!", 2400, "happy");
+      else say("too bright!", 2000, "annoyed");
+    });
+
+    /* scrolling too fast makes him dizzy */
+    let lastY = window.scrollY, lastT = performance.now(), dizzyCool = 0, dizzyUntil = 0;
+    window.addEventListener(
+      "scroll",
+      () => {
+        wake();
+        const now = performance.now(), y = window.scrollY;
+        const v = (Math.abs(y - lastY) / Math.max(1, now - lastT)) * 1000;
+        lastY = y;
+        lastT = now;
+        if (v > 5200 && now > dizzyCool && ready()) {
+          dizzyCool = now + 9000;
+          dizzyUntil = now + 2400;
+          say("whoa, slow down!", 2300, "dizzy");
+        }
+      },
+      { passive: true }
+    );
 
     /* he comments on each section as you scroll past */
     const talk = {
-      hero: "Hi! I'm Mango. I supervise here.",
-      about: "That's my human. He builds things. I nap.",
-      experience: "Hard worker. I would have napped.",
-      work: "Poke a card. Go on.",
-      skills: "So many tools. Zero fish.",
-      beyond: "He plays chess. I knock pieces off.",
-      contact: "Email my human. Treats welcome.",
+      hero: ["Hi! I'm Mango. I supervise here.", "happy"],
+      about: ["That's my human. He builds things.", "happy"],
+      experience: ["Hard worker. I would have napped.", "sleepy"],
+      work: ["Poke a card. Go on.", "curious"],
+      skills: ["So many tools. Zero fish.", "sad"],
+      beyond: ["He plays chess. I knock the pieces off.", "happy"],
+      contact: ["Email my human. Treats welcome.", "love"],
     };
     const said = new Set(["hero"]);
     if ("IntersectionObserver" in window) {
@@ -479,9 +568,11 @@
         (entries) =>
           entries.forEach((e) => {
             const id = e.target.id;
-            if (e.isIntersecting && talk[id] && !said.has(id) && wrap.classList.contains("is-here") && !asleep) {
+            if (e.isIntersecting && talk[id] && !said.has(id) && ready()) {
               said.add(id);
-              say(talk[id]);
+              const wait = Math.max(0, dizzyUntil - performance.now());
+              if (wait > 0) setTimeout(() => say(talk[id][0], 2800, talk[id][1]), wait + 100);
+              else say(talk[id][0], 2800, talk[id][1]);
             }
           }),
         { rootMargin: "-45% 0px -45% 0px" }
@@ -497,7 +588,7 @@
       if (typed === "meow") {
         typed = "";
         wake("oh, hi!");
-        say("MEOW!", 2400);
+        say("MEOW!", 2600, "excited");
         pawRain();
       }
     });
@@ -507,7 +598,7 @@
       if (document.body.classList.contains("is-loading")) { setTimeout(appear, 250); return; }
       setTimeout(() => {
         wrap.classList.add("is-here");
-        setTimeout(() => say(talk.hero, 3400), 900);
+        setTimeout(() => say(talk.hero[0], 3400, talk.hero[1]), 900);
         armSleep();
       }, 700);
     };
@@ -554,7 +645,7 @@
   gsap.set(scribblePath, { strokeDasharray: scribbleLen, strokeDashoffset: scribbleLen });
 
   /* ----- greeting screen ----- */
-  const greetings = ["Hello", "नमस्कार", "Hola", "Hi"];
+  const greetings = ["Hello", "नमस्कार", "Hola", "Meow"];
   const wordEl = $("#loaderWord");
   let introDone = false;
 
@@ -577,11 +668,22 @@
   const greet = gsap.timeline({
     onComplete: () => gsap.to("#loader", { yPercent: -100, duration: 0.9, ease: "power4.inOut", onComplete: startSite }),
   });
+  const subEl = $("#loaderSub");
+  const subs = ["Waking Mango up", "Stretching his paws", "Checking the treat jar", "Mango is awake =^.^="];
   greetings.forEach((word, i) => {
-    greet.add(() => (wordEl.textContent = word));
+    const last = i === greetings.length - 1;
+    greet.add(() => {
+      wordEl.textContent = word;
+      wordEl.classList.toggle("is-meow", last);
+      if (subEl) {
+        subEl.textContent = subs[i] || subs[subs.length - 1];
+        subEl.classList.toggle("is-done", last);
+      }
+    });
     greet.fromTo(wordEl, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.25, ease: "power2.out" });
-    greet.to(wordEl, { opacity: i === greetings.length - 1 ? 1 : 0, duration: 0.15, delay: 0.12 });
+    greet.to(wordEl, { opacity: last ? 1 : 0, duration: 0.15, delay: last ? 0.35 : 0.12 });
   });
+
   setTimeout(() => { if (!introDone) greet.progress(1); }, 5000);
 
   /* ----- rotating headline ----- */
