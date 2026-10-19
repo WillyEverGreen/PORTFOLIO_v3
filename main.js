@@ -632,6 +632,10 @@
   document.body.classList.add("is-loading");
   window.scrollTo(0, 0);
   if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+  /* the pinned projects section changes page height on load, which can make the browser jump back to the old position */
+  const toTop = () => { if (document.body.classList.contains("is-loading")) window.scrollTo(0, 0); };
+  window.addEventListener("load", () => { toTop(); setTimeout(toTop, 150); });
+  window.addEventListener("pageshow", (e) => { if (e.persisted) window.scrollTo(0, 0); });
 
   gsap.set(".hero .line__in, .contact__title .line__in", { yPercent: 115 });
   gsap.set("[data-hero]", { opacity: 0, y: 24 });
