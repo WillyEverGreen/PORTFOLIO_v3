@@ -715,7 +715,9 @@
       end: "max",
       onUpdate: (self) => {
         nav.classList.toggle("is-solid", self.scroll() > 40);
-        const hide = self.direction === 1 && self.scroll() > 240 && !document.body.classList.contains("menu-open");
+        const work = $("#work");
+        const inWork = work && self.scroll() >= work.offsetTop - 80 && self.scroll() < work.offsetTop + work.offsetHeight - window.innerHeight;
+        const hide = (inWork || (self.direction === 1 && self.scroll() > 240)) && !document.body.classList.contains("menu-open");
         gsap.to(nav, { yPercent: hide ? -120 : 0, duration: 0.35, ease: "power3.out", overwrite: true });
       },
     });
