@@ -757,7 +757,7 @@
       opacity: 1,
       ease: "none",
       stagger: 0.12,
-      scrollTrigger: { trigger: "#aboutText", start: "top 82%", end: "bottom 55%", scrub: true },
+      scrollTrigger: { trigger: "#aboutText", start: "top 82%", end: "bottom 55%", scrub: 0.8 },
     });
 
     /* counters */
@@ -784,7 +784,7 @@
     gsap.to("#timelineFill", {
       scaleY: 1,
       ease: "none",
-      scrollTrigger: { trigger: "#timeline", start: "top 70%", end: "bottom 65%", scrub: true },
+      scrollTrigger: { trigger: "#timeline", start: "top 70%", end: "bottom 65%", scrub: 0.8 },
     });
     $$("[data-job]").forEach((job) => {
       ScrollTrigger.create({
@@ -831,9 +831,9 @@
         scrollTrigger: {
           trigger: "#workPin",
           start: "top top",
-          end: () => "+=" + dist(),
+          end: () => "+=" + dist() * 1.8,
           pin: true,
-          scrub: 0.6,
+          scrub: 1.2,
           anticipatePin: 1,
           invalidateOnRefresh: true,
           onUpdate: (self) => {
