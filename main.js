@@ -839,15 +839,6 @@
         },
       });
 
-      cards.forEach((card) => {
-        const img = $("img", card);
-        if (!img) return;
-        gsap.fromTo(
-          img,
-          { xPercent: 5, scale: 1.1 },
-          { xPercent: -5, ease: "none", scrollTrigger: { trigger: card, containerAnimation: slide, start: "left 100%", end: "right 0%", scrub: true } }
-        );
-      });
     });
 
     mm.add("(max-width: 760px)", () => {
