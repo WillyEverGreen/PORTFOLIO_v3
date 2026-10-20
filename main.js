@@ -1144,6 +1144,20 @@
       el.classList.add("is-in");
     });
 
+    /* the "Right now" card draws itself in when it scrolls into view */
+    const nowCard = $("#now");
+    if (nowCard) {
+      if ("IntersectionObserver" in window && !reduceMotion) {
+        const nio = new IntersectionObserver(
+          (entries) => entries.forEach((e) => { if (e.isIntersecting) { nowCard.classList.add("is-in"); nio.disconnect(); } }),
+          { threshold: 0.3 }
+        );
+        nio.observe(nowCard);
+      } else {
+        nowCard.classList.add("is-in");
+      }
+    }
+
     /* ----- little effects ----- */
     const makeSvg = (cls) => {
       const el = document.createElementNS("http://www.w3.org/2000/svg", "svg");
