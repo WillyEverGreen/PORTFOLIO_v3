@@ -57,8 +57,7 @@ window.PROJECTS = [
       "Optimisation. Mean-CVaR linear programming with CVXPY and Hierarchical Risk Parity to build portfolios that penalise tail losses and limit turnover.",
       "Safeguards. A three-tier circuit breaker (normal, amber, red, frozen) driven by live market feeds, with an append-only audit log of every intervention.",
       "Stack. A FastAPI quant engine in Python, and a Next.js dashboard with efficient frontier charts, a crisis stress-test simulator and an execution blotter."
-    ],
-    "embed": false
+    ]
   },
   {
     "id": "legal",

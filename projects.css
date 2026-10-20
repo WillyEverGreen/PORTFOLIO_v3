@@ -352,8 +352,8 @@
 }
 .pj-viewer__frame:not(.is-loading) .pj-viewer__loading { opacity: 0; pointer-events: none; }
 
-.pj-viewer__fallback { position: relative; flex: 1; min-height: 0; overflow: hidden; background: var(--paper-2); }
-.pj-viewer__fallback img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; object-position: center 40%; }
+.pj-viewer__fallback { position: relative; flex: 1; min-height: 0; overflow-y: auto; overflow-x: hidden; background: var(--paper-2); }
+.pj-viewer__fallback img { display: block; width: 100%; height: auto; min-height: 100%; object-fit: contain; object-position: top center; }
 .pj-viewer__notice {
   position: absolute;
   left: 50%; bottom: 22px;
