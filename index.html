@@ -4,12 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Sai Balkawade | Full-stack developer</title>
-  <meta name="description" content="Sai Balkawade is a computer engineering student and full-stack developer from Mumbai. React, Node.js, Supabase and PostgreSQL. 20 merged open source pull requests, a frontend internship and several deployed projects." />
+  <meta name="description" content="Sai Balkawade is a computer engineering student and full-stack developer from Mumbai. React, Node.js, Supabase and PostgreSQL. Open-source contributor, frontend internship and several deployed projects." />
   <meta name="theme-color" content="#f3ede2" />
   <meta property="og:title" content="Sai Balkawade | Full-stack developer" />
   <meta property="og:description" content="Full-stack projects, open source work and a few chess results. Have a look around." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="img/recode.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Sai Balkawade | Full-stack developer" />
+  <meta name="twitter:description" content="Full-stack projects, open source work and a few chess results. Have a look around." />
+  <meta name="twitter:image" content="img/recode.jpg" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -64,7 +68,10 @@
         <svg class="theme__sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></svg>
         <svg class="theme__moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.2A8.6 8.6 0 0 1 9.8 3.5 8.6 8.6 0 1 0 20.5 14.2z"/></svg>
       </button>
-      <a class="nav__cta" href="assets/Sai_Balkawade_Resume.pdf" target="_blank" rel="noopener">Resume</a>
+      <button class="nav__cta" id="navResumeBtn" type="button" aria-haspopup="dialog" aria-label="View Sai's Resume">
+        <svg class="cta-paw" viewBox="0 0 64 64" aria-hidden="true"><use href="#paw"/></svg>
+        <span>Resume</span>
+      </button>
       <button class="menu" id="menuBtn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="sheet"><span></span><span></span></button>
     </div>
   </header>
@@ -78,6 +85,9 @@
       <a href="#skills">Skills</a>
       <a href="#beyond">Beyond code</a>
       <a href="#contact">Contact</a>
+      <button class="sheet__resume" id="sheetResumeBtn" type="button" aria-haspopup="dialog">
+        <span>View Resume</span> <svg class="cta-paw" viewBox="0 0 64 64" aria-hidden="true"><use href="#paw"/></svg>
+      </button>
     </nav>
   </div>
 
@@ -104,12 +114,15 @@
           <span class="line"><span class="line__in"><span class="rotator" id="rotator"><em>full-stack apps.</em></span></span></span>
         </h1>
         <p class="hero__sub" data-hero>
-          React on the front, Node.js and Express on the back, with Supabase and PostgreSQL for data and auth. I've done a frontend internship, merged 20 open source pull requests, and shipped a few side projects you can try right now.
+          React on the front, Node.js and Express on the back, with Supabase and PostgreSQL for data and auth. I've completed a frontend internship, contributed to open source, and shipped side projects you can try right now.
         </p>
         <div class="hero__cta" data-hero>
-          <a class="btn" href="#work">See my work</a>
-          <a class="btn btn--line" href="assets/Sai_Balkawade_Resume.pdf" target="_blank" rel="noopener">Resume</a>
-          <a class="btn btn--line" href="https://github.com/WillyEverGreen" target="_blank" rel="noopener">GitHub</a>
+          <a class="btn" href="#work" id="heroWorkBtn"><span>See my work</span></a>
+          <button class="btn btn--line btn--resume" id="heroResumeBtn" type="button" aria-haspopup="dialog" aria-label="View Sai's Resume">
+            <svg class="btn-paw" viewBox="0 0 64 64" aria-hidden="true"><use href="#paw"/></svg>
+            <span>Resume</span>
+          </button>
+          <a class="btn btn--line btn--gh" href="https://github.com/WillyEverGreen" target="_blank" rel="noopener" id="heroGithubBtn"><span>GitHub</span></a>
         </div>
       </div>
 
@@ -129,7 +142,7 @@
         <aside class="now" data-reveal>
           <h3>Right now</h3>
           <dl>
-            <dt>Studying</dt><dd>B.Tech in Computer Engineering, SGPA 8.59</dd>
+            <dt>Studying</dt><dd>B.Tech in Computer Engineering, CGPA 8.40</dd>
             <dt>Working</dt><dd>Technical Member at Project Cell, FrCRCE</dd>
             <dt>Using</dt><dd>React, Next.js, Node.js, Supabase and PostgreSQL</dd>
             <dt>Off screen</dt><dd>Chess, and a lot of it</dd>
@@ -138,14 +151,29 @@
       </div>
 
       <div class="stats">
-        <div class="stat" data-reveal><b data-count="20">0</b><span>merged open source PRs</span></div>
+        <div class="stat" data-reveal><b data-count="20">0</b><span>open source PRs</span></div>
         <div class="stat" data-reveal><b data-count="200" data-suffix="+">0</b><span>DSA problems solved</span></div>
         <div class="stat" data-reveal><b data-count="120" data-suffix="+">0</b><span>event participants served</span></div>
-        <div class="stat" data-reveal><b data-count="8.59" data-decimals="2">0</b><span>SGPA out of 10</span></div>
+        <div class="stat" data-reveal><b data-count="8.40" data-decimals="2">0</b><span>CGPA out of 10</span></div>
       </div>
     </section>
 
-    <div class="pawwalk" data-pawwalk aria-hidden="true"></div>
+    <div class="pawwalk" data-pawwalk aria-hidden="true">
+      <i style="--i:0"><svg viewBox="0 0 64 64"><use href="#paw"/></svg></i>
+      <i style="--i:1"><svg viewBox="0 0 64 64"><use href="#paw"/></svg></i>
+      <i style="--i:2"><svg viewBox="0 0 64 64"><use href="#paw"/></svg></i>
+      <i style="--i:3"><svg viewBox="0 0 64 64"><use href="#paw"/></svg></i>
+      <i style="--i:4"><svg viewBox="0 0 64 64"><use href="#paw"/></svg></i>
+      <i style="--i:5"><svg viewBox="0 0 64 64"><use href="#paw"/></svg></i>
+      <i style="--i:6"><svg viewBox="0 0 64 64"><use href="#paw"/></svg></i>
+      <i style="--i:7"><svg viewBox="0 0 64 64"><use href="#paw"/></svg></i>
+      <i style="--i:8"><svg viewBox="0 0 64 64"><use href="#paw"/></svg></i>
+      <i style="--i:9"><svg viewBox="0 0 64 64"><use href="#paw"/></svg></i>
+      <i style="--i:10"><svg viewBox="0 0 64 64"><use href="#paw"/></svg></i>
+      <i style="--i:11"><svg viewBox="0 0 64 64"><use href="#paw"/></svg></i>
+      <i style="--i:12"><svg viewBox="0 0 64 64"><use href="#paw"/></svg></i>
+      <i style="--i:13"><svg viewBox="0 0 64 64"><use href="#paw"/></svg></i>
+    </div>
 
     <!-- EXPERIENCE -->
     <section class="experience section" id="experience">
@@ -184,7 +212,7 @@
             <p class="edu__date">2024 to Present</p>
             <p class="edu__title">B.Tech in Computer Engineering</p>
             <p>Fr. Conceicao Rodrigues College of Engineering, Mumbai</p>
-            <p class="edu__score">SGPA 8.59 / 10</p>
+            <p class="edu__score">CGPA 8.40 / 10</p>
           </div>
           <div class="edu__item">
             <p class="edu__date">2022 to 2024</p>
@@ -215,7 +243,7 @@
 
           <article class="card" data-card data-project="clip">
             <a class="card__media" href="https://clip.foo.ng/about" target="_blank" rel="noopener" tabindex="-1">
-              <img src="img/clip.jpg" alt="Clip landing page: your text, your files, one instant link" loading="lazy" width="1200" height="750" />
+              <img src="img/clip.jpg" alt="Clip landing page: your text, your files, one instant link" loading="lazy" decoding="async" width="1200" height="750" />
             </a>
             <div class="card__body">
               <span class="card__no">1</span>
@@ -233,7 +261,7 @@
 
           <article class="card" data-card data-project="campus">
             <a class="card__media" href="https://webfusion20.vercel.app" target="_blank" rel="noopener" tabindex="-1">
-              <img src="img/campus-circular.jpg" alt="Campus Circular landing page: why buy what someone nearby already has" loading="lazy" width="1200" height="750" />
+              <img src="img/campus-circular.jpg" alt="Campus Circular landing page: why buy what someone nearby already has" loading="lazy" decoding="async" width="1200" height="750" />
             </a>
             <div class="card__body">
               <span class="card__no">2</span>
@@ -251,7 +279,7 @@
 
           <article class="card" data-card data-project="capital">
             <a class="card__media" href="https://sentinelcap.vercel.app" target="_blank" rel="noopener" tabindex="-1">
-              <img src="img/capital-ai.jpg" alt="CapitalAI landing page: smarter capital for a stronger tomorrow" loading="lazy" width="1200" height="750" />
+              <img src="img/capital-ai.jpg" alt="CapitalAI landing page: smarter capital for a stronger tomorrow" loading="lazy" decoding="async" width="1200" height="750" />
             </a>
             <div class="card__body">
               <span class="card__no">3</span>
@@ -269,7 +297,7 @@
 
           <article class="card" data-card data-project="legal">
             <a class="card__media" href="https://legal-ai-gateway-xlmv.onrender.com/" target="_blank" rel="noopener" tabindex="-1">
-              <img src="img/legal-ai.jpg" alt="LegalAI landing page" loading="lazy" width="1200" height="750" />
+              <img src="img/legal-ai.jpg" alt="LegalAI landing page" loading="lazy" decoding="async" width="1200" height="750" />
             </a>
             <div class="card__body">
               <span class="card__no">4</span>
@@ -285,30 +313,13 @@
             </div>
           </article>
 
-          <article class="card" data-card data-project="recode">
-            <a class="card__media" href="https://recode.sbs/" target="_blank" rel="noopener" tabindex="-1">
-              <img src="img/recode.jpg" alt="ReCode landing page" loading="lazy" width="1200" height="750" />
-            </a>
-            <div class="card__body">
-              <span class="card__no">5</span>
-              <h3>ReCode</h3>
-              <p class="card__kicker">AI DSA companion</p>
-              <p>A revision app that schedules spaced repetition for the topics you're weakest at, with hints that unlock one step at a time.</p>
-              <p class="card__tags">React, TypeScript, Node.js, MongoDB, Redis</p>
-              <div class="card__links">
-                <button type="button" class="more" data-open="recode">Details</button>
-                <a href="https://recode.sbs/" target="_blank" rel="noopener">Live demo</a>
-                <a href="https://github.com/WillyEverGreen/ReCode" target="_blank" rel="noopener">Code</a>
-              </div>
-            </div>
-          </article>
 
           <article class="card" data-card data-project="loop">
             <a class="card__media" href="https://loopsre.vercel.app/" target="_blank" rel="noopener" tabindex="-1">
-              <img src="img/loop.jpg" alt="Loop SRE dashboard" loading="lazy" width="1200" height="750" />
+              <img src="img/loop.jpg" alt="Loop SRE dashboard" loading="lazy" decoding="async" width="1200" height="750" />
             </a>
             <div class="card__body">
-              <span class="card__no">6</span>
+              <span class="card__no">5</span>
               <h3>Loop</h3>
               <p class="card__kicker">Autonomous SRE dashboard</p>
               <p>A dashboard that watches services, spots incidents early and suggests fixes. A demo of how an autonomous ops tool could work.</p>
@@ -321,81 +332,60 @@
             </div>
           </article>
 
-          <article class="card" data-card data-project="space">
-            <a class="card__media" href="https://space-scope-sb.vercel.app/" target="_blank" rel="noopener" tabindex="-1">
-              <img src="img/spacescope.jpg" alt="SpaceScope landing page" loading="lazy" width="1200" height="750" />
-            </a>
-            <div class="card__body">
-              <span class="card__no">7</span>
-              <h3>SpaceScope</h3>
-              <p class="card__kicker">Satellite tracker and sky viewer</p>
-              <p>Follow the ISS and satellites live, check space weather, or point your phone at the sky to see what's overhead.</p>
-              <p class="card__tags">React, public space APIs</p>
-              <div class="card__links">
-                <button type="button" class="more" data-open="space">Details</button>
-                <a href="https://space-scope-sb.vercel.app/" target="_blank" rel="noopener">Live demo</a>
-                <a href="https://github.com/WillyEverGreen/Space_Scope" target="_blank" rel="noopener">Code</a>
-              </div>
-            </div>
-          </article>
 
-          <article class="card" data-card data-project="journi">
-            <a class="card__media" href="https://journi-ai-ai-trip-planner-anzy.vercel.app" target="_blank" rel="noopener" tabindex="-1">
-              <img src="img/journi.jpg" alt="JourniAI landing page" loading="lazy" width="1200" height="750" />
-            </a>
-            <div class="card__body">
-              <span class="card__no">8</span>
-              <h3>JourniAI</h3>
-              <p class="card__kicker">AI trip planner</p>
-              <p>Say where you're going and for how long. It plans each day and gives you a rough budget.</p>
-              <p class="card__tags">React, Firebase, LLMs</p>
-              <div class="card__links">
-                <button type="button" class="more" data-open="journi">Details</button>
-                <a href="https://journi-ai-ai-trip-planner-anzy.vercel.app" target="_blank" rel="noopener">Live demo</a>
-                <a href="https://github.com/WillyEverGreen/JOURNI-AI" target="_blank" rel="noopener">Code</a>
-              </div>
-            </div>
-          </article>
 
-          <article class="card" data-card data-project="crypto">
-            <a class="card__media" href="https://virtual-cryptography-lab.vercel.app" target="_blank" rel="noopener" tabindex="-1">
-              <img src="img/crypto.jpg" alt="Virtual Cryptography Laboratory" loading="lazy" width="1200" height="750" />
+
+          <article class="card" data-card data-project="geoclash">
+            <a class="card__media" href="https://geoclash.vercel.app/" target="_blank" rel="noopener" tabindex="-1">
+              <img src="img/geoclash.jpg" alt="GeoClash landing page: run a loop, own the block" loading="lazy" decoding="async" width="1440" height="900" />
             </a>
             <div class="card__body">
-              <span class="card__no">9</span>
-              <h3>Cryptography Lab</h3>
-              <p class="card__kicker">Hands-on security course lab</p>
-              <p>Run classic and modern ciphers, hashes and a man in the middle attack, all in the browser.</p>
-              <p class="card__tags">JavaScript, Web Crypto API</p>
+              <span class="card__no">6</span>
+              <h3>GeoClash</h3>
+              <p class="card__kicker">Territory game for runners</p>
+              <p>Run or walk a GPS loop and claim the streets inside it on a live shared map. Built with a friend.</p>
+              <p class="card__tags">Next.js, React, GPS, Live map</p>
               <div class="card__links">
-                <button type="button" class="more" data-open="crypto">Details</button>
-                <a href="https://virtual-cryptography-lab.vercel.app" target="_blank" rel="noopener">Live demo</a>
-                <a href="https://github.com/WillyEverGreen/css-virtual-lab" target="_blank" rel="noopener">Code</a>
+                <button type="button" class="more" data-open="geoclash">Details</button>
+                <a href="https://geoclash.vercel.app/" target="_blank" rel="noopener">Live demo</a>
+                <a href="https://github.com/SC136/GeoClash" target="_blank" rel="noopener">Code</a>
               </div>
             </div>
           </article>
 
           <article class="card card--more" data-card>
             <div class="card__more">
-              <h3>And a few more.</h3>
-              <ul>
-                <li><a href="https://willyevergreen-headlock.hf.space" target="_blank" rel="noopener">HeadLock <span>a headless browser API</span></a></li>
-                <li><a href="https://cnmini-project.vercel.app" target="_blank" rel="noopener">Firewall Simulator <span>stateful packet filtering</span></a></li>
-                <li><a href="https://pypi.org/project/acon-intel" target="_blank" rel="noopener">acon <span>a crawler brain for scrapers</span></a></li>
-              </ul>
-              <a class="btn" href="https://github.com/WillyEverGreen?tab=repositories" target="_blank" rel="noopener">All repositories</a>
+              <h3>There's more.</h3>
+              <p class="card__more-lead">Seven more builds, from AI tools to a firewall simulator, are on the projects page.</p>
+              <a class="btn" href="projects.html" id="allProjectsBtn"><span>See more projects</span><svg class="btn-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+              <a class="card__more-link" href="https://github.com/WillyEverGreen?tab=repositories" target="_blank" rel="noopener">or browse GitHub</a>
             </div>
           </article>
         </div>
 
         <div class="work__ui" aria-hidden="true">
-          <span id="workCount">1</span><span class="work__of">of 10</span>
+          <span id="workCount">1</span><span class="work__of">of 7</span>
           <div class="work__bar"><span id="workBar"></span></div>
         </div>
       </div>
     </section>
 
-    <div class="pawwalk" data-pawwalk aria-hidden="true"></div>
+    <div class="pawwalk" data-pawwalk aria-hidden="true">
+      <i style="--i:0"><svg viewBox="0 0 64 64"><use href="#paw"/></svg></i>
+      <i style="--i:1"><svg viewBox="0 0 64 64"><use href="#paw"/></svg></i>
+      <i style="--i:2"><svg viewBox="0 0 64 64"><use href="#paw"/></svg></i>
+      <i style="--i:3"><svg viewBox="0 0 64 64"><use href="#paw"/></svg></i>
+      <i style="--i:4"><svg viewBox="0 0 64 64"><use href="#paw"/></svg></i>
+      <i style="--i:5"><svg viewBox="0 0 64 64"><use href="#paw"/></svg></i>
+      <i style="--i:6"><svg viewBox="0 0 64 64"><use href="#paw"/></svg></i>
+      <i style="--i:7"><svg viewBox="0 0 64 64"><use href="#paw"/></svg></i>
+      <i style="--i:8"><svg viewBox="0 0 64 64"><use href="#paw"/></svg></i>
+      <i style="--i:9"><svg viewBox="0 0 64 64"><use href="#paw"/></svg></i>
+      <i style="--i:10"><svg viewBox="0 0 64 64"><use href="#paw"/></svg></i>
+      <i style="--i:11"><svg viewBox="0 0 64 64"><use href="#paw"/></svg></i>
+      <i style="--i:12"><svg viewBox="0 0 64 64"><use href="#paw"/></svg></i>
+      <i style="--i:13"><svg viewBox="0 0 64 64"><use href="#paw"/></svg></i>
+    </div>
 
     <!-- SKILLS -->
     <section class="skills section" id="skills">
@@ -465,20 +455,74 @@
         </article>
       </div>
 
-      <div class="chess">
+      <div class="chess" id="chessSection">
         <div class="chess__text" data-reveal>
-          <p class="h3">Quick chess break.</p>
-          <p>A knight moves in an L. Click a highlighted square to hop there and see if you can visit every square once. Tough, but fun.</p>
-          <p class="chess__stats"><span>Visited <b id="chessCount">1</b> / 64</span> <button type="button" class="chess__reset" id="chessReset">Reset</button></p>
-          <p class="chess__msg" id="chessMsg" aria-live="polite"></p>
+          <div class="chess__badge-row">
+            <span class="chess__streak-badge" id="chessStreakBadge">Solved 0 / 5</span>
+          </div>
+          <h3 class="h3" id="chessTitle">Find the Mate.</h3>
+
+          <div class="chess__pills" id="chessPills" role="tablist" aria-label="Daily puzzles selection">
+            <button class="pill is-active" type="button" data-idx="0" aria-label="Puzzle 1">1</button>
+            <button class="pill" type="button" data-idx="1" aria-label="Puzzle 2">2</button>
+            <button class="pill" type="button" data-idx="2" aria-label="Puzzle 3">3</button>
+            <button class="pill" type="button" data-idx="3" aria-label="Puzzle 4">4</button>
+            <button class="pill" type="button" data-idx="4" aria-label="Puzzle 5">5</button>
+          </div>
+
+          <div class="chess__status-card">
+            <div class="chess__turn-indicator">
+              <span class="chess__turn-dot is-white" id="chessTurnDot" aria-hidden="true"></span>
+              <span class="chess__turn-text" id="chessTurnText">White to move • Mate in 1</span>
+            </div>
+            <span class="chess__motif" id="chessMotif">#BackRankMate</span>
+          </div>
+
+          <div class="chess__controls">
+            <button class="btn-chess" id="chessHintBtn" type="button">
+              <svg class="icon-svg" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 22h4M12 2v2M12 6a6 6 0 0 1 6 6c0 2.2-1.2 4.15-3 5.19V18H9v-.81C7.2 16.15 6 14.2 6 12a6 6 0 0 1 6-6z"/></svg>
+              <span>Hint</span>
+            </button>
+            <button class="btn-chess" id="chessResetBtn" type="button">
+              <svg class="icon-svg" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+              <span>Reset</span>
+            </button>
+            <button class="btn-chess" id="chessPrevBtn" type="button" aria-label="Previous puzzle">
+              <svg class="icon-svg" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+              <span>Prev</span>
+            </button>
+            <button class="btn-chess btn-chess--next" id="chessNextBtn" type="button" aria-label="Next puzzle">
+              <span>Next</span>
+              <svg class="icon-svg" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+          </div>
+
+          <p class="chess__msg" id="chessMsg" role="status" aria-live="polite">Click a piece to see legal moves and deliver checkmate!</p>
         </div>
-        <div class="board" id="board" role="group" aria-label="Chess board with a knight">
-          <div class="knight" id="knight" aria-hidden="true">&#9822;</div>
+
+        <div class="chess__board-wrap" data-reveal>
+          <chess-board id="chessBoard" draggable-pieces></chess-board>
+          <div class="chess__hints-overlay" id="chessHintsOverlay" aria-hidden="true"></div>
         </div>
       </div>
     </section>
 
-    <div class="pawwalk" data-pawwalk aria-hidden="true"></div>
+    <div class="pawwalk" data-pawwalk aria-hidden="true">
+      <i style="--i:0"><svg viewBox="0 0 64 64"><use href="#paw"/></svg></i>
+      <i style="--i:1"><svg viewBox="0 0 64 64"><use href="#paw"/></svg></i>
+      <i style="--i:2"><svg viewBox="0 0 64 64"><use href="#paw"/></svg></i>
+      <i style="--i:3"><svg viewBox="0 0 64 64"><use href="#paw"/></svg></i>
+      <i style="--i:4"><svg viewBox="0 0 64 64"><use href="#paw"/></svg></i>
+      <i style="--i:5"><svg viewBox="0 0 64 64"><use href="#paw"/></svg></i>
+      <i style="--i:6"><svg viewBox="0 0 64 64"><use href="#paw"/></svg></i>
+      <i style="--i:7"><svg viewBox="0 0 64 64"><use href="#paw"/></svg></i>
+      <i style="--i:8"><svg viewBox="0 0 64 64"><use href="#paw"/></svg></i>
+      <i style="--i:9"><svg viewBox="0 0 64 64"><use href="#paw"/></svg></i>
+      <i style="--i:10"><svg viewBox="0 0 64 64"><use href="#paw"/></svg></i>
+      <i style="--i:11"><svg viewBox="0 0 64 64"><use href="#paw"/></svg></i>
+      <i style="--i:12"><svg viewBox="0 0 64 64"><use href="#paw"/></svg></i>
+      <i style="--i:13"><svg viewBox="0 0 64 64"><use href="#paw"/></svg></i>
+    </div>
 
     <!-- CONTACT -->
     <section class="contact section" id="contact">
@@ -493,9 +537,9 @@
         <button class="copy" id="copyBtn" type="button">Copy email</button>
       </div>
       <div class="socials" data-reveal>
-        <a href="https://github.com/WillyEverGreen" target="_blank" rel="noopener">GitHub</a>
-        <a href="https://www.linkedin.com/in/sai-balkawade-141ba4310/" target="_blank" rel="noopener">LinkedIn</a>
-        <a href="assets/Sai_Balkawade_Resume.pdf" target="_blank" rel="noopener">Resume (PDF)</a>
+        <a href="https://github.com/WillyEverGreen" target="_blank" rel="noopener" id="contactGithubLink">GitHub</a>
+        <a href="https://www.linkedin.com/in/sai-balkawade-141ba4310/" target="_blank" rel="noopener" id="contactLinkedinLink">LinkedIn</a>
+        <button class="social-btn" id="socialResumeBtn" type="button" aria-haspopup="dialog" aria-label="View Sai's Resume">Resume (PDF)</button>
       </div>
     </section>
   </main>
@@ -526,9 +570,9 @@
           <path d="M82 218v10M118 218v10" stroke="#e5c9a3" stroke-width="2.5" stroke-linecap="round"/>
         </g>
         <g class="cat__head">
-          <path class="cat__ear cat__ear--l" d="M60 62L54 20l42 26z" fill="#f08a24"/>
+          <path class="cat__ear cat__ear--l" d="M64 76L54 20l42 26z" fill="#f08a24"/>
           <path d="M66 54l-3-21 21 13z" fill="#f4a6a0"/>
-          <path class="cat__ear cat__ear--r" d="M140 62l6-42-42 26z" fill="#f08a24"/>
+          <path class="cat__ear cat__ear--r" d="M136 76l10-56-42 26z" fill="#f08a24"/>
           <path d="M134 54l3-21-21 13z" fill="#f4a6a0"/>
           <circle cx="100" cy="90" r="46" fill="#f08a24"/>
           <path d="M100 46v16M86 49l3 14M114 49l-3 14" fill="none" stroke="#c9631a" stroke-width="5" stroke-linecap="round"/>
@@ -572,6 +616,85 @@
     <button class="dialog__close" id="dialogClose" type="button" aria-label="Close details">&times;</button>
     <div class="dialog__body" id="dialogBody"></div>
   </dialog>
+
+  <!-- resume preview dialog -->
+  <dialog class="dialog dialog--resume" id="resumeDialog" aria-labelledby="resumeDialogTitle">
+    <button class="dialog__close" id="resumeDialogClose" type="button" aria-label="Close resume preview">&times;</button>
+    <div class="dialog__body" id="resumeDialogBody">
+      <div class="resume-head">
+        <div>
+          <span class="resume-badge">Open to Internships • 2026</span>
+          <h3 id="resumeDialogTitle">Sai Balkawade</h3>
+          <p class="d-kicker">Full-Stack Engineer • Computer Engineering Student, Mumbai</p>
+        </div>
+        <div class="resume-actions">
+          <a class="btn" href="assets/Sai_Balkawade_Resume.pdf" target="_blank" rel="noopener">Open PDF in New Tab ↗</a>
+          <a class="btn btn--line" href="assets/Sai_Balkawade_Resume.pdf" download="Sai_Balkawade_Resume.pdf">Download PDF ⤓</a>
+        </div>
+      </div>
+
+      <div class="resume-quick">
+        <div class="rq-item">
+          <span class="rq-num">8.40</span>
+          <span class="rq-lbl">B.Tech CGPA (Fr. CRCE)</span>
+        </div>
+        <div class="rq-item">
+          <span class="rq-num">20</span>
+          <span class="rq-lbl">Open-Source PRs</span>
+        </div>
+        <div class="rq-item">
+          <span class="rq-num">9+</span>
+          <span class="rq-lbl">Shipped Full-Stack Apps</span>
+        </div>
+        <div class="rq-item">
+          <span class="rq-num">Top 10</span>
+          <span class="rq-lbl">6th in India Chess</span>
+        </div>
+      </div>
+
+      <div class="resume-section">
+        <h4>Work Experience</h4>
+        <div class="r-exp">
+          <div class="r-exp__head">
+            <b>Frontend Developer Intern — XIRCLS</b>
+            <span>Dec 2025 – Mar 2026</span>
+          </div>
+          <p>Built responsive, reusable UI components for an enterprise CRM platform, connected frontend modules to backend REST APIs, and improved state reliability.</p>
+        </div>
+        <div class="r-exp">
+          <div class="r-exp__head">
+            <b>Technical Member — Project Cell, FrCRCE</b>
+            <span>Aug 2025 – Present</span>
+          </div>
+          <p>Architected and deployed official portal on Next.js, with modular components tuned for rapid core web vitals and fast performance.</p>
+        </div>
+      </div>
+
+      <div class="resume-section">
+        <h4>Core Technical Stack</h4>
+        <ul class="chips chips--resume">
+          <li>React.js</li><li>Next.js</li><li>TypeScript</li><li>JavaScript</li>
+          <li>Node.js</li><li>Express.js</li><li>Hono</li><li>Python</li>
+          <li>PostgreSQL</li><li>Supabase</li><li>Redis</li><li>Docker</li>
+          <li>WebSockets</li><li>REST APIs</li><li>Tailwind CSS</li><li>Git</li>
+        </ul>
+      </div>
+
+      <div class="resume-section">
+        <h4>Embedded PDF Document</h4>
+        <div class="resume-frame-wrap">
+          <iframe class="resume-frame" src="assets/Sai_Balkawade_Resume.pdf" title="Sai Balkawade Resume PDF"></iframe>
+        </div>
+      </div>
+
+      <div class="resume-foot">
+        <a class="btn" href="assets/Sai_Balkawade_Resume.pdf" target="_blank" rel="noopener">Open Full PDF in New Tab ↗</a>
+        <a class="btn btn--line" href="assets/Sai_Balkawade_Resume.pdf" download="Sai_Balkawade_Resume.pdf">Download File ⤓</a>
+        <button class="btn btn--line" id="resumeCloseFooter" type="button">Close Preview</button>
+      </div>
+    </div>
+  </dialog>
+
 
   <template id="t-clip">
     <h3 id="dialogTitle">Clip</h3>
@@ -622,17 +745,6 @@
     <p class="d-note">The demo runs on a free tier, so the first load can take up to a minute to wake up.</p>
   </template>
 
-  <template id="t-recode">
-    <h3 id="dialogTitle">ReCode</h3>
-    <p class="d-kicker">AI DSA companion platform</p>
-    <ul>
-      <li><b>Platform.</b> A full-stack DSA revision web app with automated spaced-repetition schedules that resurface weak topics.</li>
-      <li><b>AI integration.</b> A tiered hint generator that gives a hint, then the approach, then a full walkthrough, so you can solve at your own pace.</li>
-      <li><b>Performance and auth.</b> Frequent lookups are cached in Redis to cut latency. Auth uses JWT and OTP verification.</li>
-    </ul>
-    <p class="d-tags">React, TypeScript, Node.js, MongoDB, Redis</p>
-    <p class="d-links"><a href="https://recode.sbs/" target="_blank" rel="noopener">Live demo</a><a href="https://github.com/WillyEverGreen/ReCode" target="_blank" rel="noopener">GitHub</a></p>
-  </template>
 
   <template id="t-loop">
     <h3 id="dialogTitle">Loop</h3>
@@ -646,44 +758,26 @@
     <p class="d-links"><a href="https://loopsre.vercel.app/" target="_blank" rel="noopener">Live demo</a><a href="https://github.com/WillyEverGreen/Loop" target="_blank" rel="noopener">GitHub</a></p>
   </template>
 
-  <template id="t-space">
-    <h3 id="dialogTitle">SpaceScope</h3>
-    <p class="d-kicker">Satellite tracker and sky viewer</p>
-    <ul>
-      <li>Live ISS tracking, space weather and the NASA picture of the day.</li>
-      <li>An AR mode that uses your phone's sensors to show what is in the sky above you.</li>
-      <li>Built on public space APIs with a fast, mobile-friendly interface.</li>
-    </ul>
-    <p class="d-tags">React, public space APIs</p>
-    <p class="d-links"><a href="https://space-scope-sb.vercel.app/" target="_blank" rel="noopener">Live demo</a><a href="https://github.com/WillyEverGreen/Space_Scope" target="_blank" rel="noopener">GitHub</a></p>
-  </template>
 
-  <template id="t-journi">
-    <h3 id="dialogTitle">JourniAI</h3>
-    <p class="d-kicker">AI trip planner</p>
-    <ul>
-      <li>Generates a personalised day-by-day itinerary with activities, restaurants and stays.</li>
-      <li>Location search and place photos, plus a rough budget for the trip.</li>
-      <li>Sign-in handled with Firebase.</li>
-    </ul>
-    <p class="d-tags">React, Firebase, LLMs</p>
-    <p class="d-links"><a href="https://journi-ai-ai-trip-planner-anzy.vercel.app" target="_blank" rel="noopener">Live demo</a><a href="https://github.com/WillyEverGreen/JOURNI-AI" target="_blank" rel="noopener">GitHub</a></p>
-  </template>
 
-  <template id="t-crypto">
-    <h3 id="dialogTitle">Cryptography Lab</h3>
-    <p class="d-kicker">Virtual lab for a security course</p>
+
+  <template id="t-geoclash">
+    <h3 id="dialogTitle">GeoClash</h3>
+    <p class="d-kicker">Team project with a friend</p>
     <ul>
-      <li>Interactive simulations of classic and modern ciphers, hashes and MACs.</li>
-      <li>A live man in the middle scenario with a packet flow visualiser.</li>
-      <li>Everything runs client-side using the browser's Web Crypto API, with no backend.</li>
+      <li>Run or walk a loop and the ground inside it becomes your territory on a shared live map.</li>
+      <li>Your GPS trail is drawn as you move, and a closed loop is the only thing that counts.</li>
+      <li>Earn XP, use shields to defend what you hold, and climb the rankings against rivals.</li>
     </ul>
-    <p class="d-tags">JavaScript, Web Crypto API</p>
-    <p class="d-links"><a href="https://virtual-cryptography-lab.vercel.app" target="_blank" rel="noopener">Live demo</a><a href="https://github.com/WillyEverGreen/css-virtual-lab" target="_blank" rel="noopener">GitHub</a></p>
+    <p class="d-tags">Next.js, React, GPS, Live map</p>
+    <p class="d-links"><a href="https://geoclash.vercel.app/" target="_blank" rel="noopener">Live demo</a><a href="https://github.com/SC136/GeoClash" target="_blank" rel="noopener">GitHub</a></p>
   </template>
 
   <script src="vendor/gsap.min.js"></script>
   <script src="vendor/ScrollTrigger.min.js"></script>
+  <script src="lib/chess.js"></script>
+  <script src="lib/chessboard-element.bundled.js"></script>
+  <script src="theme.js"></script>
   <script src="main.js"></script>
 </body>
 </html>

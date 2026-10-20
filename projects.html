@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>More projects | Sai Balkawade</title>
+  <meta name="description" content="More projects by Sai Balkawade: AI tools, web apps, security labs and a couple of games. Browse as an index or a gallery." />
+  <meta name="theme-color" content="#f3ede2" />
+  <meta property="og:title" content="More projects | Sai Balkawade" />
+  <meta property="og:description" content="More projects by Sai Balkawade: AI tools, web apps, security labs and a couple of games. Browse as an index or a gallery." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="img/cat-bed.webp" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="More projects | Sai Balkawade" />
+  <meta name="twitter:description" content="More projects by Sai Balkawade: AI tools, web apps, security labs and a couple of games." />
+  <meta name="twitter:image" content="img/cat-bed.webp" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+  <script>
+    /* set the theme before first paint so there is no flash */
+    (function () {
+      var t = "light";
+      try {
+        var saved = localStorage.getItem("theme");
+        if (saved === "dark" || saved === "light") t = saved;
+        else if (window.matchMedia("(prefers-color-scheme: dark)").matches) t = "dark";
+      } catch (e) {}
+      document.documentElement.setAttribute("data-theme", t);
+    })();
+  </script>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="projects.css" />
+</head>
+<body class="pj-page">
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="paw" viewBox="0 0 64 64">
+      <path d="M32 33c-9 0-17 8-17 15 0 5 4 8 10 8 3 0 5-1 7-1s4 1 7 1c6 0 10-3 10-8 0-7-8-15-17-15z"/>
+      <ellipse cx="13" cy="27" rx="6" ry="8.5" transform="rotate(-24 13 27)"/>
+      <ellipse cx="25" cy="14" rx="6" ry="9" transform="rotate(-8 25 14)"/>
+      <ellipse cx="40" cy="14" rx="6" ry="9" transform="rotate(8 40 14)"/>
+      <ellipse cx="51" cy="27" rx="6" ry="8.5" transform="rotate(24 51 27)"/>
+    </symbol>
+  </svg>
+
+  <div class="progress" aria-hidden="true"><span id="pjProgress"></span></div>
+
+  <header class="nav is-solid" id="nav">
+    <a class="nav__name" href="index.html" aria-label="Sai Balkawade, back to the portfolio">Sai Balkawade<svg class="logo-paw" viewBox="0 0 64 64" aria-hidden="true"><use href="#paw"/></svg></a>
+    <nav class="nav__links" aria-label="Main">
+      <a href="index.html">Portfolio</a>
+      <a href="projects.html" class="is-active" aria-current="page">More projects</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+    <div class="nav__right">
+      <button class="theme sfx" id="sfxBtn" type="button" aria-label="Turn sounds off" aria-pressed="false">
+        <svg class="sfx__on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4h4l5 4V6L8 10H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg>
+        <svg class="sfx__off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4h4l5 4V6L8 10H4z"/><path d="M17 9.5l5 5M22 9.5l-5 5"/></svg>
+      </button>
+      <button class="theme" id="themeBtn" type="button" aria-label="Switch to dark theme">
+        <svg class="theme__sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></svg>
+        <svg class="theme__moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.2A8.6 8.6 0 0 1 9.8 3.5 8.6 8.6 0 1 0 20.5 14.2z"/></svg>
+      </button>
+      <a class="nav__cta pj-back" href="index.html#work"><span>Back home</span></a>
+    </div>
+  </header>
+
+  <main>
+    <section class="pj-hero">
+      <div class="pj-hero__text">
+      <p class="pj-hero__label" data-intro>More work</p>
+      <h1 class="pj-hero__title" aria-label="More projects.">
+        <span class="line"><span class="line__in">More</span></span>
+        <span class="line"><span class="line__in"><em>projects.</em></span></span>
+      </h1>
+      <div class="pj-hero__meta" data-intro>
+        <p class="pj-hero__sub">More of what I've built, from AI tools to security labs and a couple of games. Browse it as a quick index or a gallery, and filter by what you're curious about.</p>
+      </div>
+      </div>
+      <div class="pj-hero__stack" id="pjStack">
+        <div class="pj-nook" id="pjNook">
+          <div class="pj-nook__glow" aria-hidden="true"></div>
+          <img class="pj-bed pj-bed--back" src="img/cat-bed.webp" alt="" width="1200" height="697" decoding="async" />
+          <div class="catwrap is-here is-asleep" id="nookCat" data-mood="neutral">
+            <p class="cat__bubble" id="nookBubble" role="status" aria-live="polite"></p>
+            <div class="zzz" aria-hidden="true"><span>z</span><span>z</span><span>Z</span></div>
+            <button class="cat" id="nookBtn" type="button" aria-label="Pet Mango, the orange cat">
+              <svg class="cat__svg" viewBox="0 0 200 230" aria-hidden="true" focusable="false">
+        <g class="cat__tail">
+          <path d="M150 226C190 220 202 172 180 128" fill="none" stroke="#f08a24" stroke-width="24" stroke-linecap="round"/>
+          <path d="M170 196q10-3 15-11M178 166q9-2 13-9" fill="none" stroke="#c9631a" stroke-width="5" stroke-linecap="round"/>
+        </g>
+        <g class="cat__body">
+          <path d="M38 232C38 160 66 126 100 126s62 34 62 106z" fill="#f08a24"/>
+          <path d="M52 180q12-6 18-2M52 198q12-6 18-2M148 180q-12-6-18-2M148 198q-12-6-18-2" fill="none" stroke="#c9631a" stroke-width="5" stroke-linecap="round"/>
+          <ellipse cx="100" cy="196" rx="25" ry="40" fill="#fbe3c0"/>
+          <rect x="70" y="204" width="24" height="30" rx="12" fill="#fbe3c0"/>
+          <rect x="106" y="204" width="24" height="30" rx="12" fill="#fbe3c0"/>
+          <path d="M82 218v10M118 218v10" stroke="#e5c9a3" stroke-width="2.5" stroke-linecap="round"/>
+        </g>
+        <g class="cat__head">
+          <path class="cat__ear cat__ear--l" d="M64 76L54 20l42 26z" fill="#f08a24"/>
+          <path d="M66 54l-3-21 21 13z" fill="#f4a6a0"/>
+          <path class="cat__ear cat__ear--r" d="M136 76l10-56-42 26z" fill="#f08a24"/>
+          <path d="M134 54l3-21-21 13z" fill="#f4a6a0"/>
+          <circle cx="100" cy="90" r="46" fill="#f08a24"/>
+          <path d="M100 46v16M86 49l3 14M114 49l-3 14" fill="none" stroke="#c9631a" stroke-width="5" stroke-linecap="round"/>
+          <ellipse cx="100" cy="108" rx="28" ry="19" fill="#fbe3c0"/>
+          <g class="cat__eye">
+            <ellipse cx="80" cy="88" rx="11" ry="12" fill="#fff"/>
+            <g transform="translate(80 88)"><g class="cat__pupil"><circle r="8" fill="#6aa84f"/><ellipse class="pup" rx="3.2" ry="6.6" fill="#1c1b18"/><circle cx="-2.6" cy="-3.2" r="2" fill="#fff"/></g></g>
+          </g>
+          <g class="cat__eye">
+            <ellipse cx="120" cy="88" rx="11" ry="12" fill="#fff"/>
+            <g transform="translate(120 88)"><g class="cat__pupil"><circle r="8" fill="#6aa84f"/><ellipse class="pup" rx="3.2" ry="6.6" fill="#1c1b18"/><circle cx="-2.6" cy="-3.2" r="2" fill="#fff"/></g></g>
+          </g>
+          <path class="cat__lid" d="M70 90q10 8 20 0M110 90q10 8 20 0" fill="none" stroke="#1c1b18" stroke-width="3" stroke-linecap="round"/>
+          <g class="e-lidhalf"><path d="M68.5 88a11.5 12.5 0 0 1 23 0z" fill="#f08a24"/><path d="M108.5 88a11.5 12.5 0 0 1 23 0z" fill="#f08a24"/></g>
+          <path class="e-brows" d="M66 75l25 8M134 75l-25 8" fill="none" stroke="#1c1b18" stroke-width="3.6" stroke-linecap="round"/>
+          <path class="e-happy" d="M69 93q11-14 22 0M109 93q11-14 22 0" fill="none" stroke="#1c1b18" stroke-width="3.6" stroke-linecap="round"/>
+          <g class="e-love"><path d="M80 99c-12-8-15-14-15-19a8 8 0 0 1 15-3 8 8 0 0 1 15 3c0 5-3 11-15 19z" fill="#e0455a"/><g transform="translate(40 0)"><path d="M80 99c-12-8-15-14-15-19a8 8 0 0 1 15-3 8 8 0 0 1 15 3c0 5-3 11-15 19z" fill="#e0455a"/></g></g>
+          <g class="e-dizzy" fill="none" stroke="#1c1b18" stroke-width="2.2" stroke-linecap="round"><path class="spin" d="M80 88a2.2 2.2 0 0 1 4.4 0 4.4 4.4 0 0 1-8.8 0 6.6 6.6 0 0 1 13.2 0 8.8 8.8 0 0 1-17.6 0"/><path class="spin" d="M120 88a2.2 2.2 0 0 1 4.4 0 4.4 4.4 0 0 1-8.8 0 6.6 6.6 0 0 1 13.2 0 8.8 8.8 0 0 1-17.6 0"/></g>
+          <ellipse class="blush" cx="67" cy="106" rx="8" ry="5" fill="#f4a6a0"/>
+          <ellipse class="blush" cx="133" cy="106" rx="8" ry="5" fill="#f4a6a0"/>
+          <path class="e-sadbrows" d="M66 84l25-9M134 84l-25-9" fill="none" stroke="#1c1b18" stroke-width="3.2" stroke-linecap="round"/>
+          <path class="tear" d="M73 99q-4.5 8 0 12 4.5-4 0-12z" fill="#7ec8e3"/>
+          <path class="sweat" d="M150 56q-7 11 0 15 7-4 0-15z" fill="#7ec8e3"/>
+          <path d="M94 98h12l-6 7z" fill="#f4a6a0"/>
+          <g class="mouths" fill="none" stroke="#1c1b18" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path class="m m-smile" d="M100 105q-5 8-12 4M100 105q5 8 12 4"/>
+            <path class="m m-flat" d="M91 109h18"/>
+            <path class="m m-sad" d="M90 112q10-10 20 0"/>
+            <path class="m m-wavy" d="M88 109q4-5 8 0t8 0 8 0"/>
+            <path class="m m-big" d="M90 106q10 18 20 0z" fill="#7a2a2a"/>
+            <g class="m m-open" stroke="none"><ellipse cx="100" cy="112" rx="6" ry="7.5" fill="#7a2a2a"/><ellipse cx="100" cy="116" rx="3.2" ry="2.6" fill="#f4a6a0"/></g>
+          </g>
+          <path d="M68 108L36 101M68 113L34 114M132 108l32-7M132 113l34 1" fill="none" stroke="#1c1b18" stroke-width="1.6" stroke-linecap="round" opacity=".55"/>
+        </g>
+      </svg>
+            </button>
+          </div>
+          <img class="pj-bed pj-bed--front" src="img/cat-bed.webp" alt="" width="1200" height="697" decoding="async" />
+          <p class="pj-nook__caption">Mango's reading corner</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="pj-archive" id="archive" aria-label="Projects">
+      <div class="pj-toolbar" id="pjToolbar">
+        <div class="pj-filters" id="pjFilters" role="group" aria-label="Filter projects by type"></div>
+        <div class="pj-view" id="pjView" role="group" aria-label="Choose a layout">
+          <span class="pj-view__thumb" aria-hidden="true"></span>
+          <button type="button" data-view="index" aria-pressed="true">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>Index
+          </button>
+          <button type="button" data-view="grid" aria-pressed="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5"/></svg>Gallery
+          </button>
+        </div>
+      </div>
+
+      <div class="pj-index" id="pjIndex"></div>
+      <div class="pj-grid" id="pjGrid" hidden></div>
+    </section>
+
+    <section class="pj-end">
+      <p class="pj-end__title">Want to build something together?</p>
+      <div class="pj-end__actions">
+        <a class="btn" href="index.html#contact"><span>Say hello</span></a>
+        <a class="btn btn--line" href="https://github.com/WillyEverGreen?tab=repositories" target="_blank" rel="noopener"><span>Browse GitHub</span></a>
+      </div>
+    </section>
+  </main>
+
+  <div class="pj-preview" id="pjPreview" aria-hidden="true"></div>
+
+  <dialog class="pj-dialog" id="pjDialog" aria-labelledby="pjDialogTitle">
+    <div class="pj-dialog__body" id="pjDialogBody"></div>
+    <button class="pj-dialog__close" id="pjDialogClose" type="button" aria-label="Close details">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+  </dialog>
+
+  <script src="vendor/gsap.min.js"></script>
+  <script src="vendor/ScrollTrigger.min.js"></script>
+  <script src="projects-data.js"></script>
+  <script src="theme.js"></script>
+  <script src="sfx.js"></script>
+  <script src="vendor/matter.min.js"></script>
+  <script src="projects.js"></script>
+  <script src="toys.js"></script>
+</body>
+</html>
