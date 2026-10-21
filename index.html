@@ -68,7 +68,7 @@
         <svg class="theme__sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></svg>
         <svg class="theme__moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.2A8.6 8.6 0 0 1 9.8 3.5 8.6 8.6 0 1 0 20.5 14.2z"/></svg>
       </button>
-      <button class="nav__cta" id="navResumeBtn" type="button" aria-haspopup="dialog" aria-label="View Sai's Resume">
+      <button class="nav__cta" id="navResumeBtn" type="button" aria-label="View Sai's Resume">
         <svg class="cta-paw" viewBox="0 0 64 64" aria-hidden="true"><use href="#paw"/></svg>
         <span>Resume</span>
       </button>
@@ -85,7 +85,7 @@
       <a href="#skills">Skills</a>
       <a href="#beyond">Beyond code</a>
       <a href="#contact">Contact</a>
-      <button class="sheet__resume" id="sheetResumeBtn" type="button" aria-haspopup="dialog">
+      <button class="sheet__resume" id="sheetResumeBtn" type="button">
         <span>View Resume</span> <svg class="cta-paw" viewBox="0 0 64 64" aria-hidden="true"><use href="#paw"/></svg>
       </button>
     </nav>
@@ -118,7 +118,7 @@
         </p>
         <div class="hero__cta" data-hero>
           <a class="btn" href="#work" id="heroWorkBtn"><span>See my work</span></a>
-          <button class="btn btn--line btn--resume" id="heroResumeBtn" type="button" aria-haspopup="dialog" aria-label="View Sai's Resume">
+          <button class="btn btn--line btn--resume" id="heroResumeBtn" type="button" aria-label="View Sai's Resume">
             <svg class="btn-paw" viewBox="0 0 64 64" aria-hidden="true"><use href="#paw"/></svg>
             <span>Resume</span>
           </button>
@@ -553,26 +553,49 @@
     <!-- CONTACT -->
     <section class="contact section" id="contact">
       <h2 class="label" data-reveal>Contact</h2>
-      <p class="contact__title">
-        <span class="line"><span class="line__in">Let's build</span></span>
-        <span class="line"><span class="line__in">something <em>together.</em></span></span>
-      </p>
-      <p class="contact__sub" data-reveal>I'm looking for internships and happy to talk about projects, open source or chess. Email is the quickest way to reach me.</p>
-      <div class="contact__row" data-reveal>
-        <a class="contact__mail" href="mailto:saibalkawade10@gmail.com" id="mailLink">saibalkawade10@gmail.com</a>
-        <button class="copy" id="copyBtn" type="button">Copy email</button>
-      </div>
-      <div class="socials" data-reveal>
-        <a href="https://github.com/WillyEverGreen" target="_blank" rel="noopener" id="contactGithubLink">GitHub</a>
-        <a href="https://www.linkedin.com/in/sai-balkawade-141ba4310/" target="_blank" rel="noopener" id="contactLinkedinLink">LinkedIn</a>
-        <button class="social-btn" id="socialResumeBtn" type="button" aria-haspopup="dialog" aria-label="View Sai's Resume">Resume (PDF)</button>
+      <div class="contact__grid">
+        <div class="contact__left">
+          <p class="contact__title">
+            <span class="line"><span class="line__in">Let's build</span></span>
+            <span class="line"><span class="line__in">something <em>together.</em></span></span>
+          </p>
+        <p class="contact__sub" data-reveal>I'm looking for internships and happy to talk about projects, open source or chess. Email is the quickest way to reach me.</p>
+        <div class="contact__row" data-reveal>
+          <a class="contact__mail" href="mailto:saibalkawade10@gmail.com" id="mailLink">saibalkawade10@gmail.com</a>
+          <button class="copy" id="copyBtn" type="button">Copy email</button>
+        </div>
+        <div class="socials" data-reveal>
+          <a href="https://github.com/WillyEverGreen" target="_blank" rel="noopener" id="contactGithubLink">GitHub</a>
+          <a href="https://www.linkedin.com/in/sai-balkawade-141ba4310/" target="_blank" rel="noopener" id="contactLinkedinLink">LinkedIn</a>
+          <button class="social-btn" id="socialResumeBtn" type="button" aria-label="View Sai's Resume">Resume (PDF)</button>
+        </div>
+        </div>
+
+        <form class="msgform" id="msgForm" data-reveal novalidate data-web3forms-key="05350b82-1fb4-49be-b787-ecede98aa98f" data-mailto="saibalkawade10@gmail.com">
+          <svg class="msgform__waves" viewBox="0 0 440 560" preserveAspectRatio="none" aria-hidden="true"><path class="w1" d="M440 150C380 170 310 240 290 340S340 560 440 560z"/><path class="w2" d="M0 430C70 410 130 470 170 560H0z"/></svg><svg class="msgform__star msgform__star--1" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C13 8 16 11 24 12 16 13 13 16 12 24 11 16 8 13 0 12 8 11 11 8 12 0z"/></svg><svg class="msgform__star msgform__star--2" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C13 8 16 11 24 12 16 13 13 16 12 24 11 16 8 13 0 12 8 11 11 8 12 0z"/></svg><svg class="msgform__star msgform__star--3" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C13 8 16 11 24 12 16 13 13 16 12 24 11 16 8 13 0 12 8 11 11 8 12 0z"/></svg>
+          <h3 class="msgform__title">Leave a quick <em>message<svg class="now__swoosh" viewBox="0 0 200 20" aria-hidden="true"><path d="M3 12C40 3 90 18 140 9S190 8 197 6"/></svg><svg class="now__rays" viewBox="0 0 28 28" aria-hidden="true"><path d="M6.6 18.1L4.9 8.3M12 19.1L17 10.4M15.5 23.6L24.9 19.8"/></svg></em></h3>
+          <p class="msgform__sub">It lands straight in my inbox.</p>
+          <label class="msgform__field"><span>Your name</span>
+            <input type="text" name="name" autocomplete="name" required maxlength="80" placeholder="Jane Doe" />
+          </label>
+          <label class="msgform__field"><span>Your email</span>
+            <input type="email" name="email" autocomplete="email" required maxlength="120" placeholder="jane@company.com" />
+          </label>
+          <label class="msgform__field msgform__field--grow"><span>Message</span>
+            <textarea name="message" rows="4" required maxlength="2000" placeholder="Hi Sai, I'd love to chat about..."></textarea>
+          </label>
+          <input type="checkbox" name="botcheck" class="msgform__trap" tabindex="-1" autocomplete="off" aria-hidden="true" />
+          <div class="msgform__actions">
+            <button class="btn msgform__send" type="submit"><span>Send message</span></button>
+            <p class="msgform__status" id="msgStatus" role="status" aria-live="polite"></p>
+          </div>
+        </form>
       </div>
     </section>
   </main>
 
   <footer class="footer">
     <span>&copy; <span id="year">2026</span> Sai Balkawade</span>
-    <span>Made by hand with HTML, CSS, GSAP and one very orange cat.</span>
     <button class="pawtoggle" id="pawToggle" type="button" aria-pressed="true">Paw trail: on</button>
     <a href="#top">Back to top</a>
   </footer>
@@ -641,84 +664,6 @@
   <dialog class="dialog" id="dialog" aria-labelledby="dialogTitle">
     <button class="dialog__close" id="dialogClose" type="button" aria-label="Close details">&times;</button>
     <div class="dialog__body" id="dialogBody"></div>
-  </dialog>
-
-  <!-- resume preview dialog -->
-  <dialog class="dialog dialog--resume" id="resumeDialog" aria-labelledby="resumeDialogTitle">
-    <button class="dialog__close" id="resumeDialogClose" type="button" aria-label="Close resume preview">&times;</button>
-    <div class="dialog__body" id="resumeDialogBody">
-      <div class="resume-head">
-        <div>
-          <span class="resume-badge">Open to Internships • 2026</span>
-          <h3 id="resumeDialogTitle">Sai Balkawade</h3>
-          <p class="d-kicker">Full-Stack Engineer • Computer Engineering Student, Mumbai</p>
-        </div>
-        <div class="resume-actions">
-          <a class="btn" href="assets/Sai_Balkawade_Resume.pdf" target="_blank" rel="noopener">Open PDF in New Tab ↗</a>
-          <a class="btn btn--line" href="assets/Sai_Balkawade_Resume.pdf" download="Sai_Balkawade_Resume.pdf">Download PDF ⤓</a>
-        </div>
-      </div>
-
-      <div class="resume-quick">
-        <div class="rq-item">
-          <span class="rq-num">8.40</span>
-          <span class="rq-lbl">B.Tech CGPA (Fr. CRCE)</span>
-        </div>
-        <div class="rq-item">
-          <span class="rq-num">20</span>
-          <span class="rq-lbl">Open-Source PRs</span>
-        </div>
-        <div class="rq-item">
-          <span class="rq-num">9+</span>
-          <span class="rq-lbl">Shipped Full-Stack Apps</span>
-        </div>
-        <div class="rq-item">
-          <span class="rq-num">Top 10</span>
-          <span class="rq-lbl">6th in India Chess</span>
-        </div>
-      </div>
-
-      <div class="resume-section">
-        <h4>Work Experience</h4>
-        <div class="r-exp">
-          <div class="r-exp__head">
-            <b>Frontend Developer Intern, XIRCLS</b>
-            <span>Dec 2025 – Mar 2026</span>
-          </div>
-          <p>Built responsive, reusable UI components for an enterprise CRM platform, connected frontend modules to backend REST APIs, and improved state reliability.</p>
-        </div>
-        <div class="r-exp">
-          <div class="r-exp__head">
-            <b>Technical Member, Project Cell, FrCRCE</b>
-            <span>Aug 2025 – Present</span>
-          </div>
-          <p>Architected and deployed official portal on Next.js, with modular components tuned for rapid core web vitals and fast performance.</p>
-        </div>
-      </div>
-
-      <div class="resume-section">
-        <h4>Core Technical Stack</h4>
-        <ul class="chips chips--resume">
-          <li>React.js</li><li>Next.js</li><li>TypeScript</li><li>JavaScript</li>
-          <li>Node.js</li><li>Express.js</li><li>Hono</li><li>Python</li>
-          <li>PostgreSQL</li><li>Supabase</li><li>Redis</li><li>Docker</li>
-          <li>WebSockets</li><li>REST APIs</li><li>Tailwind CSS</li><li>Git</li>
-        </ul>
-      </div>
-
-      <div class="resume-section">
-        <h4>Embedded PDF Document</h4>
-        <div class="resume-frame-wrap">
-          <iframe class="resume-frame" src="assets/Sai_Balkawade_Resume.pdf" title="Sai Balkawade Resume PDF"></iframe>
-        </div>
-      </div>
-
-      <div class="resume-foot">
-        <a class="btn" href="assets/Sai_Balkawade_Resume.pdf" target="_blank" rel="noopener">Open Full PDF in New Tab ↗</a>
-        <a class="btn btn--line" href="assets/Sai_Balkawade_Resume.pdf" download="Sai_Balkawade_Resume.pdf">Download File ⤓</a>
-        <button class="btn btn--line" id="resumeCloseFooter" type="button">Close Preview</button>
-      </div>
-    </div>
   </dialog>
 
 

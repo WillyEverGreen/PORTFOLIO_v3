@@ -154,6 +154,69 @@
   });
 
   /* ----- copy email ----- */
+  /* ----- quick message form ----- */
+  /* With a Web3Forms access key in data-web3forms-key the message is emailed to me without opening a mail app.
+     Without a key it falls back to opening the visitor's mail app with the message filled in. */
+  (() => {
+    const form = $("#msgForm");
+    if (!form) return;
+    const status = $("#msgStatus");
+    const sendBtn = $(".msgform__send", form);
+    const show = (text, kind) => {
+      status.textContent = text;
+      status.className = "msgform__status" + (kind ? " is-" + kind : "");
+    };
+    const val = (name) => form.elements[name].value.trim();
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (form.elements.botcheck.checked) return; /* a bot filled the hidden trap field */
+      const fields = ["name", "email", "message"].map((n) => form.elements[n]);
+      fields.forEach((f) => f.removeAttribute("aria-invalid"));
+      const bad = fields.find((f) => !f.value.trim() || (f.type === "email" && !f.checkValidity()));
+      if (bad) {
+        bad.setAttribute("aria-invalid", "true");
+        bad.focus();
+        return show(bad.type === "email" ? "That email doesn't look right." : "Please fill this in.", "error");
+      }
+
+      const data = { name: val("name"), email: val("email"), message: val("message") };
+      const key = form.dataset.web3formsKey;
+
+      const openMailApp = () => {
+        const subject = encodeURIComponent("Portfolio message from " + data.name);
+        const body = encodeURIComponent(data.message + "\n\n" + data.name + "\n" + data.email);
+        window.location.href = "mailto:" + form.dataset.mailto + "?subject=" + subject + "&body=" + body;
+      };
+
+      if (!key) {
+        openMailApp();
+        return show("Opening your email app...", "ok");
+      }
+
+      sendBtn.disabled = true;
+      show("Sending...");
+      try {
+        const res = await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify({ access_key: key, subject: "Portfolio message from " + data.name, from_name: "Portfolio", ...data }),
+        });
+        const out = await res.json();
+        if (!res.ok || !out.success) throw new Error(out.message || "failed");
+        form.reset();
+        show("Sent! I'll get back to you soon.", "ok");
+        window.dispatchEvent(new CustomEvent("mango:messageSent"));
+      } catch (err) {
+        /* never lose a message: if the mail service is unreachable, hand it to the visitor's email app */
+        openMailApp();
+        show("Couldn't send it directly, so I opened your email app instead.", "error");
+      } finally {
+        sendBtn.disabled = false;
+      }
+    });
+  })();
+
   const copyBtn = $("#copyBtn");
   const mail = $("#mailLink").textContent.trim();
   copyBtn.addEventListener("click", async () => {
@@ -191,89 +254,31 @@
     window.dispatchEvent(new CustomEvent("mango:scribble"));
   });
 
-  /* ----- resume preview dialog ----- */
-  const resumeDialog = $("#resumeDialog");
-  const resumeDialogBody = $("#resumeDialogBody");
-  let lastResumeOpener = null;
+  /* ----- resume: the buttons download the PDF straight away ----- */
+  const RESUME_URL = "assets/Sai_Balkawade_Resume.pdf";
 
-  const openResume = (opener) => {
-    if (!resumeDialog) return;
-    lastResumeOpener = opener || null;
-    root.style.overflow = "hidden";
-    resumeDialog.showModal();
-    const focusClose = () => {
-      const closeBtn = $("#resumeDialogClose");
-      if (closeBtn) closeBtn.focus({ preventScroll: true });
-    };
-    focusClose();
-    requestAnimationFrame(focusClose);
-    setTimeout(focusClose, 120);
-
-    if (opener && typeof burst === "function") {
-      const r = opener.getBoundingClientRect();
+  const downloadResume = (btn) => {
+    const link = document.createElement("a");
+    link.href = RESUME_URL;
+    link.download = "Sai_Balkawade_Resume.pdf";
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    if (btn && typeof burst === "function") {
+      const r = btn.getBoundingClientRect();
       burst(r.left + r.width / 2, r.top + r.height / 2, 28);
-    }
-    if (animate) {
-      gsap.fromTo(
-        resumeDialogBody,
-        { opacity: 0, y: 32, scale: 0.95 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.45, ease: "power3.out" }
-      );
-      gsap.fromTo(
-        $$(".rq-item", resumeDialogBody),
-        { opacity: 0, y: 16, scale: 0.9 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.4, stagger: 0.06, delay: 0.12, ease: "back.out(1.8)" }
-      );
     }
     window.dispatchEvent(new CustomEvent("mango:resumeOpen"));
   };
 
-  const closeResume = () => {
-    if (!resumeDialog || !resumeDialog.open) return;
-    window.dispatchEvent(new CustomEvent("mango:resumeClose"));
-    if (animate) {
-      gsap.to(resumeDialogBody, {
-        opacity: 0,
-        y: 20,
-        scale: 0.97,
-        duration: 0.22,
-        ease: "power2.in",
-        onComplete: () => resumeDialog.close(),
-      });
-    } else {
-      resumeDialog.close();
-    }
-  };
-
-  if (resumeDialog) {
-    resumeDialog.addEventListener("close", () => {
-      root.style.overflow = "";
-      if (hasGsap) gsap.set(resumeDialogBody, { clearProps: "all" });
-      if (lastResumeOpener) lastResumeOpener.focus({ preventScroll: true });
-    });
-    resumeDialog.addEventListener("cancel", (e) => {
-      e.preventDefault();
-      closeResume();
-    });
-    resumeDialog.addEventListener("click", (e) => {
-      if (e.target === resumeDialog) closeResume();
-    });
-    const resumeCloseBtn = $("#resumeDialogClose");
-    if (resumeCloseBtn) resumeCloseBtn.addEventListener("click", closeResume);
-    const resumeCloseFooter = $("#resumeCloseFooter");
-    if (resumeCloseFooter) resumeCloseFooter.addEventListener("click", closeResume);
-  }
-
-  // Hook up all resume buttons to openResume:
   ["#navResumeBtn", "#heroResumeBtn", "#socialResumeBtn", "#sheetResumeBtn"].forEach((sel) => {
     const btn = $(sel);
-    if (btn) {
-      btn.addEventListener("click", () => {
-        const wasOpen = sheet && sheet.classList.contains("is-open");
-        if (wasOpen && typeof setMenu === "function") setMenu(false);
-        setTimeout(() => openResume(btn), wasOpen ? 250 : 0);
-      });
-    }
+    if (!btn) return;
+    btn.addEventListener("click", () => {
+      const menuOpen = sheet && sheet.classList.contains("is-open");
+      if (menuOpen && typeof setMenu === "function") setMenu(false);
+      downloadResume(btn);
+    });
   });
 
   $$('a[href*="Resume"]').forEach((a) => {
@@ -751,7 +756,9 @@
     const boardEl = $("#chessBoard");
     if (!boardEl) return;
 
-    const todayStr = new Date().toISOString().slice(0, 10);
+    /* the day changes at local midnight (toISOString would use UTC, which lags 5.5 hours behind India) */
+    const now = new Date();
+    const todayStr = [now.getFullYear(), String(now.getMonth() + 1).padStart(2, "0"), String(now.getDate()).padStart(2, "0")].join("-");
     const storageKey = "chess_daily_" + todayStr;
     const dailyPuzzles = getDailyPuzzles(todayStr);
 
@@ -1182,6 +1189,8 @@
         "pointermove",
         (e) => {
           if (e.pointerType !== "mouse" || !trailOn || document.body.classList.contains("is-loading")) return;
+          /* no footprints over the chess board: they sit on top of the pieces and get in the way of dragging */
+          if (e.target.closest && e.target.closest(".chess__board-wrap")) { lx = null; return; }
           if (lx === null) { lx = e.clientX; ly = e.clientY; return; }
           const dx = e.clientX - lx, dy = e.clientY - ly;
           if (Math.hypot(dx, dy) < 46 || live > 22) return;
@@ -1402,6 +1411,7 @@
       geoclash: "GeoClash! Sai and a friend built a run-a-loop territory game. I only chase lasers, not runners.",
     };
 
+    window.addEventListener("mango:messageSent", () => { triggerPurr(); say("Message delivered! Now go and refill my bowl.", 3200, "love"); });
     /* copying the email makes him fall in love with the idea of treats */
     $("#copyBtn").addEventListener("click", () => { say("Treats incoming! Tell Sai to feed me!", 3200, "love"); });
 
@@ -1714,16 +1724,12 @@
       });
     });
 
-    /* reaction to resume preview modal */
-    const onResumeOpen = () => {
+    /* reaction to the resume download */
+    window.addEventListener("mango:resumeOpen", () => {
       triggerPurr();
       const r = catBtn.getBoundingClientRect();
       pawBurst(r.left + r.width * 0.5, r.top + r.height * 0.25);
-      say("Sai's resume! Full-stack developer, open to internships.", 4200, "love");
-    };
-    window.addEventListener("mango:resumeOpen", onResumeOpen);
-    window.addEventListener("mango:resumeClose", () => {
-      say("Ready to hire him or collaborate? Hit that email button!", 2800, "happy");
+      say("Sai's resume is on its way to you! Open to internships.", 3600, "love");
     });
 
     /* reaction to chess milestones */
