@@ -1221,7 +1221,7 @@
       if ("IntersectionObserver" in window && !reduceMotion) {
         const eio = new IntersectionObserver(
           (entries) => entries.forEach((e) => { if (e.isIntersecting) { eduCard.classList.add("is-in"); eio.disconnect(); } }),
-          { threshold: 0.2 }
+          { threshold: 0.05, rootMargin: "60px 0px" }
         );
         eio.observe(eduCard);
       } else {
@@ -1940,7 +1940,7 @@
             setTimeout(() => eduSay("Taking notes. Very important."), 1200);
           }
         }),
-        { threshold: 0.15 }
+        { threshold: 0.05, rootMargin: "40px 0px" }
       ).observe(eduStage);
     }
     if (eduMango) {
@@ -2108,7 +2108,12 @@
     ScrollTrigger.batch("[data-reveal]", {
       start: "top 90%",
       once: true,
-      onEnter: (els) => gsap.to(els, { opacity: 1, y: 0, duration: 0.9, stagger: 0.12, ease: "power3.out" }),
+      onEnter: (els) => {
+        gsap.to(els, { opacity: 1, y: 0, duration: 0.9, stagger: 0.12, ease: "power3.out" });
+        els.forEach((el) => {
+          if (el.id === "edu" || el.id === "now") el.classList.add("is-in");
+        });
+      },
     });
 
     gsap.to(".contact__title .line__in", {

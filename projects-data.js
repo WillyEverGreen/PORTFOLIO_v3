@@ -60,6 +60,25 @@ window.PROJECTS = [
     ]
   },
   {
+    "id": "jalnet",
+    "title": "JalNet",
+    "kicker": "Household tap monitoring for Smart India Hackathon 2026",
+    "desc": "Watches every household tap connection in a village, minute by minute, and tells the Gram Panchayat the moment one stops working. Our SIH 2026 submission (PS SIH26255) as Team WakeByte.",
+    "stack": "JavaScript, Three.js, GSAP",
+    "image": "img/jalnet.jpg",
+    "cats": [
+      "ai",
+      "web"
+    ],
+    "live": "https://sih2-landing.vercel.app/",
+    "code": null,
+    "points": [
+      "Product. A story-driven landing page, a 90-second film and an interactive 3D digital twin of a village water scheme, from river intake and pump to treatment plant, overhead tank and monitored household taps.",
+      "AI engine. Explainable online detectors for leaks (mass balance plus pressure-pattern localisation), tap and meter faults, water quality and pump health, with complaint triage that checks reports against sensor data.",
+      "Community and operations. Complaints in Hindi, Marathi, Bengali, Telugu and English, a priority-scored maintenance queue routed to repair crews, and a mock IMIS and Sujal Gaon sync. The village and data are fictional demo data."
+    ]
+  },
+  {
     "id": "legal",
     "title": "LegalAI",
     "kicker": "AI legal research engine",
