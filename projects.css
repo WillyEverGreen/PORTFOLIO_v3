@@ -51,7 +51,7 @@
   margin-bottom: clamp(28px, 4vw, 48px);
 }
 .pj-filters { position: relative; display: flex; flex-wrap: wrap; gap: 10px; }
-.pj-chip-thumb { position: absolute; left: 0; top: 0; border-radius: 999px; background: var(--ink); box-shadow: 3px 3px 0 var(--accent); pointer-events: none; }
+.pj-chip-thumb { position: absolute; left: 0; top: 0; border-radius: 999px; background: var(--ink); pointer-events: none; }
 .pj-chip {
   display: inline-flex;
   align-items: flex-start;
@@ -65,7 +65,7 @@
   transition: background 0.25s, color 0.25s, transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
 }
 .pj-chip sup { font-size: 11px; opacity: 0.6; margin-top: -2px; }
-.pj-chip:hover { transform: translate(-2px, -2px); box-shadow: 3px 3px 0 var(--ink); }
+.pj-chip:hover { transform: translateY(-2px); border-color: var(--accent); }
 .pj-chip { position: relative; z-index: 1; }
 .pj-chip[aria-pressed="true"] { color: var(--paper); }
 .pj-chip[aria-pressed="true"]:hover { box-shadow: none; transform: none; }
@@ -216,7 +216,7 @@
   transition: background 0.25s, transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
 }
 .pj-link svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.3s var(--ease); }
-.pj-link:hover { background: var(--highlight); transform: translate(-2px, -2px); box-shadow: 3px 3px 0 var(--ink); }
+.pj-link:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(28, 27, 24, 0.2); }
 .pj-link:hover svg { transform: translate(2px, -2px); }
 
 /* ---------- cursor preview ---------- */
@@ -615,3 +615,8 @@ body.is-modal { overflow: hidden; }
 
 /* while the toy tray is open, Mango's speech bubble moves out from under it to the side of his head */
 .pj-nook.is-picking .cat__bubble { right: auto; left: 64%; bottom: calc(100% - 52px); max-width: 190px; }
+
+.pj-link { font-size: 14.5px; }
+.pj-link:active { transform: translateY(0) scale(0.97); box-shadow: none; }
+[data-theme="dark"] .pj-link:hover { box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45); }
+.pj-view__thumb { box-shadow: none; }

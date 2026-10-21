@@ -1452,7 +1452,7 @@
         ms: 4800,
       },
       beyond: {
-        text: "Beyond coursework: Music Blocks open source contributor and 6th in India at chess! (Though I'm still the master of knocking pieces down).",
+        text: "Beyond coursework: Music Blocks open source contributor, and 6th rank at the All India Inter-University chess championship! (Though I'm still the master of knocking pieces down).",
         mood: "happy",
         ms: 5000,
       },
