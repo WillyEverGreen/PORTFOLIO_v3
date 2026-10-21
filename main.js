@@ -1158,6 +1158,77 @@
       }
     }
 
+    /* ----- the yarn ball in the "Right now" card: tap it and it bounces ----- */
+    const yarnBall = $(".now__bg .yarnball");
+    if (yarnBall) {
+      const spin = $(".yarn-spin", yarnBall);
+      const floorShadow = $(".now__bg .y-shadow");
+      let hop = null, combo = 0, lastHop = 0;
+
+      const bounce = () => {
+        const t = performance.now();
+        combo = t - lastHop < 900 ? Math.min(combo + 1, 3) : 0; /* tap again quickly to go higher */
+        lastHop = t;
+        document.dispatchEvent(new CustomEvent("yarn:bounce", { detail: { combo } }));
+
+        if (!animate) {
+          yarnBall.classList.remove("is-bouncing");
+          void yarnBall.getBoundingClientRect();
+          yarnBall.classList.add("is-bouncing");
+          return;
+        }
+
+        const height = 46 + combo * 18;
+        if (hop) hop.kill();
+        gsap.set(yarnBall, { svgOrigin: "108 192" });
+        gsap.set(floorShadow, { svgOrigin: "110 196" });
+        /* the strands roll on their own clock so they never hold up the fall */
+        gsap.to(spin, { rotation: "+=" + (200 + combo * 120), svgOrigin: "108 152", duration: 0.95, ease: "power2.out", overwrite: "auto" });
+        hop = gsap.timeline()
+          /* crouch */
+          .to(yarnBall, { scaleX: 1.14, scaleY: 0.84, y: 0, duration: 0.09, ease: "power2.out" })
+          /* jump and stretch, rolling as it goes */
+          .to(yarnBall, { y: -height, scaleX: 0.93, scaleY: 1.08, duration: 0.34, ease: "power2.out" })
+          .to(floorShadow, { scaleX: 0.5, opacity: 0.4, duration: 0.34, ease: "power2.out" }, "<")
+          /* fall */
+          .to(yarnBall, { y: 0, scaleX: 1, scaleY: 1, duration: 0.3, ease: "power2.in" })
+          .to(floorShadow, { scaleX: 1, opacity: 1, duration: 0.3, ease: "power2.in" }, "<")
+          /* land with a squash, then a smaller hop */
+          .to(yarnBall, { scaleX: 1.2, scaleY: 0.8, duration: 0.07, ease: "power1.out" })
+          .to(yarnBall, { y: -height * 0.3, scaleX: 0.97, scaleY: 1.03, duration: 0.2, ease: "power2.out" })
+          .to(floorShadow, { scaleX: 0.78, opacity: 0.75, duration: 0.2, ease: "power2.out" }, "<")
+          .to(yarnBall, { y: 0, scaleX: 1, scaleY: 1, duration: 0.18, ease: "power2.in" })
+          .to(floorShadow, { scaleX: 1, opacity: 1, duration: 0.18, ease: "power2.in" }, "<")
+          /* settle with a little jelly wobble */
+          .to(yarnBall, { scaleX: 1.07, scaleY: 0.93, duration: 0.06 })
+          .to(yarnBall, { scaleX: 1, scaleY: 1, duration: 0.6, ease: "elastic.out(1, 0.35)" });
+      };
+
+      yarnBall.addEventListener("click", bounce);
+      yarnBall.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); bounce(); }
+      });
+      /* a small curious roll when the pointer arrives */
+      yarnBall.addEventListener("mouseenter", () => {
+        if (!animate || (hop && hop.isActive())) return;
+        gsap.fromTo(spin, { rotation: "+=0" }, { rotation: "+=24", svgOrigin: "108 152", duration: 0.7, ease: "back.out(3)" });
+      });
+    }
+
+    /* the Education card does the same */
+    const eduCard = $("#edu");
+    if (eduCard) {
+      if ("IntersectionObserver" in window && !reduceMotion) {
+        const eio = new IntersectionObserver(
+          (entries) => entries.forEach((e) => { if (e.isIntersecting) { eduCard.classList.add("is-in"); eio.disconnect(); } }),
+          { threshold: 0.2 }
+        );
+        eio.observe(eduCard);
+      } else {
+        eduCard.classList.add("is-in");
+      }
+    }
+
     /* ----- little effects ----- */
     const makeSvg = (cls) => {
       const el = document.createElementNS("http://www.w3.org/2000/svg", "svg");
@@ -1541,8 +1612,8 @@
       lastActiveSection = id;
       tourBusyUntil = performance.now() + Math.min(item.ms, 4000);
 
-      // Cute burst & purr animation on first introduction
-      if (isFirstTour && id !== "hero") {
+      // Cute burst & purr animation on first introduction (not while he has stepped away to the Education card)
+      if (isFirstTour && id !== "hero" && !wrap.classList.contains("is-away")) {
         triggerPurr();
         const r = catBtn.getBoundingClientRect();
         pawBurst(r.left + r.width * 0.5, r.top + r.height * 0.25);
@@ -1832,6 +1903,57 @@
         pawRain();
       }
     });
+
+    /* the yarn ball is the most exciting thing on the page, obviously */
+    let yarnCool = 0;
+    const yarnLines = ["YARN!", "ooh, the yarn!", "that's mine.", "again! again!"];
+    document.addEventListener("yarn:bounce", (e) => {
+      if (!ready() || performance.now() < yarnCool) return;
+      yarnCool = performance.now() + 2200;
+      const line = e.detail && e.detail.combo >= 2 ? "again! again!" : yarnLines[Math.floor(Math.random() * 3)];
+      say(line, 2000, "excited");
+    });
+
+    /* only one Mango at a time: the floating one steps away while the Mango in the Education card is on screen */
+    const eduStage = $(".edu-stage");
+    const eduBubble = $("#eduBubble");
+    const eduMango = $(".edu-stage .art--mango");
+    let eduSeen = false, eduTimer, eduGreeted = false, eduLine = 0;
+    const syncAway = () => {
+      wrap.classList.toggle("is-away", eduSeen);
+      if (eduSeen) { bubble.classList.remove("is-on"); wrap.classList.remove("is-up"); }
+    };
+    const eduSay = (text, ms = 2400) => {
+      if (!eduBubble) return;
+      eduBubble.textContent = text;
+      eduBubble.classList.add("is-on");
+      clearTimeout(eduTimer);
+      eduTimer = setTimeout(() => eduBubble.classList.remove("is-on"), ms);
+    };
+    if (eduStage && "IntersectionObserver" in window) {
+      new IntersectionObserver(
+        (entries) => entries.forEach((e) => {
+          eduSeen = e.isIntersecting;
+          syncAway();
+          if (e.isIntersecting && !eduGreeted) {
+            eduGreeted = true;
+            setTimeout(() => eduSay("Taking notes. Very important."), 1200);
+          }
+        }),
+        { threshold: 0.15 }
+      ).observe(eduStage);
+    }
+    if (eduMango) {
+      const eduLines = ["mrrp!", "I'm studying.", "Exam? What exam?", "Pet me later."];
+      const pet = () => {
+        eduSay(eduLines[eduLine++ % eduLines.length], 2200);
+        eduMango.classList.remove("is-hop");
+        void eduMango.getBoundingClientRect();
+        eduMango.classList.add("is-hop");
+      };
+      eduMango.addEventListener("click", pet);
+      eduMango.addEventListener("keydown", (ev) => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); pet(); } });
+    }
 
     /* he shows up once the greeting screen is gone */
     const appear = () => {
