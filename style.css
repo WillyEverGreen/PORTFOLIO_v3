@@ -1421,3 +1421,15 @@ g-chess-board.is-shaking {
 .now, .edu { width: 100%; justify-self: end; border-radius: 18px; }
 @media (min-width: 881px) { .now, .edu { min-height: 585px; } }
 @media (max-width: 880px) { .now, .edu { justify-self: center; } }
+
+/* ---------- custom orange cursor ---------- */
+/* the arrow tip and the fingertip are the click points; the normal cursors are the fallback if an image cannot load */
+html { cursor: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2232%22 height=%2232%22 viewBox=%220 0 32 32%22%3E%3Cpath d=%22M4 3V25L9.6 20L13.4 28.6L17.4 26.8L13.7 18.4H21Z%22 fill=%22%23e8561f%22 stroke=%22%23e8561f%22 stroke-width=%222%22 stroke-linejoin=%22round%22/%3E%3C/svg%3E") 4 3, auto; }
+html[data-theme="dark"] { cursor: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2232%22 height=%2232%22 viewBox=%220 0 32 32%22%3E%3Cpath d=%22M4 3V25L9.6 20L13.4 28.6L17.4 26.8L13.7 18.4H21Z%22 fill=%22%23ff7a4d%22 stroke=%22%23ff7a4d%22 stroke-width=%222%22 stroke-linejoin=%22round%22/%3E%3C/svg%3E") 4 3, auto; }
+a[href], button:not(:disabled), [role="button"]:not(.pj-t), summary, label[for], select, .scribble, .yarnball, .art--mango, .card[data-project] .card__body, .pj-row__head, .pj-pick, .pj-chip {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2232%22 height=%2232%22 viewBox=%220 0 32 32%22%3E%3Cpath d=%22M10.5 5.2C10.5 2.6 15.2 2.6 15.2 5.2V12.6C16.2 12 17.6 12.4 18 13.6C19 13.2 20.4 13.7 20.8 15C22 14.7 23.6 15.4 23.6 17V22.5C23.6 26.8 21 29.6 16.8 29.6H15.4C12.6 29.6 11.2 28.5 9.7 26.7L5.6 21.2C4.7 20 6.6 18.4 7.8 19.4L10.5 21.6Z%22 fill=%22%23e8561f%22 stroke=%22%23e8561f%22 stroke-width=%221.8%22 stroke-linejoin=%22round%22/%3E%3C/svg%3E") 12 4, pointer !important;
+}
+html[data-theme="dark"] :is(a[href], button:not(:disabled), [role="button"]:not(.pj-t), summary, label[for], select, .scribble, .yarnball, .art--mango, .card[data-project] .card__body, .pj-row__head, .pj-pick, .pj-chip) {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2232%22 height=%2232%22 viewBox=%220 0 32 32%22%3E%3Cpath d=%22M10.5 5.2C10.5 2.6 15.2 2.6 15.2 5.2V12.6C16.2 12 17.6 12.4 18 13.6C19 13.2 20.4 13.7 20.8 15C22 14.7 23.6 15.4 23.6 17V22.5C23.6 26.8 21 29.6 16.8 29.6H15.4C12.6 29.6 11.2 28.5 9.7 26.7L5.6 21.2C4.7 20 6.6 18.4 7.8 19.4L10.5 21.6Z%22 fill=%22%23ff7a4d%22 stroke=%22%23ff7a4d%22 stroke-width=%221.8%22 stroke-linejoin=%22round%22/%3E%3C/svg%3E") 12 4, pointer !important;
+}
+@media (pointer: coarse) { html { cursor: auto; } }
