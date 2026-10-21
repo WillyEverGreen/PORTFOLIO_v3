@@ -1444,3 +1444,39 @@ chess-board.is-shaking {
 .edu .art--mango.is-hop { animation: eduhop 0.6s var(--ease); }
 @keyframes eduhop { 0% { transform: none; } 30% { transform: translateY(-16px) scale(0.98, 1.04); } 60% { transform: scale(1.04, 0.96); } 100% { transform: none; } }
 @media (prefers-reduced-motion: reduce) { .edu .art--mango.is-hop { animation: none; } }
+
+
+/* ---------- scrollbars ---------- */
+:root {
+  --sb-size: 10px;
+  --sb-thumb: color-mix(in srgb, var(--accent) 55%, var(--paper));
+  --sb-thumb-hover: var(--accent);
+}
+
+/* Chrome, Edge, Safari: a slim rounded thumb that sits inside a quiet track */
+@supports selector(::-webkit-scrollbar) {
+  *::-webkit-scrollbar { width: var(--sb-size); height: var(--sb-size); background: transparent; }
+  html::-webkit-scrollbar { background: var(--paper); }
+  *::-webkit-scrollbar-track { background: transparent; }
+  html::-webkit-scrollbar-track { background: var(--paper); }
+  *::-webkit-scrollbar-thumb {
+    min-height: 56px; min-width: 56px;
+    background: var(--sb-thumb);
+    border: 3px solid transparent;
+    background-clip: padding-box;
+    border-radius: 999px;
+  }
+  *::-webkit-scrollbar-thumb:hover { background: var(--sb-thumb-hover); background-clip: padding-box; }
+  *::-webkit-scrollbar-thumb:active { background: var(--sb-thumb-hover); background-clip: padding-box; border-width: 2px; }
+  *::-webkit-scrollbar-corner { background: transparent; }
+}
+
+/* Firefox: the standard thin scrollbar in the same colours */
+@supports not selector(::-webkit-scrollbar) {
+  * { scrollbar-width: thin; scrollbar-color: var(--sb-thumb) transparent; }
+  html { scrollbar-color: var(--sb-thumb) var(--paper); }
+}
+
+/* smooth, contained scrolling inside panels */
+.pj-viewer__info-in, .pj-viewer__fallback, .pj-filters { scroll-behavior: smooth; overscroll-behavior: contain; }
+@media (prefers-reduced-motion: reduce) { .pj-viewer__info-in, .pj-viewer__fallback, .pj-filters { scroll-behavior: auto; } }
