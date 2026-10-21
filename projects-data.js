@@ -133,8 +133,7 @@ window.PROJECTS = [
       "Run or walk a loop and the ground inside it becomes your territory on a shared live map.",
       "Your GPS trail is drawn as you move, and a closed loop is the only thing that counts.",
       "Earn XP, use shields to defend what you hold, and climb the rankings against rivals."
-    ],
-    "embed": false
+    ]
   },
   {
     "id": "recode",

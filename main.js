@@ -768,9 +768,7 @@
     let hintLevel = 0;
     let isBusy = false;
     let chessEngine = null;
-    let selectedSquare = null;
-    let currentLegalMoves = [];
-    const hintsOverlay = $("#chessHintsOverlay");
+    let lastMove = null;
 
     const updateBadges = () => {
       const solvedCount = solvedStatus.filter(Boolean).length;
@@ -787,190 +785,89 @@
       });
     };
 
-    const getGridCoords = (square, orientation) => {
-      const file = square.charCodeAt(0) - 97;
-      const rank = parseInt(square.charAt(1), 10) - 1;
-      const col = orientation === "white" ? file + 1 : 8 - file;
-      const row = orientation === "white" ? 8 - rank : rank + 1;
-      return { col, row };
-    };
-
-    let lastMove = null;
-    let hoverSq = null;
-
-    const checkedKingSquare = () => {
-      if (!chessEngine) return null;
-      const inCheck = typeof chessEngine.isCheck === "function" ? chessEngine.isCheck() : chessEngine.inCheck();
-      if (!inCheck) return null;
-      const side = chessEngine.turn();
-      const rows = chessEngine.board();
-      for (let r = 0; r < 8; r++) {
-        for (let f = 0; f < 8; f++) {
-          const cell = rows[r][f];
-          if (cell && cell.type === "k" && cell.color === side) return String.fromCharCode(97 + f) + (8 - r);
-        }
-      }
-      return null;
-    };
-
-    // Tints live on the squares themselves (::part), so pieces are never washed over.
-    // Dots and capture rings stay in the overlay because they sit above pieces on lichess too.
-    const squareStyle = document.createElement("style");
-    squareStyle.id = "chessSquareStyles";
-    document.head.appendChild(squareStyle);
-
-    const renderOverlay = () => {
-      if (!hintsOverlay) return;
-      const orientation = boardEl.orientation || "white";
-      const frag = document.createDocumentFragment();
-      const rules = [];
-      const tint = (sq, bg) => rules.push(`chess-board::part(${sq}) { background-image: ${bg}; }`);
-      const flat = (c) => `linear-gradient(${c}, ${c})`;
+    /* The board is gchessboard (click, drag and keyboard moves, markers, animations).
+       Last move and check are drawn with its square slots, which sit behind the pieces. */
+    const paintSquares = () => {
+      boardEl.replaceChildren();
+      const slot = (sq, cls) => {
+        const d = document.createElement("div");
+        d.slot = sq;
+        d.className = cls;
+        boardEl.appendChild(d);
+      };
       if (lastMove) {
-        tint(lastMove.from, flat("rgba(240, 217, 138, 0.55)"));
-        tint(lastMove.to, flat("rgba(240, 217, 138, 0.55)"));
+        slot(lastMove.from, "chess__last");
+        slot(lastMove.to, "chess__last");
       }
-      const king = checkedKingSquare();
-      if (king) tint(king, "radial-gradient(ellipse at center, rgb(255, 0, 0) 0%, rgb(231, 0, 0) 25%, rgba(169, 0, 0, 0) 89%, rgba(158, 0, 0, 0) 100%)");
-      if (selectedSquare) {
-        const selPos = getGridCoords(selectedSquare, orientation);
-        const selEl = document.createElement("div");
-        selEl.className = "chess__hint-selected";
-        selEl.style.setProperty("--col", selPos.col);
-        selEl.style.setProperty("--row", selPos.row);
-        frag.appendChild(selEl);
-        currentLegalMoves.forEach((m) => {
-          if (m.to === hoverSq) tint(m.to, flat("rgba(28, 27, 24, 0.16)"));
-          const pos = getGridCoords(m.to, orientation);
-          const el = document.createElement("div");
-          el.className = m.captured ? "chess__hint-ring" : "chess__hint-dot";
-          el.style.setProperty("--col", pos.col);
-          el.style.setProperty("--row", pos.row);
-          frag.appendChild(el);
-        });
-      }
-      squareStyle.textContent = rules.join(" ");
-      hintsOverlay.replaceChildren(frag);
-    };
-
-    const setHover = (sq) => {
-      const next = selectedSquare && currentLegalMoves.some((m) => m.to === sq) ? sq : null;
-      if (next === hoverSq) return;
-      hoverSq = next;
-      renderOverlay();
-    };
-
-    const clearHints = () => {
-      selectedSquare = null;
-      currentLegalMoves = [];
-      hoverSq = null;
-      renderOverlay();
-    };
-
-    const showLegalMoves = (square) => {
-      if (!chessEngine || !hintsOverlay || isBusy || isCheckmated) return;
-      const piece = chessEngine.get(square);
-      if (!piece || piece.color !== currentPuzzle.turn) {
-        clearHints();
-        return;
-      }
-      selectedSquare = square;
-      currentLegalMoves = chessEngine.moves({ square, verbose: true });
-      hoverSq = null;
-      renderOverlay();
-    };
-
-    const getSquareFromEvent = (e) => {
-      if (e.composedPath) {
-        const sqEl = e.composedPath().find((el) => el.getAttribute && el.getAttribute("data-square"));
-        if (sqEl) return sqEl.getAttribute("data-square");
-      }
-      const rect = boardEl.getBoundingClientRect();
-      const clientX = e.clientX ?? (e.touches && e.touches[0] ? e.touches[0].clientX : null);
-      const clientY = e.clientY ?? (e.touches && e.touches[0] ? e.touches[0].clientY : null);
-      if (clientX === null || clientY === null) return null;
-
-      const x = clientX - rect.left;
-      const y = clientY - rect.top;
-      if (x < 0 || x > rect.width || y < 0 || y > rect.height) return null;
-
-      const col = Math.floor((x / rect.width) * 8);
-      const row = Math.floor((y / rect.height) * 8);
-      const orientation = boardEl.orientation || "white";
-
-      let file, rank;
-      if (orientation === "white") {
-        file = String.fromCharCode(97 + col);
-        rank = 8 - row;
-      } else {
-        file = String.fromCharCode(104 - col);
-        rank = 1 + row;
-      }
-      return `${file}${rank}`;
-    };
-
-    const executeMoveStep = (source, target, isDrop = false, dropEvent = null) => {
-      clearHints();
-      if (isBusy || isCheckmated) {
-        if (isDrop && dropEvent) dropEvent.detail.setAction("snapback");
-        return;
-      }
-
-      // like lichess: a move that is not legal just snaps back, no scolding
-      if (chessEngine && !chessEngine.moves({ square: source, verbose: true }).some((m) => m.to === target)) {
-        if (isDrop && dropEvent) dropEvent.detail.setAction("snapback");
-        return;
-      }
-
-      const moveStr = source + target;
-      const expectedMove = currentPuzzle.moves[currentStep * 2];
-
-      if (expectedMove && moveStr === expectedMove.slice(0, 4)) {
-        // Correct winning move!
-        if (!isDrop) {
-          boardEl.move(source + "-" + target);
+      if (chessEngine) {
+        const inCheck = typeof chessEngine.isCheck === "function" ? chessEngine.isCheck() : chessEngine.inCheck();
+        if (inCheck) {
+          const side = chessEngine.turn();
+          chessEngine.board().forEach((row, r) => row.forEach((cell, f) => {
+            if (cell && cell.type === "k" && cell.color === side) slot(String.fromCharCode(97 + f) + (8 - r), "chess__check");
+          }));
         }
-        if (chessEngine) chessEngine.move({ from: source, to: target, promotion: expectedMove[4] || "q" });
-        lastMove = { from: source, to: target };
-        renderOverlay();
+      }
+    };
 
+    const placement = () => chessEngine.fen().split(" ")[0];
+
+    // Only the side to move can be picked up, and only legal squares accept the piece
+    boardEl.addEventListener("movestart", (e) => {
+      const { from } = e.detail;
+      if (isBusy || isCheckmated || !chessEngine) {
+        e.detail.setTargets([]);
+        return;
+      }
+      const info = chessEngine.get(from);
+      if (!info || info.color !== currentPuzzle.turn) {
+        e.detail.setTargets([]);
+        return;
+      }
+      e.detail.setTargets(chessEngine.moves({ square: from, verbose: true }).map((m) => m.to));
+    });
+
+    boardEl.addEventListener("moveend", (e) => {
+      const { from, to } = e.detail;
+      if (isBusy || isCheckmated || !chessEngine) return;
+      const expectedMove = currentPuzzle.moves[currentStep * 2];
+      const promotion = expectedMove && expectedMove[4] ? expectedMove[4] : "q";
+      if (!chessEngine.moves({ square: from, verbose: true }).some((m) => m.to === to)) return;
+
+      if (expectedMove && from + to === expectedMove.slice(0, 4)) {
+        chessEngine.move({ from, to, promotion });
+        lastMove = { from, to };
+        hintLevel = 0;
+        boardEl.arrows = [];
         if (currentPuzzle.type === "m1" || currentStep === 1) {
           onCheckmate();
         } else {
-          // Mate in 2: Step 1 completed, computer replies!
           currentStep = 1;
           isBusy = true;
+          boardEl.interactive = false;
           if (msgEl) {
             msgEl.className = "chess__msg is-success";
             msgEl.textContent = "Brilliant move! Opponent makes the forced reply...";
           }
-
           setTimeout(() => {
-            const replyMove = currentPuzzle.moves[1];
-            const from = replyMove.slice(0, 2);
-            const to = replyMove.slice(2, 4);
-            boardEl.move(from + "-" + to);
-            if (chessEngine) chessEngine.move({ from, to, promotion: replyMove[4] || "q" });
-            lastMove = { from, to };
-            renderOverlay();
+            const reply = currentPuzzle.moves[1];
+            const rf = reply.slice(0, 2);
+            const rt = reply.slice(2, 4);
+            chessEngine.move({ from: rf, to: rt, promotion: reply[4] || "q" });
+            lastMove = { from: rf, to: rt };
+            boardEl.fen = placement();
             isBusy = false;
+            boardEl.interactive = true;
             if (msgEl) {
               msgEl.className = "chess__msg";
               msgEl.textContent = "Forced defense played. Now deliver the knockout blow!";
             }
           }, 450);
         }
+        paintSquares();
       } else {
-        // Wrong move
-        if (isDrop && dropEvent) {
-          dropEvent.detail.setAction("snapback");
-        } else {
-          boardEl.move(source + "-" + target);
-          setTimeout(() => {
-            boardEl.setPosition(chessEngine ? chessEngine.fen() : currentPuzzle.fen, true);
-          }, 380);
-        }
-
+        // a legal move that is not the mating line: let the piece land, shake, then put it back
+        isBusy = true;
         boardEl.classList.remove("is-shaking");
         void boardEl.offsetWidth;
         boardEl.classList.add("is-shaking");
@@ -979,8 +876,12 @@
           msgEl.textContent = "Not checkmate! The defender can still escape. Try another line.";
         }
         window.dispatchEvent(new CustomEvent("mango:chess", { detail: { action: "wrong" } }));
+        setTimeout(() => {
+          boardEl.fen = placement();
+          isBusy = false;
+        }, 650);
       }
-    };
+    });
 
     const loadPuzzle = (puzzle) => {
       currentPuzzle = puzzle;
@@ -988,12 +889,9 @@
       isCheckmated = false;
       hintLevel = 0;
       isBusy = false;
-
-      if (typeof window.Chess === "function") {
-        chessEngine = new window.Chess(puzzle.fen);
-      }
       lastMove = null;
-      clearHints();
+
+      if (typeof window.Chess === "function") chessEngine = new window.Chess(puzzle.fen);
 
       if (titleEl) titleEl.textContent = puzzle.title;
       if (turnDot) {
@@ -1012,120 +910,38 @@
       updateBadges();
       updatePillsUI();
 
-      // Setup premade chess-board
+      boardEl.cancelMove();
+      boardEl.arrows = [];
       boardEl.orientation = puzzle.turn === "w" ? "white" : "black";
-      boardEl.setPosition(puzzle.fen, false);
-      if (boardEl._highlightedSquares) {
-        boardEl._highlightedSquares.clear();
-        boardEl.requestUpdate();
-      }
-      renderOverlay();
+      boardEl.turn = puzzle.turn === "w" ? "white" : "black";
+      boardEl.interactive = true;
+      boardEl.fen = puzzle.fen.split(" ")[0];
+      paintSquares();
     };
-
-    // Click on board: Tap piece to view moves, or tap legal destination to move!
-    boardEl.addEventListener("click", (e) => {
-      if (isBusy || isCheckmated) return;
-      const sq = getSquareFromEvent(e);
-      if (!sq) {
-        clearHints();
-        return;
-      }
-
-      // Like lichess: click a piece to see its moves, then click a dot to play it (or drag it there)
-      if (selectedSquare && currentLegalMoves.some((m) => m.to === sq)) {
-        executeMoveStep(selectedSquare, sq, false);
-        return;
-      }
-
-      // 2. If clicking on current player's piece: show legal moves!
-      if (chessEngine) {
-        const piece = chessEngine.get(sq);
-        if (piece && piece.color === currentPuzzle.turn) {
-          if (selectedSquare === sq) {
-            clearHints(); // Toggle off if tapped again
-          } else {
-            showLegalMoves(sq);
-          }
-          return;
-        }
-      }
-
-      // 3. Clicked empty square or opponent piece:
-      clearHints();
-    });
-
-    // Hover a legal destination to light the square, and show a grab cursor over pieces you can move
-    boardEl.addEventListener("mousemove", (e) => {
-      if (isBusy || isCheckmated) return;
-      const sq = getSquareFromEvent(e);
-      setHover(sq);
-      const piece = sq && chessEngine ? chessEngine.get(sq) : null;
-      const isDest = sq && selectedSquare && currentLegalMoves.some((m) => m.to === sq);
-      boardEl.style.cursor = isDest ? "pointer" : piece && piece.color === currentPuzzle.turn ? "grab" : "default";
-    });
-    boardEl.addEventListener("mouseleave", () => setHover(null));
-    boardEl.addEventListener("drag-move", (e) => setHover(e.detail.newLocation));
-
-    // Drag start validation & show legal moves
-    boardEl.addEventListener("drag-start", (e) => {
-      if (isBusy || isCheckmated) {
-        e.preventDefault();
-        return;
-      }
-      const playerColor = currentPuzzle.turn;
-      const piece = e.detail.piece;
-      if (!piece || piece.charAt(0) !== playerColor) {
-        e.preventDefault();
-        return;
-      }
-      showLegalMoves(e.detail.source);
-    });
-
-    // Drop move validation
-    boardEl.addEventListener("drop", (e) => {
-      const { source, target } = e.detail;
-      if (!source || !target || source === target) {
-        clearHints();
-        e.detail.setAction("snapback");
-        return;
-      }
-      executeMoveStep(source, target, true, e);
-    });
-
-    // Deselect if user clicks outside the board
-    document.addEventListener("click", (e) => {
-      if (!boardEl.contains(e.target) && (!hintsOverlay || !hintsOverlay.contains(e.target))) {
-        clearHints();
-      }
-    });
 
     const onCheckmate = () => {
       isCheckmated = true;
+      boardEl.interactive = false;
       if (msgEl) {
         msgEl.className = "chess__msg is-success";
         msgEl.textContent = "Checkmate! Well played.";
       }
 
-      // Mark daily puzzle solved
       solvedStatus[currentPuzzleIdx] = true;
       try {
         localStorage.setItem(storageKey, JSON.stringify(solvedStatus));
       } catch (e) { /* storage can be blocked */ }
       updateBadges();
       updatePillsUI();
-      
+
       const allSolved = solvedStatus.every(Boolean);
 
-      // Fire confetti burst
       if (typeof burst === "function") {
         const boardRect = boardEl.getBoundingClientRect();
         burst(boardRect.left + boardRect.width * 0.5, boardRect.top + boardRect.height * 0.45, 45);
       }
 
-      // Trigger Mango the cat dialogue & reactions
-      window.dispatchEvent(new CustomEvent("mango:chess", {
-        detail: { action: "mate", allSolved }
-      }));
+      window.dispatchEvent(new CustomEvent("mango:chess", { detail: { action: "mate", allSolved } }));
     };
 
     // Controls
@@ -1145,11 +961,10 @@
           const fromSq = expectedMove.slice(0, 2);
           const toSq = expectedMove.slice(2, 4);
           if (hintLevel === 1) {
-            boardEl._highlightSquare(fromSq, true);
-            showLegalMoves(fromSq);
+            boardEl.startMove(fromSq, chessEngine.moves({ square: fromSq, verbose: true }).map((m) => m.to));
             if (msgEl) msgEl.textContent = `Hint: Look at your piece on ${fromSq.toUpperCase()}!`;
           } else {
-            boardEl._highlightSquare(toSq, true);
+            boardEl.arrows = [{ from: fromSq, to: toSq, brush: "primary" }];
             if (msgEl) msgEl.textContent = `Target: Move to ${toSq.toUpperCase()} for the knockout!`;
           }
         }
@@ -1160,14 +975,14 @@
     if (prevBtn) {
       prevBtn.addEventListener("click", () => {
         currentPuzzleIdx = (currentPuzzleIdx - 1 + dailyPuzzles.length) % dailyPuzzles.length;
-          loadPuzzle(dailyPuzzles[currentPuzzleIdx]);
+        loadPuzzle(dailyPuzzles[currentPuzzleIdx]);
       });
     }
 
     if (nextBtn) {
       nextBtn.addEventListener("click", () => {
         currentPuzzleIdx = (currentPuzzleIdx + 1) % dailyPuzzles.length;
-          loadPuzzle(dailyPuzzles[currentPuzzleIdx]);
+        loadPuzzle(dailyPuzzles[currentPuzzleIdx]);
       });
     }
 
@@ -1184,12 +999,8 @@
       });
     }
 
-    // Initialize with first daily puzzle
-    if (customElements.get("chess-board")) {
-      loadPuzzle(dailyPuzzles[0]);
-    } else {
-      customElements.whenDefined("chess-board").then(() => loadPuzzle(dailyPuzzles[0]));
-    }
+    // the module script that defines <g-chess-board> may load after this one
+    customElements.whenDefined("g-chess-board").then(() => loadPuzzle(dailyPuzzles[0]));
   })();
 
   /* =====================================================================

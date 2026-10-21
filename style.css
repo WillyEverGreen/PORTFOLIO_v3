@@ -251,7 +251,7 @@ em { font-style: italic; color: var(--accent); }
 @keyframes beat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.18); } }
 
 /* ---------- about ---------- */
-.about__grid { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: clamp(30px, 5vw, 80px); align-items: start; }
+.about__grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 480px); gap: clamp(30px, 5vw, 80px); align-items: start; }
 .about__text { font-family: var(--serif); font-size: clamp(28px, 3.3vw, 50px); line-height: 1.15; }
 .about__text .w { color: var(--ink); opacity: 0.2; }
 
@@ -263,7 +263,7 @@ em { font-style: italic; color: var(--accent); }
 .stat span { display: block; margin-top: 8px; color: var(--muted); font-size: 15px; }
 
 /* ---------- experience ---------- */
-.exp__grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.1fr); gap: clamp(30px, 6vw, 100px); align-items: start; }
+.exp__grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 480px); gap: clamp(30px, 5vw, 80px); align-items: start; }
 .timeline { position: relative; padding-left: 38px; }
 .timeline__line { position: absolute; left: 7px; top: 8px; bottom: 8px; width: 2px; background: var(--line); }
 .timeline__line span { display: block; width: 100%; height: 100%; background: var(--accent); transform: scaleY(0); transform-origin: 50% 0; }
@@ -606,23 +606,33 @@ em { font-style: italic; color: var(--accent); }
   }
 }
 
-/* Premade chessboard-element */
-chess-board {
+/* gchessboard, themed with the site colours */
+g-chess-board {
   display: block;
   width: 100%;
-  aspect-ratio: 1;
   border-radius: 10px;
   overflow: hidden;
-  --light-color: #fbe6cc;
-  --dark-color: var(--accent);
-  --highlight-color: rgba(240, 217, 138, 0.75);
+  --square-color-light: #fbe6cc;
+  --square-color-dark: var(--accent);
+  --square-color-light-hover: #f6d98b;
+  --square-color-dark-hover: #e0662f;
+  --square-color-light-active: #f0d98a;
+  --square-color-dark-active: #d9792f;
+  --outline-color-light-active: rgba(28, 27, 24, 0.85);
+  --outline-color-dark-active: rgba(28, 27, 24, 0.85);
+  --outline-color-focus: var(--ink);
+  --inner-border-color: transparent;
+  --move-target-marker-color-light-square: rgba(28, 27, 24, 0.32);
+  --move-target-marker-color-dark-square: rgba(28, 27, 24, 0.32);
+  --arrow-color-primary: rgba(28, 27, 24, 0.75);
+  --coords-font-family: var(--sans, "DM Sans", system-ui, sans-serif);
+  --coords-font-size: 0.72rem;
 }
-[data-theme="dark"] chess-board {
-  --light-color: #ecd9bd;
-  --dark-color: var(--accent);
-  --highlight-color: rgba(240, 217, 138, 0.7);
+[data-theme="dark"] g-chess-board {
+  --square-color-light: #c9b89c;
+  --square-color-dark: #a5441f;
 }
-chess-board.is-shaking {
+g-chess-board.is-shaking {
   animation: boardShake 0.4s cubic-bezier(.36, .07, .19, .97) both;
 }
 @keyframes boardShake {
@@ -631,74 +641,8 @@ chess-board.is-shaking {
   30%, 50%, 70% { transform: translate3d(-5px, 0, 0); }
   40%, 60% { transform: translate3d(5px, 0, 0); }
 }
-
-/* legal move hints overlay */
-.chess__hints-overlay {
-  position: absolute;
-  top: 1.5px;
-  left: 1.5px;
-  right: 1.5px;
-  bottom: 1.5px;
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  grid-template-rows: repeat(8, 1fr);
-  pointer-events: none;
-  z-index: 5;
-  border-radius: 6px;
-  overflow: hidden;
-}
-
-.chess__hint-selected {
-  grid-column: var(--col);
-  grid-row: var(--row);
-  background: rgba(240, 217, 138, 0.6);
-  box-shadow: inset 0 0 0 3px var(--ink);
-  border-radius: 3px;
-  pointer-events: none;
-  animation: hintPulse 2s ease-in-out infinite;
-}
-
-.chess__hint-dot {
-  grid-column: var(--col);
-  grid-row: var(--row);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-}
-.chess__hint-dot::after {
-  content: "";
-  display: block;
-  width: 28%;
-  height: 28%;
-  border-radius: 50%;
-  background: var(--highlight);
-  border: 1.5px solid var(--ink);
-}
-
-.chess__hint-ring {
-  grid-column: var(--col);
-  grid-row: var(--row);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-}
-.chess__hint-ring::after {
-  content: "";
-  display: block;
-  width: 96%;
-  height: 96%;
-  border-radius: 50%;
-  border: 5px solid var(--highlight);
-  box-shadow: 0 0 0 1.5px var(--ink), inset 0 0 0 1.5px var(--ink);
-  box-sizing: border-box;
-}
-
-@keyframes hintPulse {
-  0%, 100% { opacity: 0.95; }
-  50% { opacity: 0.65; }
-}
+.chess__last { height: 100%; background: rgba(240, 217, 138, 0.6); }
+.chess__check { height: 100%; background: radial-gradient(ellipse at center, #e11d1d 0%, rgba(225, 29, 29, 0.85) 25%, rgba(225, 29, 29, 0) 80%); }
 
 /* ---------- contact ---------- */
 .contact { padding-top: clamp(40px, 6vw, 80px); }
@@ -1237,11 +1181,6 @@ chess-board.is-shaking {
 
 /* chess section: calmer colours in dark mode */
 [data-theme="dark"] .chess { border-color: var(--line); }
-[data-theme="dark"] chess-board {
-  --light-color: #c9b89c;
-  --dark-color: #a5441f;
-  --highlight-color: rgba(240, 217, 138, 0.5);
-}
 [data-theme="dark"] .chess__board-wrap { border-color: var(--line); box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.55); }
 [data-theme="dark"] .chess__streak-badge,
 [data-theme="dark"] .chess__motif { color: var(--ink); border-color: var(--line); }
@@ -1257,9 +1196,6 @@ chess-board.is-shaking {
 [data-theme="dark"] .btn-chess--next, [data-theme="dark"] .btn-chess--next:hover { background: #c4421a; color: #fff; border-color: var(--line); }
 [data-theme="dark"] .chess__msg.is-success { color: var(--ink); border-color: var(--line); }
 [data-theme="dark"] .chess__msg.is-error { color: #ff9a8f; }
-[data-theme="dark"] .chess__hint-selected { box-shadow: inset 0 0 0 3px #f0d98a; }
-[data-theme="dark"] .chess__hint-dot::after { background: #f0d98a; border-color: rgba(0, 0, 0, 0.5); }
-[data-theme="dark"] .chess__hint-ring::after { border-color: #f0d98a; box-shadow: 0 0 0 1.5px rgba(0, 0, 0, 0.5), inset 0 0 0 1.5px rgba(0, 0, 0, 0.5); }
 
 /* light/dark switch: circular reveal from the toggle (View Transitions) */
 ::view-transition-old(root), ::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
@@ -1480,3 +1416,8 @@ chess-board.is-shaking {
 /* smooth, contained scrolling inside panels */
 .pj-viewer__info-in, .pj-viewer__fallback, .pj-filters { scroll-behavior: smooth; overscroll-behavior: contain; }
 @media (prefers-reduced-motion: reduce) { .pj-viewer__info-in, .pj-viewer__fallback, .pj-filters { scroll-behavior: auto; } }
+
+/* Right now and Education sit in different grids, so give them one shared size and shape */
+.now, .edu { width: 100%; justify-self: end; border-radius: 18px; }
+@media (min-width: 881px) { .now, .edu { min-height: 585px; } }
+@media (max-width: 880px) { .now, .edu { justify-self: center; } }

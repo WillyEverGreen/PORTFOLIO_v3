@@ -524,12 +524,11 @@
             </button>
           </div>
 
-          <p class="chess__msg" id="chessMsg" role="status" aria-live="polite">Click a piece to see legal moves and deliver checkmate!</p>
+          <p class="chess__msg" id="chessMsg" role="status" aria-live="polite">Tap or drag a piece to see its moves and play.</p>
         </div>
 
         <div class="chess__board-wrap" data-reveal>
-          <chess-board id="chessBoard" draggable-pieces></chess-board>
-          <div class="chess__hints-overlay" id="chessHintsOverlay" aria-hidden="true"></div>
+          <g-chess-board id="chessBoard" interactive coordinates="inside" animation-duration="200"></g-chess-board>
         </div>
       </div>
     </section>
@@ -803,7 +802,7 @@
   <script src="vendor/gsap.min.js"></script>
   <script src="vendor/ScrollTrigger.min.js"></script>
   <script src="lib/chess.js"></script>
-  <script src="lib/chessboard-element.bundled.js"></script>
+  <script src="lib/gchessboard.js"></script>
   <script src="theme.js"></script>
   <script src="main.js"></script>
 </body>
