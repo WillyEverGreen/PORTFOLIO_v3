@@ -26,6 +26,11 @@
         document.documentElement.setAttribute("data-theme", t);
       })();
     </script>
+    <script>
+      /* outlines only for keyboard users, same as the rest of the portfolio */
+      addEventListener("keydown", function (e) { if (e.key === "Tab") document.documentElement.classList.add("kb"); }, true);
+      addEventListener("pointerdown", function () { document.documentElement.classList.remove("kb"); }, true);
+    </script>
   </head>
   <body>
     <div id="root"></div>

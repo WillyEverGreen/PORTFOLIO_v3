@@ -61,7 +61,9 @@ ul { list-style: none; }
 img { display: block; max-width: 100%; height: auto; }
 code { font-family: ui-monospace, "SFMono-Regular", Menlo, monospace; font-size: 0.9em; background: var(--highlight); padding: 1px 6px; border-radius: 4px; }
 
-:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 4px; }
+/* outlines only while navigating by keyboard (focus.js adds .kb); never after a click or tap */
+:focus, :focus-visible { outline: none; }
+html.kb :focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 4px; }
 ::selection { background: var(--highlight); color: var(--ink); }
 
 /* ---------- progress, loader ---------- */
@@ -1272,7 +1274,7 @@ g-chess-board.is-shaking {
 
 /* Mango in the card is petable */
 .edu .art--mango { cursor: pointer; outline: none; -webkit-tap-highlight-color: transparent; }
-.edu .art--mango:focus-visible { filter: drop-shadow(0 0 0 var(--accent)); outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 12px; }
+.kb .edu .art--mango:focus-visible { filter: drop-shadow(0 0 0 var(--accent)); outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 12px; }
 .edu .art--mango.is-hop { animation: eduhop 0.6s var(--ease); }
 @keyframes eduhop { 0% { transform: none; } 30% { transform: translateY(-16px) scale(0.98, 1.04); } 60% { transform: scale(1.04, 0.96); } 100% { transform: none; } }
 @media (prefers-reduced-motion: reduce) { .edu .art--mango.is-hop { animation: none; } }

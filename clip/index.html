@@ -26,11 +26,16 @@
         document.documentElement.setAttribute("data-theme", t);
       })();
     </script>
-    <script type="module" crossorigin src="/clip/assets/index-JLFUPJSB.js"></script>
+    <script>
+      /* outlines only for keyboard users, same as the rest of the portfolio */
+      addEventListener("keydown", function (e) { if (e.key === "Tab") document.documentElement.classList.add("kb"); }, true);
+      addEventListener("pointerdown", function () { document.documentElement.classList.remove("kb"); }, true);
+    </script>
+    <script type="module" crossorigin src="/clip/assets/index-DUJaXkcO.js"></script>
     <link rel="modulepreload" crossorigin href="/clip/assets/gsap-BZYTkIem.js">
     <link rel="modulepreload" crossorigin href="/clip/assets/motion-V2n6wu7X.js">
     <link rel="modulepreload" crossorigin href="/clip/assets/react-CmI68vC2.js">
-    <link rel="stylesheet" crossorigin href="/clip/assets/index-1dSDJZgq.css">
+    <link rel="stylesheet" crossorigin href="/clip/assets/index-D3K7um5q.css">
   </head>
   <body>
     <div id="root"></div>

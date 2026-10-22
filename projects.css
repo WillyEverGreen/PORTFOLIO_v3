@@ -391,7 +391,7 @@
 }
 .pj-viewer__toggle svg { width: 22px; height: 22px; fill: none; stroke: #fff; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.6s var(--ease); }
 .pj-viewer__toggle:hover { box-shadow: 4px 4px 0 var(--ink); }
-.pj-viewer__toggle:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.kb .pj-viewer__toggle:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
 .pj-viewer.is-collapsed .pj-viewer__toggle { right: 16px; transform: translate(0, -50%); }
 .pj-viewer.is-collapsed .pj-viewer__toggle svg { transform: rotate(180deg); }
 
