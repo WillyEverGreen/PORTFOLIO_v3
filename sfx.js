@@ -26,6 +26,7 @@
   };
 
   let noiseBuffer = null;
+  let meowWave = null; /* built once, the soft voice for the meow */
   const noise = () => {
     if (!noiseBuffer) {
       noiseBuffer = ctx.createBuffer(1, ctx.sampleRate * 1.5, ctx.sampleRate);
@@ -48,33 +49,125 @@
     return g;
   };
 
+  /* Real meows (Pixabay, free to use). They load after the first click so a first visit pays
+     nothing, and until they arrive (or if they never do) the synthesised meow plays instead. */
+  const MEOW_FILES = ["audio/meow-kitten.mp3", "audio/meow-cat.mp3"];
+  let meows = [];
+  let meowsReady = null; /* a promise once loading has started */
+  let lastMeow = -1;
+  const loadMeows = () => {
+    if (meowsReady || !ctx) return meowsReady;
+    meowsReady = Promise.all(MEOW_FILES.map((url) =>
+      fetch(url)
+        .then((r) => (r.ok ? r.arrayBuffer() : Promise.reject(r.status)))
+        .then((data) => ctx.decodeAudioData(data))
+        .then((buffer) => {
+          /* even out the two recordings so neither is louder than the other */
+          let peak = 0;
+          for (let c = 0; c < buffer.numberOfChannels; c++) {
+            const d = buffer.getChannelData(c);
+            for (let i = 0; i < d.length; i++) peak = Math.max(peak, Math.abs(d[i]));
+          }
+          meows.push({ buffer, gain: peak > 0 ? 0.32 / peak : 1 });
+        })
+        .catch(() => { /* this one stays out; the synthesised meow covers for it */ })
+    ));
+    return meowsReady;
+  };
+  /* start fetching on the visitor's first touch anywhere, so the files are usually in by the
+     time they pet Mango (audio may only start after a gesture, so this is the earliest point) */
+  window.addEventListener("pointerdown", () => { if (!muted && ensure()) loadMeows(); }, { once: true, passive: true });
+
+  const playMeow = () => {
+    /* never the same recording twice in a row */
+    let i = Math.floor(Math.random() * meows.length);
+    if (meows.length > 1 && i === lastMeow) i = (i + 1) % meows.length;
+    lastMeow = i;
+    const { buffer, gain } = meows[i];
+    const src = ctx.createBufferSource();
+    src.buffer = buffer;
+    src.playbackRate.value = 0.96 + Math.random() * 0.08; /* a touch of variety */
+    const g = ctx.createGain();
+    g.gain.value = gain * level;
+    src.connect(g);
+    g.connect(master);
+    src.start();
+  };
+
   const sounds = {
-    /* a vowel-ish meow: a buzzy tone whose pitch and filter glide up and back down */
     meow() {
+      if (meows.length) return playMeow();
+      /* still loading: wait a moment for a real one, otherwise use the synthesised meow */
+      const pending = loadMeows();
+      if (!pending) return sounds.meowSynth();
+      const lvl = level;
+      Promise.race([pending, new Promise((r) => setTimeout(r, 500))]).then(() => {
+        level = lvl;
+        if (meows.length) playMeow();
+        else sounds.meowSynth();
+      });
+    },
+
+    meowSynth() {
       const t = ctx.currentTime;
-      const len = 0.62;
-      const osc = ctx.createOscillator();
-      osc.type = "sawtooth";
-      osc.frequency.setValueAtTime(420, t);
-      osc.frequency.exponentialRampToValueAtTime(760, t + 0.16);
-      osc.frequency.exponentialRampToValueAtTime(520, t + len);
+      const len = 0.46;
+      if (!meowWave) {
+        const n = 24, real = new Float32Array(n), imag = new Float32Array(n);
+        for (let k = 1; k < n; k++) imag[k] = 1 / Math.pow(k, 1.35);
+        meowWave = ctx.createPeriodicWave(real, imag);
+      }
+      const voice = ctx.createOscillator();
+      voice.setPeriodicWave(meowWave);
+      voice.frequency.setValueAtTime(640, t);
+      voice.frequency.exponentialRampToValueAtTime(960, t + 0.12);
+      voice.frequency.exponentialRampToValueAtTime(760, t + 0.28);
+      voice.frequency.exponentialRampToValueAtTime(580, t + len);
+      /* a gentle wobble once the note is sounding */
       const vibrato = ctx.createOscillator();
       const vibratoDepth = ctx.createGain();
       vibrato.frequency.value = 6;
-      vibratoDepth.gain.value = 9;
+      vibratoDepth.gain.setValueAtTime(0, t);
+      vibratoDepth.gain.linearRampToValueAtTime(10, t + 0.18);
       vibrato.connect(vibratoDepth);
-      vibratoDepth.connect(osc.frequency);
-      const formant = ctx.createBiquadFilter();
-      formant.type = "bandpass";
-      formant.Q.value = 4;
-      formant.frequency.setValueAtTime(700, t);
-      formant.frequency.exponentialRampToValueAtTime(1900, t + 0.18);
-      formant.frequency.exponentialRampToValueAtTime(900, t + len);
-      osc.connect(formant);
-      formant.connect(envelope(t, 0.5, 0.05, len));
-      osc.start(t);
+      vibratoDepth.connect(voice.frequency);
+      /* the "m": the mouth opens over the first 70 ms */
+      const mouth = ctx.createBiquadFilter();
+      mouth.type = "lowpass";
+      mouth.Q.value = 0.7;
+      mouth.frequency.setValueAtTime(700, t);
+      mouth.frequency.exponentialRampToValueAtTime(5000, t + 0.07);
+      mouth.frequency.exponentialRampToValueAtTime(2600, t + len);
+      voice.connect(mouth);
+      const out = ctx.createGain();
+      out.gain.setValueAtTime(0.0001, t);
+      out.gain.exponentialRampToValueAtTime(0.085 * level, t + 0.035);
+      out.gain.setValueAtTime(0.085 * level, t + 0.26);
+      out.gain.exponentialRampToValueAtTime(0.0001, t + len);
+      out.connect(master);
+      /* vowel resonances: ee, then ah, then oo */
+      const formant = (f0, f1, f2, q, gain) => {
+        const f = ctx.createBiquadFilter();
+        f.type = "bandpass";
+        f.Q.value = q;
+        f.frequency.setValueAtTime(f0, t);
+        f.frequency.exponentialRampToValueAtTime(f1, t + 0.15);
+        f.frequency.exponentialRampToValueAtTime(f2, t + len);
+        const g = ctx.createGain();
+        g.gain.value = gain;
+        mouth.connect(f);
+        f.connect(g);
+        g.connect(out);
+      };
+      formant(380, 900, 520, 5, 1.1);
+      formant(2300, 1500, 1000, 7, 0.7);
+      /* a little of the plain voice keeps it warm rather than whistly */
+      const body = ctx.createGain();
+      body.gain.value = 0.18;
+      mouth.connect(body);
+      body.connect(out);
+      voice.start(t);
       vibrato.start(t);
-      osc.stop(t + len + 0.05);
+      voice.stop(t + len + 0.05);
       vibrato.stop(t + len + 0.05);
     },
 
@@ -96,34 +189,6 @@
       lfo.start(t);
       osc.stop(t + 0.25);
       lfo.stop(t + 0.25);
-    },
-
-    /* a low rumble pulsed about 25 times a second */
-    purr() {
-      const t = ctx.currentTime;
-      const len = 1.3;
-      const osc = ctx.createOscillator();
-      osc.type = "sawtooth";
-      osc.frequency.value = 52;
-      const lowpass = ctx.createBiquadFilter();
-      lowpass.type = "lowpass";
-      lowpass.frequency.value = 260;
-      const pulse = ctx.createGain();
-      pulse.gain.value = 0.5;
-      const lfo = ctx.createOscillator();
-      const lfoDepth = ctx.createGain();
-      lfo.type = "square";
-      lfo.frequency.value = 25;
-      lfoDepth.gain.value = 0.5;
-      lfo.connect(lfoDepth);
-      lfoDepth.connect(pulse.gain);
-      osc.connect(lowpass);
-      lowpass.connect(pulse);
-      pulse.connect(envelope(t, 0.55, 0.25, len));
-      osc.start(t);
-      lfo.start(t);
-      osc.stop(t + len + 0.1);
-      lfo.stop(t + len + 0.1);
     },
 
     hiss() {

@@ -49,7 +49,7 @@
       ]
     },
     {
-      "source": "/(vendor|lib|img)/(.*)",
+      "source": "/(vendor|lib|img|audio)/(.*)",
       "headers": [
         {
           "key": "Cache-Control",

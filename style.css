@@ -144,6 +144,10 @@ html.kb :focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; 
 .theme__moon { transform: translateY(140%) rotate(-60deg); opacity: 0; }
 [data-theme="dark"] .theme__sun { transform: translateY(-140%) rotate(60deg); opacity: 0; }
 [data-theme="dark"] .theme__moon { transform: none; opacity: 1; }
+/* sound toggle: one icon at a time, swapped with the same slide as the theme toggle */
+.sfx__off { transform: translateY(140%) rotate(-60deg); opacity: 0; }
+.sfx.is-muted .sfx__on { transform: translateY(-140%) rotate(60deg); opacity: 0; }
+.sfx.is-muted .sfx__off { transform: none; opacity: 1; }
 
 .menu { display: none; width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid var(--ink); position: relative; }
 .menu span { position: absolute; left: 11px; width: 16px; height: 1.8px; background: var(--ink); transition: transform 0.35s var(--ease), top 0.35s var(--ease); }
@@ -1330,6 +1334,11 @@ a[href], button:not(:disabled), [role="button"]:not(.pj-t), summary, label[for],
 html[data-theme="dark"] :is(a[href], button:not(:disabled), [role="button"]:not(.pj-t), summary, label[for], select, .scribble, .yarnball, .art--mango, .card[data-project] .card__body, .pj-row__head, .pj-pick, .pj-chip) {
   cursor: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2232%22 height=%2232%22 viewBox=%220 0 32 32%22%3E%3Cpath d=%22M10.5 5.2C10.5 2.6 15.2 2.6 15.2 5.2V12.6C16.2 12 17.6 12.4 18 13.6C19 13.2 20.4 13.7 20.8 15C22 14.7 23.6 15.4 23.6 17V22.5C23.6 26.8 21 29.6 16.8 29.6H15.4C12.6 29.6 11.2 28.5 9.7 26.7L5.6 21.2C4.7 20 6.6 18.4 7.8 19.4L10.5 21.6Z%22 fill=%22%23ff7a4d%22 stroke=%22%23ff7a4d%22 stroke-width=%221.8%22 stroke-linejoin=%22round%22/%3E%3C/svg%3E") 12 4, pointer !important;
 }
+/* toys: an orange open hand to pick one up and a closed fist while holding it, matching the orange pointer */
+.pj-t { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M8 15h16v6.2c0 4.5-3 7.3-7.2 7.3h-1.5c-2.9 0-4.5-1.2-5.9-3.1L8 23z M9.4 22.6 4.9 18.6a1.7 1.7 0 0 1 2.3-2.5L10.6 19z M8 16V8.2a1.7 1.7 0 0 1 3.4 0V16Z M12.2 16V5.2a1.7 1.7 0 0 1 3.4 0V16Z M16.4 16V4.7a1.7 1.7 0 0 1 3.4 0V16Z M20.6 16V6.7a1.7 1.7 0 0 1 3.4 0V16Z' fill='%23e8561f'/%3E%3C/svg%3E") 16 16, grab !important; }
+.pj-t.is-held { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M8 15h16v6.2c0 4.5-3 7.3-7.2 7.3h-1.5c-2.9 0-4.5-1.2-5.9-3.1L8 23z M8 16V14.299999999999999a1.7 1.7 0 0 1 3.4 0V16Z M12.2 16V13.299999999999999a1.7 1.7 0 0 1 3.4 0V16Z M16.4 16V13.1a1.7 1.7 0 0 1 3.4 0V16Z M20.6 16V14.1a1.7 1.7 0 0 1 3.4 0V16Z' fill='%23e8561f'/%3E%3C/svg%3E") 16 16, grabbing !important; }
+html[data-theme="dark"] .pj-t { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M8 15h16v6.2c0 4.5-3 7.3-7.2 7.3h-1.5c-2.9 0-4.5-1.2-5.9-3.1L8 23z M9.4 22.6 4.9 18.6a1.7 1.7 0 0 1 2.3-2.5L10.6 19z M8 16V8.2a1.7 1.7 0 0 1 3.4 0V16Z M12.2 16V5.2a1.7 1.7 0 0 1 3.4 0V16Z M16.4 16V4.7a1.7 1.7 0 0 1 3.4 0V16Z M20.6 16V6.7a1.7 1.7 0 0 1 3.4 0V16Z' fill='%23ff7a4d'/%3E%3C/svg%3E") 16 16, grab !important; }
+html[data-theme="dark"] .pj-t.is-held { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M8 15h16v6.2c0 4.5-3 7.3-7.2 7.3h-1.5c-2.9 0-4.5-1.2-5.9-3.1L8 23z M8 16V14.299999999999999a1.7 1.7 0 0 1 3.4 0V16Z M12.2 16V13.299999999999999a1.7 1.7 0 0 1 3.4 0V16Z M16.4 16V13.1a1.7 1.7 0 0 1 3.4 0V16Z M20.6 16V14.1a1.7 1.7 0 0 1 3.4 0V16Z' fill='%23ff7a4d'/%3E%3C/svg%3E") 16 16, grabbing !important; }
 @media (pointer: coarse) { html { cursor: auto; } }
 
 /* ---------- contact: email on the left, quick message form on the right ---------- */

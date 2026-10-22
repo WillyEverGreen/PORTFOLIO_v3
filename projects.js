@@ -591,7 +591,6 @@
       purr();
       hearts();
       sfx("meow");
-      setTimeout(() => sfx("purr"), 450);
       window.dispatchEvent(new CustomEvent("nook:pet"));
     });
 
