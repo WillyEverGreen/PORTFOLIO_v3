@@ -4,8 +4,45 @@
   overflow-x: hidden;
 }
 
-.pj-back span {
-  display: inline;
+.pj-back.theme {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1.5px solid var(--ink);
+  background: transparent;
+  color: var(--ink);
+  text-decoration: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.2s, border-color 0.25s, transform 0.25s var(--ease);
+}
+
+.pj-back.theme:hover {
+  background: var(--highlight);
+  transform: translateY(-2px);
+}
+
+.pj-back.theme:active {
+  transform: translateY(0) scale(0.96);
+}
+
+.pj-back__icon {
+  position: static !important;
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 0.25s var(--ease);
+}
+
+.pj-back.theme:hover .pj-back__icon {
+  transform: scale(1.14);
 }
 
 .pj-page .nav__links a.is-active::after {
@@ -1055,13 +1092,24 @@ body.is-modal {
 
 .pj-tree {
   position: absolute;
-  left: -24%;
+  left: -50%;
   bottom: 28%;
-  width: 56%;
+  width: 81%;
   height: auto;
   z-index: 1;
   pointer-events: none;
   filter: drop-shadow(0 14px 16px rgba(28, 27, 24, 0.18));
+}
+
+.pj-plant {
+  position: absolute;
+  left: -43%;
+  bottom: 32%;
+  width: 11%;
+  height: auto;
+  z-index: 2;
+  pointer-events: none;
+  filter: drop-shadow(0 6px 6px rgba(28, 27, 24, 0.18));
 }
 
 [data-theme="dark"] .pj-tree {
@@ -1127,8 +1175,40 @@ body.is-modal {
 }
 
 .pj-nook .cat__bubble {
-  right: 44%;
+  position: absolute;
+  right: auto;
+  left: 50%;
   bottom: calc(100% - 2px);
+  transform: translateX(-50%) translateY(8px) scale(0.9);
+  transform-origin: 50% 100%;
+  width: max-content;
+  max-width: min(280px, calc(100vw - 44px));
+  white-space: normal;
+  text-align: center;
+  border-radius: 16px;
+  padding: 10px 14px;
+  font-size: 13px;
+  line-height: 1.35;
+  box-shadow: 0 8px 24px rgba(28, 27, 24, 0.12);
+  z-index: 10;
+}
+
+.pj-nook .cat__bubble::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -5px;
+  transform: translateX(-50%) rotate(45deg);
+  width: 9px;
+  height: 9px;
+  background: var(--paper-2);
+  border-right: 1.5px solid var(--ink);
+  border-bottom: 1.5px solid var(--ink);
+}
+
+.pj-nook .cat__bubble.is-on {
+  opacity: 1;
+  transform: translateX(-50%);
 }
 
 .pj-nook__caption {
@@ -1447,13 +1527,19 @@ body.is-modal {
     width: 50%;
   }
 
-  .pj-back {
-    padding: 6px 12px;
-    font-size: 13px;
-  }
-
   .nav__name {
     font-size: 22px;
+  }
+
+  .pj-nook.is-picking .cat__bubble {
+    left: 50%;
+    transform: translateX(-50%) translateY(8px) scale(0.9);
+    bottom: calc(100% - 44px);
+    max-width: min(200px, calc(100vw - 32px));
+  }
+
+  .pj-nook.is-picking .cat__bubble.is-on {
+    transform: translateX(-50%);
   }
 
   .pj-pick span:last-child {
@@ -1473,9 +1559,18 @@ body.is-modal {
 /* while the toy tray is open, Mango's speech bubble moves out from under it to the side of his head */
 .pj-nook.is-picking .cat__bubble {
   right: auto;
-  left: 64%;
+  left: 60%;
   bottom: calc(100% - 52px);
-  max-width: 190px;
+  transform: translateY(8px) scale(0.9);
+  max-width: min(180px, calc(100vw - 48px));
+}
+
+.pj-nook.is-picking .cat__bubble.is-on {
+  transform: none;
+}
+
+.pj-nook.is-picking .cat__bubble::after {
+  display: none;
 }
 
 .pj-link {
