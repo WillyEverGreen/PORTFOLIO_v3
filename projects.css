@@ -1031,15 +1031,15 @@ body.is-modal {
 /* hero: Mango's bed. The cat styles (moods, sleeping, zzz, bubble) come from style.css via .catwrap */
 .pj-hero__stack {
   position: relative;
-  display: grid;
-  place-items: center;
+  width: 100%;
 }
 
 .pj-nook {
   position: relative;
-  /* never taller than what is left of the first screen once the nav and hero padding are taken off */
-  width: min(100%, 560px, calc((100svh - 190px) / 0.95));
+  width: 100%;
+  max-width: min(560px, calc((100svh - 190px) / 0.95));
   aspect-ratio: 100 / 95;
+  margin: 0 auto;
 }
 
 .pj-nook__glow {
@@ -1055,7 +1055,7 @@ body.is-modal {
 
 .pj-tree {
   position: absolute;
-  left: -50%;
+  left: -24%;
   bottom: 28%;
   width: 56%;
   height: auto;
@@ -1179,15 +1179,24 @@ body.is-modal {
 @media (max-width: 900px) {
   .pj-hero {
     grid-template-columns: 1fr;
+    min-height: 0;
+    gap: 36px;
+    padding-bottom: 40px;
   }
 
   .pj-hero__stack {
-    max-width: 420px;
+    max-width: 440px;
     margin: 0 auto;
   }
 
-  .pj-hero {
-    min-height: 0;
+  .pj-nook {
+    max-width: 420px;
+  }
+
+  .pj-tree {
+    left: -18%;
+    bottom: 26%;
+    width: 52%;
   }
 }
 
@@ -1418,6 +1427,35 @@ body.is-modal {
 }
 
 @media (max-width: 480px) {
+  .pj-hero {
+    gap: 24px;
+    padding-top: 88px;
+    padding-bottom: 24px;
+  }
+
+  .pj-hero__stack {
+    max-width: 320px;
+  }
+
+  .pj-nook {
+    max-width: 300px;
+  }
+
+  .pj-tree {
+    left: -14%;
+    bottom: 24%;
+    width: 50%;
+  }
+
+  .pj-back {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+
+  .nav__name {
+    font-size: 22px;
+  }
+
   .pj-pick span:last-child {
     font-size: 9.5px;
   }
