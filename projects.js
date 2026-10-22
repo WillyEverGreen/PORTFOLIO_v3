@@ -148,7 +148,7 @@
   };
 
   const renderPreview = () => {
-    els.preview.innerHTML = projects.map((p) => `<img data-id="${p.id}" src="${p.image}" alt="" decoding="async" />`).join("");
+    els.preview.innerHTML = projects.map((p) => `<img data-id="${p.id}" data-title="${escapeHtml(p.title)}" src="${p.image}" alt="" decoding="async" />`).join("");
   };
 
   const shown = (container) => $$(":scope > :not(.is-hidden)", container);
