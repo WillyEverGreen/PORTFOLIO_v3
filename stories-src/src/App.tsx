@@ -160,7 +160,7 @@ function Hero() {
 
 function ChatHeader() {
   return (
-    <div className="sticky top-[65px] z-40 border-y border-line bg-paper2/90 backdrop-blur-md">
+    <div className="border-y border-line bg-paper2">
       <div className="mx-auto flex max-w-[1200px] items-center gap-3 px-[clamp(16px,4vw,40px)] py-3">
         <span className="relative grid size-10 place-items-center rounded-full border-[1.5px] border-ink bg-peach">
           <Mango className="size-9 translate-y-0.5" />
@@ -170,7 +170,7 @@ function ChatHeader() {
           <p className="font-bold">Mango, Sai's cat</p>
           <p className="text-[13px] text-muted">online &middot; watched him build all of it</p>
         </div>
-        <span className="ml-auto hidden text-[13px] text-muted sm:block">Scroll to keep chatting</span>
+        <span className="ml-auto hidden text-[13px] text-muted sm:block">Scroll down to read the chat</span>
       </div>
     </div>
   )
@@ -204,8 +204,8 @@ function Why() {
           </div>
         </div>
         <div className="mt-14 max-w-[900px]">
-          <ScrollReveal baseOpacity={0.12} enableBlur blurStrength={4} baseRotation={0} textClassName="font-serif text-[clamp(30px,3.6vw,52px)] leading-[1.1]">
-            So he built the shortest path from one screen to another. Paste or drop, get a link, walk away. Nothing to log in to, so nothing to forget to log out of.
+          <ScrollReveal baseOpacity={0.12} enableBlur blurStrength={4} baseRotation={0} textClassName="font-serif text-[clamp(30px,3.6vw,52px)] leading-[1.1] [text-wrap:pretty]">
+            So he built the shortest path from one screen to another. Paste or drop, get a link, walk away. Nothing to log in to, so nothing to forget to log out of.
           </ScrollReveal>
         </div>
       </Reply>
@@ -396,15 +396,15 @@ function Terminalish() {
 
 /* a bento that fills its grid exactly, so every row and the bottom edge line up.
    phones: 2 columns, desktop: 4 columns by 4 rows of equal height */
-const GALLERY = [
+const GALLERY: { id: string; title: string; cls: string; pos?: string }[] = [
   { id: 'dsa-lab-4-clip', title: 'DSA Lab 4, rendered', cls: 'col-span-2 md:row-span-2' },
   { id: 'phone-lab-week-7', title: 'Lab files on a phone', cls: 'row-span-2' },
   { id: 'phone-dsa-lab-4', title: 'The same code on a phone', cls: 'row-span-2' },
   { id: 'os-lab-chart-preview', title: 'OS Lab 6 graph, in the lightbox', cls: 'col-span-2' },
   { id: 'zip-inspector', title: 'Peek inside a zip', cls: 'col-span-2' },
   { id: 'livepad-pepper', title: 'A group project in a Live Pad', cls: 'col-span-2' },
-  { id: 'viva-notes-locked', title: 'What everyone else sees', cls: '' },
-  { id: 'clip-landing', title: 'The front door', cls: '' },
+  { id: 'viva-notes-locked', title: 'What everyone else sees', cls: '', pos: 'object-center' },
+  { id: 'clip-landing', title: 'The front door', cls: '', pos: 'object-center' },
 ]
 
 function Gallery() {
@@ -415,12 +415,15 @@ function Gallery() {
     <Exchange id="gallery">
       <Ask>Show me everything.</Ask>
       <Reply lead={<>Every one of these is the real app with Sai's real lab work in it. Tap one to see it big.</>}>
-        <div className="grid grid-flow-dense auto-rows-[150px] grid-cols-2 gap-3 sm:auto-rows-[190px] md:auto-rows-[200px] md:grid-cols-4 md:gap-4">
+        <div className="grid grid-flow-dense auto-rows-[184px] grid-cols-2 gap-3 sm:auto-rows-[224px] md:auto-rows-[234px] md:grid-cols-4 md:gap-4">
           {GALLERY.map((g, i) => (
             <AnimatedContent key={g.id} distance={30} delay={(i % 4) * 0.06} className={`${g.cls} h-full`}>
-              <button type="button" onClick={() => setOpen(i)} className="group relative block size-full overflow-hidden rounded-2xl border-[1.5px] border-ink bg-[#0b0b0b] text-left transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-hard focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
-                <img src={shot(g.id)} alt={g.title} loading="lazy" className="size-full object-cover object-left-top transition-transform duration-700 group-hover:scale-[1.04]" />
-                <span className="absolute inset-x-2 bottom-2 rounded-lg bg-paper/90 px-3 py-1.5 text-[13px] font-medium text-ink backdrop-blur-sm">{g.title}</span>
+              <button type="button" onClick={() => setOpen(i)} className="group flex size-full flex-col text-left focus-visible:outline-none">
+                <span className="block min-h-0 flex-1 overflow-hidden rounded-2xl border-[1.5px] border-ink bg-[#0b0b0b] transition-all group-hover:-translate-x-0.5 group-hover:-translate-y-0.5 group-hover:shadow-hard group-focus-visible:outline-2 group-focus-visible:outline-offset-2 group-focus-visible:outline-accent">
+                  <img src={shot(g.id)} alt={g.title} loading="lazy" className={`size-full object-cover transition-transform duration-700 group-hover:scale-[1.04] ${g.pos ?? 'object-left-top'}`} />
+                </span>
+                {/* the caption sits under the picture, in the same italic as every other caption here */}
+                <span className="mt-2 block h-6 truncate font-serif text-[17px] leading-6 text-muted italic">{g.title}</span>
               </button>
             </AnimatedContent>
           ))}

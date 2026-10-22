@@ -130,7 +130,8 @@ const ScrollReveal: React.FC<ScrollRevealProps> = ({
 
   const splitText = useMemo(() => {
     if (text === null) return null;
-    return text.split(/(\s+)/).map((word, index) =>
+    // split on ordinary whitespace only, so a non-breaking space keeps two words together
+    return text.split(/([ \t\r\n]+)/).map((word, index) =>
       word.trim() === '' ? (
         word
       ) : (
