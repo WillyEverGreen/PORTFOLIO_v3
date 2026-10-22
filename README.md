@@ -2,7 +2,7 @@
   <img src="favicon.svg" alt="Sai Balkawade Logo" width="96" height="96" />
 </p>
 
-<h1 align="center">Sai Balkawade — Interactive Portfolio</h1>
+<h1 align="center">Sai Balkawade, Interactive Portfolio</h1>
 
 <p align="center">
   <b>A tactile, high-performance personal portfolio built with zero framework overhead.</b><br />
@@ -66,7 +66,8 @@ Every element is handcrafted using semantic HTML5, modern CSS3 with fluid design
 - Instant layout switcher supporting **Index View** (compact tabular data) and **Gallery View** (rich visual cards).
 
 ### ♟️ 6. Playable Knight Puzzle
-- Integrated mini-chess experience powered by `chessboard-element` and `chess.js` directly on the homepage.
+- Daily mate-in-one and mate-in-two puzzles on the homepage, using `gchessboard` for the board and `chess.js` for the rules.
+- A case study for Clip at `/clip`, told as a chat with Mango, with real screenshots of the app.
 
 ### 🌓 7. View Transition Theme Ripple
 - Seamless toggle between parchment light mode and obsidian dark mode utilizing the modern View Transitions API with circular ripple animations.
@@ -103,12 +104,14 @@ sai-dipak-portfolio/
 ├── ⚡ sfx.js                # Procedural Web Audio API sound generator
 ├── ⚙️ vercel.json           # Vercel deployment config (clean URLs, caching, security headers)
 ├── 📦 package.json          # Development scripts and project metadata
-├── 🔒 package-lock.json     # Dependency lockfile
 ├── 🛡️ .gitignore            # Git exclusion rules for node_modules, logs, and OS caches
+├── 🚫 .vercelignore         # Keeps the story source and README off the live site
 ├── 🖼️ favicon.svg           # High-resolution vector brand icon
 ├── 📁 assets/               # Static documents (Sai_Balkawade_Resume.pdf)
-├── 📁 img/                  # High-resolution project screenshots and assets
-├── 📁 lib/                  # Bundled chess libraries (chess.js, chessboard-element)
+├── 📁 img/                  # Project screenshots (WebP, 1200px wide)
+├── 📁 lib/                  # Chess libraries (chess.js, gchessboard)
+├── 📁 clip/                 # Built Clip case study, served at /clip (do not edit by hand)
+├── 📁 stories-src/          # React source for the case study; `npm run build:clip` rebuilds clip/
 └── 📁 vendor/               # Local production vendor libraries (GSAP, ScrollTrigger, Matter.js)
 ```
 

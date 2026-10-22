@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clip, a case study | Sai Balkawade</title>
+    <meta name="description" content="The story of Clip: why a student got tired of signing in on lab PCs, and how one lab assignment now moves between screens in ten seconds, encrypted the whole way." />
+    <meta name="theme-color" content="#f3ede2" />
+    <meta property="og:title" content="Clip, a case study | Sai Balkawade" />
+    <meta property="og:description" content="One lab assignment, one shared computer, and the ten seconds in between." />
+    <meta property="og:image" content="/clip/screens/dsa-lab-4-clip.webp" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+    <script>
+      /* same theme key as the rest of the portfolio, applied before first paint */
+      (function () {
+        var t = "light";
+        try {
+          var saved = localStorage.getItem("theme");
+          if (saved === "dark" || saved === "light") t = saved;
+          else if (window.matchMedia("(prefers-color-scheme: dark)").matches) t = "dark";
+        } catch (e) {}
+        document.documentElement.setAttribute("data-theme", t);
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

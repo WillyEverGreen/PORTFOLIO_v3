@@ -715,41 +715,26 @@
       }
 ]
 
-    // Deterministic Daily Puzzle Selection
-    const getDateSeed = (dateStr) => {
-      let hash = 0;
-      for (let i = 0; i < dateStr.length; i++) {
-        hash = (hash << 5) - hash + dateStr.charCodeAt(i);
-        hash |= 0;
+    /* Daily puzzles: each pool is shuffled once in a fixed order, and every day takes the next
+       slice of it. Neighbouring days never share a puzzle, and the whole pool comes round before
+       anything repeats (20 mate-in-ones at 3 a day, 10 mate-in-twos at 2 a day). */
+    const shuffled = (list, seed) => {
+      const out = list.slice();
+      let s = seed;
+      const rnd = () => ((s = (s * 9301 + 49297) % 233280) / 233280);
+      for (let i = out.length - 1; i > 0; i--) {
+        const j = Math.floor(rnd() * (i + 1));
+        [out[i], out[j]] = [out[j], out[i]];
       }
-      return Math.abs(hash);
+      return out;
     };
-
-    const seededRandom = (seed) => {
-      const x = Math.sin(seed) * 10000;
-      return x - Math.floor(x);
-    };
+    const M1 = shuffled(PUZZLES.filter((p) => p.type === "m1"), 7);
+    const M2 = shuffled(PUZZLES.filter((p) => p.type === "m2"), 13);
+    const take = (pool, count, day) => Array.from({ length: count }, (_, k) => pool[(day * count + k) % pool.length]);
 
     const getDailyPuzzles = (dateStr) => {
-      const m1List = PUZZLES.filter((p) => p.type === "m1");
-      const m2List = PUZZLES.filter((p) => p.type === "m2");
-      const seed = getDateSeed(dateStr);
-      const chosen = [];
-
-      const m1Indices = [...Array(m1List.length).keys()];
-      for (let i = 0; i < 3; i++) {
-        const s = seed + i * 19;
-        const rIdx = Math.floor(seededRandom(s) * m1Indices.length);
-        chosen.push(m1List[m1Indices.splice(rIdx, 1)[0]]);
-      }
-
-      const m2Indices = [...Array(m2List.length).keys()];
-      for (let i = 0; i < 2; i++) {
-        const s = seed + (i + 3) * 37;
-        const rIdx = Math.floor(seededRandom(s) * m2Indices.length);
-        chosen.push(m2List[m2Indices.splice(rIdx, 1)[0]]);
-      }
-      return chosen;
+      const day = Math.floor(Date.parse(dateStr + "T00:00:00Z") / 86400000);
+      return [...take(M1, 3, day), ...take(M2, 2, day)];
     };
 
     // State
@@ -779,7 +764,8 @@
 
     const updateBadges = () => {
       const solvedCount = solvedStatus.filter(Boolean).length;
-      if (streakBadge) streakBadge.textContent = `Solved ${solvedCount} / 5`;
+      const label = now.toLocaleDateString("en-IN", { day: "numeric", month: "short" });
+      if (streakBadge) streakBadge.textContent = `${label} · Solved ${solvedCount} / 5`;
     };
 
     const updatePillsUI = () => {

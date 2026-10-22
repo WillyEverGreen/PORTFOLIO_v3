@@ -60,6 +60,24 @@
           "value": "public, max-age=3600, must-revalidate"
         }
       ]
+    },
+    {
+      "source": "/clip/assets/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/clip/screens/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=2592000, stale-while-revalidate=604800"
+        }
+      ]
     }
   ]
 }

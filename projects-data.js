@@ -8,7 +8,7 @@ window.PROJECTS = [
     "kicker": "Zero-knowledge pastebin and real-time collab pad",
     "desc": "Share text and files with expiring links. Everything is encrypted in your browser before it leaves, so the server never sees your data.",
     "stack": "React, TypeScript, Cloudflare Workers, Hono",
-    "image": "img/clip.jpg",
+    "image": "img/clip.webp",
     "cats": [
       "web",
       "tools",
@@ -16,6 +16,7 @@ window.PROJECTS = [
     ],
     "live": "https://clip.foo.ng/about",
     "code": "https://github.com/WillyEverGreen/clip",
+    "caseStudy": "clip/",
     "points": [
       "Architecture. An ephemeral file and text sharing platform with a real-time collaborative Live Pad, synchronised over WebSockets.",
       "Security. Client-side zero-knowledge encryption using PBKDF2 and AES-256-GCM. Plaintext and keys never touch the server.",
@@ -28,7 +29,7 @@ window.PROJECTS = [
     "kicker": "Peer-to-peer resource sharing for campuses",
     "desc": "Borrow what someone nearby already has. Escrow-secured deposits, a nine-stage borrowing lifecycle and AI bundles for what you need. 1st Runner Up at Thakur Web Fusion 2.0.",
     "stack": "Next.js, React, TypeScript, Tailwind CSS",
-    "image": "img/campus-circular.jpg",
+    "image": "img/campus-circular.webp",
     "cats": [
       "web"
     ],
@@ -46,7 +47,7 @@ window.PROJECTS = [
     "kicker": "Portfolio optimizer with autonomous risk safeguards",
     "desc": "Builds portfolios that minimise tail risk, then watches live market data and trips a three-tier circuit breaker when limits are breached.",
     "stack": "Next.js, FastAPI, Python, CVXPY",
-    "image": "img/capital-ai.jpg",
+    "image": "img/capital-ai.webp",
     "cats": [
       "ai",
       "web"
@@ -65,7 +66,7 @@ window.PROJECTS = [
     "kicker": "Household tap monitoring for Smart India Hackathon 2026",
     "desc": "Watches every household tap connection in a village, minute by minute, and tells the Gram Panchayat the moment one stops working. Our SIH 2026 submission (PS SIH26255) as Team WakeByte.",
     "stack": "JavaScript, Three.js, GSAP",
-    "image": "img/jalnet.jpg",
+    "image": "img/jalnet.webp",
     "cats": [
       "ai",
       "web"
@@ -84,7 +85,7 @@ window.PROJECTS = [
     "kicker": "AI legal research engine",
     "desc": "Ask a question about Indian criminal law and get an answer that names the exact IPC and BNS sections it relies on.",
     "stack": "React, Node.js, ChromaDB, Llama 3.1",
-    "image": "img/legal-ai.jpg",
+    "image": "img/legal-ai.webp",
     "cats": [
       "ai"
     ],
@@ -103,7 +104,7 @@ window.PROJECTS = [
     "kicker": "Autonomous SRE dashboard",
     "desc": "A dashboard that watches services, spots incidents early and suggests fixes. A demo of how an autonomous ops tool could work.",
     "stack": "TypeScript, React",
-    "image": "img/loop.jpg",
+    "image": "img/loop.webp",
     "cats": [
       "ai",
       "web"
@@ -122,7 +123,7 @@ window.PROJECTS = [
     "kicker": "Territory game for runners",
     "desc": "Run or walk a GPS loop and claim the streets inside it on a live shared map. Built with a friend.",
     "stack": "Next.js, React, GPS, Live map",
-    "image": "img/geoclash.jpg",
+    "image": "img/geoclash.webp",
     "cats": [
       "games",
       "web"
@@ -141,7 +142,7 @@ window.PROJECTS = [
     "kicker": "AI DSA companion",
     "desc": "A revision app that schedules spaced repetition for the topics you're weakest at, with hints that unlock one step at a time.",
     "stack": "React, TypeScript, Node.js, MongoDB, Redis",
-    "image": "img/recode.jpg",
+    "image": "img/recode.webp",
     "cats": [
       "ai",
       "web"
@@ -160,7 +161,7 @@ window.PROJECTS = [
     "kicker": "Satellite tracker and sky viewer",
     "desc": "Follow the ISS and satellites live, check space weather, or point your phone at the sky to see what's overhead.",
     "stack": "React, public space APIs",
-    "image": "img/spacescope.jpg",
+    "image": "img/spacescope.webp",
     "cats": [
       "web"
     ],
@@ -178,7 +179,7 @@ window.PROJECTS = [
     "kicker": "AI trip planner",
     "desc": "Say where you're going and for how long. It plans each day and gives you a rough budget.",
     "stack": "React, Firebase, LLMs",
-    "image": "img/journi.jpg",
+    "image": "img/journi.webp",
     "cats": [
       "ai",
       "web"
@@ -197,7 +198,7 @@ window.PROJECTS = [
     "kicker": "Hands-on security course lab",
     "desc": "Run classic and modern ciphers, hashes and a man in the middle attack, all in the browser.",
     "stack": "JavaScript, Web Crypto API",
-    "image": "img/crypto.jpg",
+    "image": "img/crypto.webp",
     "cats": [
       "security"
     ],
@@ -215,7 +216,7 @@ window.PROJECTS = [
     "kicker": "Private headless browser API",
     "desc": "A hosted headless browser you call over HTTP. Send a URL and get back rendered HTML, element text, a screenshot, a PDF or the result of your own JavaScript.",
     "stack": "Express, Playwright, Docker",
-    "image": "img/headlock.jpg",
+    "image": "img/headlock.webp",
     "cats": [
       "tools"
     ],
@@ -233,7 +234,7 @@ window.PROJECTS = [
     "kicker": "Stateful packet filtering, visualised",
     "desc": "PacketGuard lets you craft requests from three clients, push them through a stateful firewall and watch every packet get allowed or blocked.",
     "stack": "Web app, networking",
-    "image": "img/firewall.jpg",
+    "image": "img/firewall.webp",
     "cats": [
       "security",
       "web"
@@ -253,7 +254,7 @@ window.PROJECTS = [
     "kicker": "A crawler brain for scrapers",
     "desc": "A Python package that gives scrapers and crawlers a brain, published on PyPI as acon-intel.",
     "stack": "Python, PyPI",
-    "image": "img/acon.jpg",
+    "image": "img/acon.webp",
     "cats": [
       "tools"
     ],

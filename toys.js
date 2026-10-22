@@ -93,23 +93,27 @@
   const buildStatics = () => {
     Composite.remove(engine.world, statics);
     const t = 200;
-    const wall = (x, y, w, h) => Bodies.rectangle(x, y, w, h, { isStatic: true, restitution: 0.5, friction: 0.4 });
-    /* the chest is solid: toys can be thrown onto its lid-line and rest there */
-    const chestTop = chest.offsetTop + chest.offsetHeight * 0.5;
-    const chestBox = Bodies.rectangle(
-      chest.offsetLeft + chest.offsetWidth / 2,
-      (chestTop + floorY) / 2,
-      chest.offsetWidth * 0.9,
-      Math.max(10, floorY - chestTop),
-      { isStatic: true, restitution: 0.4, friction: 0.5 }
-    );
-    statics = [
-      chestBox,
+    /* Matter's collision code crashes on zero-size bodies, so nothing is ever narrower than 1px */
+    const wall = (x, y, w, h) => Bodies.rectangle(x, y, Math.max(1, w), Math.max(1, h), { isStatic: true, restitution: 0.5, friction: 0.4 });
+    statics = [];
+    /* the chest is solid: toys can be thrown onto its lid-line and rest there. On small
+       screens the chest is hidden and measures 0 wide, so it only joins the world when visible */
+    if (chest.offsetWidth > 0) {
+      const chestTop = chest.offsetTop + chest.offsetHeight * 0.5;
+      statics.push(Bodies.rectangle(
+        chest.offsetLeft + chest.offsetWidth / 2,
+        (chestTop + floorY) / 2,
+        chest.offsetWidth * 0.9,
+        Math.max(10, floorY - chestTop),
+        { isStatic: true, restitution: 0.4, friction: 0.5 }
+      ));
+    }
+    statics.push(
       wall(W / 2, floorY + t / 2, W * 3, t),
       wall(-t / 2 + 6 * unit, H / 2, t, H * 6),
       wall(W + t / 2 - 6 * unit, H / 2, t, H * 6),
       wall(W / 2, -H * 0.9 - t / 2, W * 3, t),
-    ];
+    );
     Composite.add(engine.world, statics);
   };
 
@@ -164,7 +168,8 @@
       body = Bodies.circle(x, y, w / 2 - 2 * unit, opts);
       Composite.add(engine.world, body);
     } else {
-      body = Bodies.rectangle(x, y, w, h * 0.8, { ...opts, chamfer: { radius: Math.min(def.chamfer * unit, h * 0.38) } });
+      // the corner radius can't exceed either half side, or Matter builds overlapping vertices that crash collisions
+      body = Bodies.rectangle(x, y, w, h * 0.8, { ...opts, chamfer: { radius: Math.min(def.chamfer * unit, h * 0.38, w * 0.38) } });
       Composite.add(engine.world, body);
     }
     if (drop) Body.setAngle(body, (Math.random() - 0.5) * 1.4);
@@ -448,11 +453,17 @@
     toys.forEach(draw);
   }
 
+  /* the scene can measure 0x0 (hidden on small screens, or not laid out yet). Physics bodies
+     built at that size come out as NaN and crash Matter's collisions, so wait for a real size */
+  const hasRoom = () => W > 0 && H > 0;
+
   const build = () => {
     measure();
-    buildStatics();
-    readChosen().forEach((id) => createToy(id, { drop: !reduceMotion }));
-    if (reduceMotion) settle();
+    if (hasRoom()) {
+      buildStatics();
+      readChosen().forEach((id) => createToy(id, { drop: !reduceMotion }));
+      if (reduceMotion) settle();
+    }
     syncPanel();
   };
 
@@ -470,17 +481,23 @@
   build();
   if (!reduceMotion) new IntersectionObserver(([entry]) => setRunning(entry.isIntersecting), { threshold: 0.05 }).observe(nook);
 
-  /* the toys are sized to the scene, so a resize starts them again with the same choice */
+  /* the toys are sized to the scene, so a size change starts them again with the same choice.
+     Watching the scene itself (not the window) also catches it going from 0x0 to visible */
   let resizeTimer;
-  window.addEventListener("resize", () => {
+  let lastSize = `${W}x${H}`;
+  new ResizeObserver(() => {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(() => {
-      const chosen = [...toys.keys()];
+      const size = `${nook.clientWidth}x${nook.clientHeight}`;
+      if (size === lastSize) return;
+      lastSize = size;
+      const chosen = toys.size ? [...toys.keys()] : readChosen();
       clearAll();
       measure();
+      if (!hasRoom()) return;
       buildStatics();
       chosen.forEach((id) => createToy(id, { drop: false }));
       if (reduceMotion) settle();
     }, 250);
-  });
+  }).observe(nook);
 })();

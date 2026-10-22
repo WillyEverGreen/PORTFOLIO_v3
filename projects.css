@@ -620,3 +620,7 @@ body.is-modal { overflow: hidden; }
 .pj-link:active { transform: translateY(0) scale(0.97); box-shadow: none; }
 [data-theme="dark"] .pj-link:hover { box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45); }
 .pj-view__thumb { box-shadow: none; }
+
+/* a project with a case study leads with it, filled in so it stands out from the external links */
+.pj-link--study { background: var(--ink); color: var(--paper); }
+.pj-link--study:hover { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }

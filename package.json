@@ -2,16 +2,11 @@
   "name": "sai-balkawade-portfolio",
   "version": "1.0.0",
   "private": true,
-  "description": "Personal portfolio of Sai Balkawade - Full-stack developer",
+  "description": "Personal portfolio of Sai Balkawade, full-stack developer",
   "scripts": {
     "dev": "npx serve .",
     "start": "npx serve .",
-    "build": "echo 'Static portfolio ready for deployment'"
-  },
-  "devDependencies": {
-    "@chrisoakman/chessboardjs": "^1.0.0",
-    "chess.js": "^1.4.0",
-    "chessboard-element": "^1.2.0",
-    "cm-chessboard": "^8.15.4"
+    "build": "echo 'Static portfolio, nothing to build. The Clip story is prebuilt into clip/'",
+    "build:clip": "npm --prefix stories-src run build"
   }
 }

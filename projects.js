@@ -54,7 +54,9 @@
   const linksHtml = (p) => {
     const live = `<a class="pj-link" href="${escapeHtml(p.live)}" target="_blank" rel="noopener">${escapeHtml(p.liveLabel || "Live demo")}${ARROW}</a>`;
     const code = p.code ? `<a class="pj-link" href="${escapeHtml(p.code)}" target="_blank" rel="noopener">Code${ARROW}</a>` : "";
-    return live + code;
+    // projects with a written case study get a link to it first
+    const study = p.caseStudy ? `<a class="pj-link pj-link--study" href="${escapeHtml(p.caseStudy)}">Read the story${ARROW}</a>` : "";
+    return study + live + code;
   };
 
   const tagsHtml = (p, max = Infinity) => `<ul class="pj-tags">${stackList(p).slice(0, max).map((t) => `<li>${escapeHtml(t)}</li>`).join("")}</ul>`;
@@ -135,6 +137,7 @@
           <p class="card__tags">${escapeHtml(p.stack)}</p>
           <div class="card__links">
             <button type="button" class="more" data-open="${p.id}">Details</button>
+            ${p.caseStudy ? `<a href="${escapeHtml(p.caseStudy)}">Read the story</a>` : ""}
             <a href="${escapeHtml(p.live)}" target="_blank" rel="noopener">${escapeHtml(p.liveLabel || "Live demo")}</a>
             ${p.code ? `<a href="${escapeHtml(p.code)}" target="_blank" rel="noopener">Code</a>` : ""}
           </div>

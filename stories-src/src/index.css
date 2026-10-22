@@ -1,0 +1,80 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* the portfolio's palette, so this page sits with the rest of the site */
+:root {
+  --paper: #f3ede2;
+  --paper-2: #fbf7ef;
+  --ink: #1c1b18;
+  --muted: #6b655b;
+  --line: rgba(28, 27, 24, 0.18);
+  --accent: #d9481c;
+  --accent-ink: #ffffff;
+  --highlight: #f0d98a;
+  --peach: #f9dfcd;
+  --sage: #d9dfd0;
+  --green: #2f7d5b;
+  color-scheme: light;
+}
+[data-theme="dark"] {
+  --paper: #151412;
+  --paper-2: #1e1d1a;
+  --ink: #f1ebdf;
+  --muted: #a39b8d;
+  --line: rgba(241, 235, 223, 0.2);
+  --accent: #ff7a4d;
+  --accent-ink: #151412;
+  --highlight: #4a4020;
+  --peach: #46302a;
+  --sage: #2c352d;
+  --green: #5cc59a;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-paper2: var(--paper-2);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-highlight: var(--highlight);
+  --color-peach: var(--peach);
+  --color-sage: var(--sage);
+  --color-green: var(--green);
+  --font-serif: "Instrument Serif", Georgia, "Times New Roman", serif;
+  --font-sans: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+  --shadow-hard: 6px 6px 0 var(--ink);
+  --shadow-hard-lg: 10px 10px 0 var(--ink);
+}
+
+html { background: var(--paper); }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; overflow-x: clip; }
+::selection { background: var(--highlight); color: var(--ink); }
+
+/* thin scrollbars, same as the portfolio */
+@supports selector(::-webkit-scrollbar) {
+  *::-webkit-scrollbar { width: 10px; height: 10px; background: transparent; }
+  *::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--accent) 55%, var(--paper)); border: 3px solid transparent; background-clip: padding-box; border-radius: 999px; }
+  *::-webkit-scrollbar-thumb:hover { background: var(--accent); background-clip: padding-box; }
+}
+@supports not selector(::-webkit-scrollbar) {
+  * { scrollbar-width: thin; scrollbar-color: color-mix(in srgb, var(--accent) 55%, var(--paper)) transparent; }
+}
+
+@keyframes blink { 50% { opacity: 0; } }
+@keyframes scanline { 0% { transform: translateY(0); } 100% { transform: translateY(100%); } }
+
+/* the portfolio's theme toggle (same as style.css .theme), so switching looks identical on every page */
+.theme-btn { position: relative; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid var(--ink); overflow: hidden; cursor: pointer; transition: background 0.2s, transform 0.3s cubic-bezier(.2, .8, .2, 1); }
+.theme-btn:hover { background: var(--highlight); transform: rotate(18deg); }
+.theme-btn svg { position: absolute; width: 20px; height: 20px; fill: none; stroke: var(--ink); stroke-width: 1.8; stroke-linecap: round; transition: transform 0.5s cubic-bezier(.2, .8, .2, 1), opacity 0.3s; }
+.theme-btn__moon { transform: translateY(140%) rotate(-60deg); opacity: 0; }
+[data-theme="dark"] .theme-btn__sun { transform: translateY(-140%) rotate(60deg); opacity: 0; }
+[data-theme="dark"] .theme-btn__moon { transform: none; opacity: 1; }
+::view-transition-old(root), ::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+::view-transition-old(root) { z-index: 1; }
+::view-transition-new(root) { z-index: 2; }
