@@ -671,7 +671,7 @@ g-chess-board.is-shaking {
 /* ---------- dialog ---------- */
 .dialog { margin: auto; width: min(92vw, 640px); max-height: 88vh; overflow: auto; padding: 0; border: 1.5px solid var(--ink); border-radius: 16px; background: var(--paper-2); color: var(--ink); }
 .dialog::backdrop { background: rgba(20, 19, 17, 0.55); }
-.dialog__close { position: absolute; top: 14px; right: 16px; width: 38px; height: 38px; border-radius: 50%; font-size: 26px; line-height: 1; border: 1.5px solid var(--ink); display: grid; place-items: center; transition: background 0.2s, color 0.2s, transform 0.3s var(--ease); }
+.dialog__close { position: absolute; z-index: 5; top: 14px; right: 16px; width: 38px; height: 38px; border-radius: 50%; font-size: 26px; line-height: 1; border: 1.5px solid var(--ink); display: grid; place-items: center; transition: background 0.2s, color 0.2s, transform 0.3s var(--ease); }
 .dialog__close:hover { background: var(--ink); color: var(--paper); transform: rotate(90deg); }
 .dialog__body { padding: clamp(24px, 4vw, 40px); }
 .dialog__body h3 { font-family: var(--serif); font-weight: 400; font-size: clamp(36px, 5vw, 52px); line-height: 1; padding-right: 50px; }
