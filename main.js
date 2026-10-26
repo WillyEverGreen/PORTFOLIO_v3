@@ -118,6 +118,9 @@
     requestAnimationFrame(focusClose);
     setTimeout(focusClose, 120);
     if (animate) {
+      /* the slide would briefly overflow the dialog and flash its scrollbar, so hide it while animating */
+      dialog.style.overflow = "hidden";
+      setTimeout(() => { dialog.style.overflow = ""; }, 800);
       /* animate the inner wrapper: transforming the <dialog> itself makes GSAP re-append it and drops it out of the top layer */
       gsap.fromTo(dialogBody, { opacity: 0, y: 30, scale: 0.96 }, { opacity: 1, y: 0, scale: 1, duration: 0.45, ease: "power3.out" });
       gsap.fromTo($$("li", dialogBody), { opacity: 0, x: -14 }, { opacity: 1, x: 0, duration: 0.45, stagger: 0.08, delay: 0.15, ease: "power2.out" });
@@ -128,6 +131,7 @@
     if (!dialog.open) return;
     window.dispatchEvent(new CustomEvent("mango:projectClose"));
     if (animate) {
+      dialog.style.overflow = "hidden";
       gsap.to(dialogBody, { opacity: 0, y: 20, scale: 0.97, duration: 0.25, ease: "power2.in", onComplete: () => dialog.close() });
     } else {
       dialog.close();
@@ -135,6 +139,7 @@
   };
   dialog.addEventListener("close", () => {
     root.style.overflow = "";
+    dialog.style.overflow = "";
     if (hasGsap) gsap.set(dialogBody, { clearProps: "all" });
     if (lastOpener) lastOpener.focus({ preventScroll: true });
   });
