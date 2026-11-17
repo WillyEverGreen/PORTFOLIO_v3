@@ -163,14 +163,35 @@
   };
 
   /* ================================================================
+     Professional Vector Festival Icons (crisp, colorful, retina-sharp)
+     ================================================================ */
+  const ICONS = {
+    calendar: `<svg viewBox="0 0 28 28" width="24" height="24" fill="none" aria-hidden="true"><rect x="3" y="5" width="22" height="20" rx="5" fill="#fdfaf3" stroke="#e8561f" stroke-width="1.8"/><path d="M3 11h22" stroke="#e8561f" stroke-width="1.8"/><path d="M3 8a3 3 0 0 1 3-3h16a3 3 0 0 1 3 3v3H3V8z" fill="#e8561f"/><rect x="7" y="2.5" width="2.4" height="5" rx="1.2" fill="#1c1b18"/><rect x="18.6" y="2.5" width="2.4" height="5" rx="1.2" fill="#1c1b18"/><circle cx="8" cy="16" r="1.4" fill="#d97706"/><circle cx="14" cy="16" r="1.4" fill="#d97706"/><circle cx="20" cy="16" r="1.4" fill="#d97706"/><circle cx="8" cy="21" r="1.4" fill="#d97706"/><path d="M14 19.5l.8 1.4 1.6.3-1.1 1.2.2 1.6-1.5-.7-1.5.7.3-1.6-1.2-1.2 1.6-.3z" fill="#e8561f"/></svg>`,
+    cat: `<svg viewBox="0 0 28 28" width="24" height="24" fill="none" aria-hidden="true"><path d="M5 14c0 6 4 10 9 10s9-4 9-10c0-5-4-9-9-9s-9 4-9 9z" fill="#f08a24"/><path d="M6 10L3 3l7 4z" fill="#f08a24"/><path d="M5.5 8.5L4 4.5l4.5 2.5z" fill="#f4a6a0"/><path d="M22 10l3-7-7 4z" fill="#f08a24"/><path d="M22.5 8.5L24 4.5l-4.5 2.5z" fill="#f4a6a0"/><ellipse cx="14" cy="18" rx="4.5" ry="3" fill="#fbe3c0"/><circle cx="10" cy="13.5" r="1.8" fill="#1c1b18"/><circle cx="18" cy="13.5" r="1.8" fill="#1c1b18"/><circle cx="9.4" cy="12.9" r=".6" fill="#fff"/><circle cx="17.4" cy="12.9" r=".6" fill="#fff"/><path d="M13.2 16.5l.8.8.8-.8" stroke="#e0455a" stroke-width="1.2" stroke-linecap="round"/></svg>`,
+    diwali: `<svg viewBox="0 0 28 28" width="24" height="24" fill="none" aria-hidden="true"><path d="M4 17c1.5 6 14.5 6 20 0-3-1.5-17-1.5-20 0z" fill="#c2410c"/><path d="M5 17c3-1 15-1 18 0-1 4-16 4-18 0z" fill="#ea580c"/><ellipse cx="14" cy="16.5" rx="9" ry="2" fill="#f59e0b"/><path d="M14 3c-2.5 4-4 7-4 9.5 0 2.5 1.8 4.5 4 4.5s4-2 4-4.5c0-2.5-1.5-5.5-4-9.5z" fill="#f97316"/><path d="M14 7c-1.2 2.5-2 4.2-2 5.8 0 1.5 1 2.7 2 2.7s2-1.2 2-2.7c0-1.6-.8-3.3-2-5.8z" fill="#fef08a"/></svg>`,
+    holi: `<svg viewBox="0 0 28 28" width="24" height="24" fill="none" aria-hidden="true"><circle cx="9" cy="10" r="5.5" fill="#ec4899"/><circle cx="18" cy="9" r="5" fill="#06b6d4"/><circle cx="14" cy="18" r="6" fill="#facc15"/><circle cx="8" cy="19" r="3.2" fill="#10b981"/><circle cx="21" cy="17" r="3" fill="#a855f7"/><circle cx="5" cy="14" r="1.5" fill="#f43f5e"/><circle cx="22" cy="12" r="1.4" fill="#3b82f6"/><circle cx="13" cy="5" r="1.6" fill="#fb923c"/></svg>`,
+    ganesh: `<svg viewBox="0 0 28 28" width="24" height="24" fill="none" aria-hidden="true"><path d="M14 4c-5 6-7 11-7 15 0 3 3 5 7 5s7-2 7-5c0-4-2-9-7-15z" fill="#f59e0b"/><path d="M14 4c-2 6-3 11-3 15 0 2.5 1.3 4.5 3 4.8 1.7-.3 3-2.3 3-4.8 0-4-1-9-3-15z" fill="#fbbf24"/><path d="M14 4v20" stroke="#d97706" stroke-width="1.2"/><path d="M14 6l-3.5 13M14 6l3.5 13" stroke="#d97706" stroke-width="1"/><path d="M13 10h2v4h-2z" fill="#dc2626"/><circle cx="14" cy="9" r=".8" fill="#fef08a"/></svg>`,
+    navratri: `<svg viewBox="0 0 28 28" width="24" height="24" fill="none" aria-hidden="true"><path d="M6 22L20 4" stroke="#ec4899" stroke-width="3.2" stroke-linecap="round"/><path d="M8 4l14 18" stroke="#06b6d4" stroke-width="3.2" stroke-linecap="round"/><path d="M10 17l4-5" stroke="#facc15" stroke-width="3.2"/><path d="M14 12l4 5" stroke="#facc15" stroke-width="3.2"/><circle cx="20" cy="4" r="2.2" fill="#e11d48"/><circle cx="8" cy="4" r="2.2" fill="#3b82f6"/><path d="M5 23l-2 3M23 23l2 3" stroke="#f59e0b" stroke-width="1.5" stroke-linecap="round"/></svg>`,
+    sankranti: `<svg viewBox="0 0 28 28" width="24" height="24" fill="none" aria-hidden="true"><path d="M14 3L23 12L14 21L5 12Z" fill="#0284c7"/><path d="M14 3L23 12L14 12Z" fill="#38bdf8"/><path d="M5 12L14 12L14 21Z" fill="#f59e0b"/><path d="M14 12L23 12L14 21Z" fill="#e11d48"/><path d="M14 3v18M5 12h18" stroke="#ffffff" stroke-width="1.2" opacity=".8"/><path d="M14 21l-3 4h6z" fill="#ef4444"/><path d="M14 24q2 2 0 3t2 1" stroke="#f59e0b" stroke-width="1.2" fill="none"/></svg>`,
+    christmas: `<svg viewBox="0 0 28 28" width="24" height="24" fill="none" aria-hidden="true"><path d="M7 19C9 9 14 5 19 6c3 1 3 5 1 8-2 3-5 5-13 5z" fill="#dc2626"/><path d="M19 6c2 0 4 2 4 4s-2 4-4 4" stroke="#dc2626" stroke-width="2"/><circle cx="23" cy="11" r="2.5" fill="#ffffff" stroke="#e2e8f0" stroke-width=".8"/><rect x="5" y="17" width="18" height="5.5" rx="2.75" fill="#ffffff" stroke="#e2e8f0" stroke-width=".8"/><circle cx="8" cy="20" r="1" fill="#f1f5f9"/><circle cx="14" cy="20" r="1" fill="#f1f5f9"/><circle cx="20" cy="20" r="1" fill="#f1f5f9"/></svg>`,
+    eid: `<svg viewBox="0 0 28 28" width="24" height="24" fill="none" aria-hidden="true"><path d="M17 5A10 10 0 1 0 23 20 8.5 8.5 0 1 1 17 5Z" fill="#f59e0b"/><path d="M16.5 6A9 9 0 1 0 21.5 19 7.5 7.5 0 1 1 16.5 6Z" fill="#fbbf24"/><path d="M20 7.5l.8 1.5 1.7.2-1.3 1.2.3 1.7-1.5-.8-1.5.8.3-1.7-1.3-1.2 1.7-.2z" fill="#10b981"/></svg>`,
+    gudipadwa: `<svg viewBox="0 0 28 28" width="24" height="24" fill="none" aria-hidden="true"><path d="M14 6v20" stroke="#78350f" stroke-width="1.8" stroke-linecap="round"/><path d="M10 9c0-3 8-3 8 0v2c0 2-8 2-8 0z" fill="#b45309"/><ellipse cx="14" cy="8.5" rx="3.8" ry="2" fill="#d97706"/><path d="M11 11q-4 3-2 8t5-1z" fill="#eab308"/><path d="M17 11q4 3 2 8t-5-1z" fill="#f97316"/><circle cx="12" cy="11.5" r="1.5" fill="#22c55e"/><circle cx="16" cy="11.5" r="1.5" fill="#22c55e"/><path d="M10 10.5h8" stroke="#dc2626" stroke-width="1.2"/></svg>`,
+    raksha: `<svg viewBox="0 0 28 28" width="24" height="24" fill="none" aria-hidden="true"><path d="M2 14h6M20 14h6" stroke="#dc2626" stroke-width="2" stroke-linecap="round"/><path d="M4 13h4M20 13h4" stroke="#f59e0b" stroke-width="1" stroke-linecap="round"/><circle cx="14" cy="14" r="6.5" fill="#f59e0b"/><circle cx="14" cy="14" r="5" fill="#b91c1c"/><circle cx="14" cy="14" r="2.8" fill="#fbbf24"/><circle cx="14" cy="14" r="1.4" fill="#ffffff"/><circle cx="14" cy="7.8" r="1" fill="#f59e0b"/><circle cx="14" cy="20.2" r="1" fill="#f59e0b"/><circle cx="7.8" cy="14" r="1" fill="#f59e0b"/><circle cx="20.2" cy="14" r="1" fill="#f59e0b"/></svg>`,
+    janmashtami: `<svg viewBox="0 0 28 28" width="24" height="24" fill="none" aria-hidden="true"><path d="M4 22L24 10" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round"/><circle cx="10" cy="18.5" r=".8" fill="#78350f"/><circle cx="13" cy="16.7" r=".8" fill="#78350f"/><circle cx="16" cy="14.9" r=".8" fill="#78350f"/><circle cx="19" cy="13.1" r=".8" fill="#78350f"/><path d="M22 10c0-5-4-7-7-7 0 3 2 7 7 7z" fill="#047857"/><path d="M20 9c0-3.5-2.5-5-5-5 0 2 1.5 5 5 5z" fill="#0284c7"/><circle cx="17.5" cy="6" r="1.5" fill="#f59e0b"/></svg>`,
+    dussehra: `<svg viewBox="0 0 28 28" width="24" height="24" fill="none" aria-hidden="true"><path d="M7 6C15 6 19 14 19 22" stroke="#d97706" stroke-width="2.4" stroke-linecap="round" fill="none"/><path d="M7 6L19 22" stroke="#94a3b8" stroke-width="1" stroke-dasharray="2 2"/><path d="M6 14L22 14" stroke="#ea580c" stroke-width="2.2" stroke-linecap="round"/><path d="M19 11l4 3-4 3z" fill="#dc2626"/><circle cx="14" cy="14" r="1.8" fill="#f59e0b"/></svg>`,
+    independence: `<svg viewBox="0 0 28 28" width="24" height="24" fill="none" aria-hidden="true"><circle cx="14" cy="14" r="10.5" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/><path d="M4 14A10.5 10.5 0 0 1 14 3.5 10.5 10.5 0 0 1 24 14Z" fill="#ff9933"/><path d="M4 14A10.5 10.5 0 0 0 14 24.5 10.5 10.5 0 0 0 24 14Z" fill="#138808"/><rect x="3.5" y="10.5" width="21" height="7" fill="#ffffff"/><circle cx="14" cy="14" r="3.2" fill="none" stroke="#000080" stroke-width="1"/><circle cx="14" cy="14" r=".8" fill="#000080"/><path d="M14 11v6M11 14h6M11.9 11.9l4.2 4.2M11.9 16.1l4.2-4.2" stroke="#000080" stroke-width=".7"/></svg>`
+  };
+
+  /* ================================================================
      Outfits Catalogue (12 festivals + normal)
      ================================================================ */
   const OUTFITS = {
     normal: {
       id: "normal",
-      icon: "🐱",
+      icon: ICONS.cat,
       name: "Normal Mango",
       note: "Everyday look",
+      dateTag: "Everyday",
       hideEars: false,
       preDays: 0,
       postDays: 0,
@@ -196,9 +217,10 @@
 
     diwali: {
       id: "diwali",
-      icon: "🪔",
+      icon: ICONS.diwali,
       name: "Diwali",
       note: "Maroon & gold shawl, tilak",
+      dateTag: "Autumn · Nov",
       hideEars: false,
       preDays: 7,
       postDays: 7,
@@ -232,9 +254,10 @@
 
     holi: {
       id: "holi",
-      icon: "🎨",
+      icon: ICONS.holi,
       name: "Holi",
       note: "Rainbow scarf, colour-splashed",
+      dateTag: "Spring · Mar",
       hideEars: false,
       preDays: 5,
       postDays: 5,
@@ -277,9 +300,10 @@
 
     ganesh: {
       id: "ganesh",
-      icon: "🐘",
+      icon: ICONS.ganesh,
       name: "Ganesh Chaturthi",
       note: "White & gold angavastram, tilak",
+      dateTag: "Bhadrapada · Sep",
       hideEars: false,
       preDays: 5,
       postDays: 15,
@@ -308,9 +332,10 @@
 
     navratri: {
       id: "navratri",
-      icon: "🪘",
+      icon: ICONS.navratri,
       name: "Navratri",
       note: "Garba cap & mirror-work vest",
+      dateTag: "Sharad · Oct",
       hideEars: true,
       preDays: 5,
       postDays: 14,
@@ -351,9 +376,10 @@
 
     sankranti: {
       id: "sankranti",
-      icon: "🪁",
+      icon: ICONS.sankranti,
       name: "Makar Sankranti",
       note: "Cool shades & blue muffler",
+      dateTag: "Harvest · Jan 14",
       hideEars: false,
       preDays: 5,
       postDays: 5,
@@ -386,9 +412,10 @@
 
     christmas: {
       id: "christmas",
-      icon: "🎄",
+      icon: ICONS.christmas,
       name: "Christmas",
       note: "Santa hat & snowflake scarf",
+      dateTag: "Winter · Dec 25",
       hideEars: true,
       preDays: 5,
       postDays: 11,
@@ -427,9 +454,10 @@
 
     eid: {
       id: "eid",
-      icon: "🌙",
+      icon: ICONS.eid,
       name: "Eid",
       note: "White kurta & embroidered cap",
+      dateTag: "Shawwal · Eid",
       hideEars: true,
       preDays: 5,
       postDays: 5,
@@ -462,9 +490,10 @@
 
     gudipadwa: {
       id: "gudipadwa",
-      icon: "🚩",
+      icon: ICONS.gudipadwa,
       name: "Gudi Padwa",
       note: "Saffron pheta, kurta & dupatta",
+      dateTag: "Chaitra · New Year",
       hideEars: true,
       preDays: 5,
       postDays: 5,
@@ -504,9 +533,10 @@
 
     raksha: {
       id: "raksha",
-      icon: "🧵",
+      icon: ICONS.raksha,
       name: "Raksha Bandhan",
       note: "Rakhi on the tail, tilak",
+      dateTag: "Shravana · Aug",
       hideEars: false,
       preDays: 5,
       postDays: 5,
@@ -537,9 +567,10 @@
 
     janmashtami: {
       id: "janmashtami",
-      icon: "🦚",
+      icon: ICONS.janmashtami,
       name: "Janmashtami",
       note: "Mor-pankh crown, pearls & flute",
+      dateTag: "Gokulashtami · Aug",
       hideEars: false,
       preDays: 5,
       postDays: 5,
@@ -579,9 +610,10 @@
 
     dussehra: {
       id: "dussehra",
-      icon: "🏹",
+      icon: ICONS.dussehra,
       name: "Dussehra",
       note: "Royal cape, gold mukut, arrows",
+      dateTag: "Vijayadashami · Oct",
       hideEars: false,
       preDays: 5,
       postDays: 5,
@@ -625,9 +657,10 @@
 
     independence: {
       id: "independence",
-      icon: "🇮🇳",
+      icon: ICONS.independence,
       name: "Independence Day",
       note: "Waving tiranga & cheek paint",
+      dateTag: "National · Aug 15",
       hideEars: false,
       preDays: 5,
       postDays: 5,
@@ -1004,55 +1037,106 @@
   let currentDateOverride = null;
   let currentOutfitOverride = null;
 
-  /* Safe Storage Wrapper */
-  const safeStorage = {
+  /* Detect page reload (e.g. Ctrl+Shift+R, Ctrl+R, or browser reload button) */
+  const isPageReload = () => {
+    try {
+      const navEntries = performance.getEntriesByType && performance.getEntriesByType("navigation");
+      if (navEntries && navEntries.length > 0) {
+        return navEntries[0].type === "reload";
+      }
+      if (window.performance && window.performance.navigation) {
+        return window.performance.navigation.type === 1;
+      }
+    } catch (e) { }
+    return false;
+  };
+
+  /* Safe Session Storage Wrapper (session-scoped; does not persist on disk across browser close) */
+  const memStorage = {};
+  const safeSessionStorage = {
     get: (key) => {
       try {
-        const store = typeof window !== "undefined" ? (window.sessionStorage || window.localStorage) : null;
-        return (window.sessionStorage && window.sessionStorage.getItem(key)) ||
-               (window.localStorage && window.localStorage.getItem(key)) || null;
-      } catch (e) {
-        return null;
-      }
+        if (typeof window !== "undefined" && window.sessionStorage) {
+          return window.sessionStorage.getItem(key);
+        }
+      } catch (e) { }
+      return memStorage[key] || null;
     },
     set: (key, val) => {
-      try { if (window.sessionStorage) window.sessionStorage.setItem(key, val); } catch (e) { }
-      try { if (window.localStorage) window.localStorage.setItem(key, val); } catch (e) { }
+      try {
+        if (typeof window !== "undefined" && window.sessionStorage) {
+          window.sessionStorage.setItem(key, val);
+        }
+      } catch (e) { }
+      memStorage[key] = String(val);
     },
     remove: (key) => {
-      try { if (window.sessionStorage) window.sessionStorage.removeItem(key); } catch (e) { }
-      try { if (window.localStorage) window.localStorage.removeItem(key); } catch (e) { }
+      try {
+        if (typeof window !== "undefined" && window.sessionStorage) {
+          window.sessionStorage.removeItem(key);
+        }
+      } catch (e) { }
+      delete memStorage[key];
+    }
+  };
+
+  // Explicitly purge any persistent wardrobe overrides from localStorage
+  // so closing & reopening the site always returns to the natural calendar outfit.
+  try {
+    if (typeof window !== "undefined" && window.localStorage) {
+      window.localStorage.removeItem("mango_active_outfit");
+      window.localStorage.removeItem("mango_user_outfit");
+    }
+  } catch (e) { }
+
+  // Cross-tab synchronization via BroadcastChannel without writing to disk/localStorage
+  let wardrobeChannel = null;
+  try {
+    if (typeof window !== "undefined" && "BroadcastChannel" in window) {
+      wardrobeChannel = new BroadcastChannel("mango_wardrobe_sync");
+      wardrobeChannel.onmessage = (e) => {
+        if (!e.data) return;
+        if (e.data.type === "setOutfit") {
+          const val = e.data.outfit;
+          if (!val || val === "auto") {
+            currentOutfitOverride = null;
+          } else if (OUTFITS[val.toLowerCase()] || val === "normal") {
+            currentOutfitOverride = val.toLowerCase();
+          }
+          updateAllCats();
+          updateStatusPill();
+        }
+      };
+    }
+  } catch (e) { }
+
+  const broadcastOutfitChange = (outfitId) => {
+    if (wardrobeChannel) {
+      try {
+        wardrobeChannel.postMessage({ type: "setOutfit", outfit: outfitId });
+      } catch (e) { }
     }
   };
 
   const loadStoredOutfit = () => {
-    const stored = safeStorage.get("mango_active_outfit");
+    // If the user reloaded (e.g. Ctrl+Shift+R or browser reload), reset to natural calendar outfit
+    if (isPageReload()) {
+      safeSessionStorage.remove("mango_active_outfit");
+      currentOutfitOverride = null;
+      return;
+    }
+
+    const stored = safeSessionStorage.get("mango_active_outfit");
     if (stored) {
       if (stored === "auto") {
         currentOutfitOverride = null;
       } else if (OUTFITS[stored.toLowerCase()] || stored === "normal") {
         currentOutfitOverride = stored.toLowerCase();
       } else {
-        safeStorage.remove("mango_active_outfit");
+        safeSessionStorage.remove("mango_active_outfit");
       }
     }
   };
-
-  // Cross-page and cross-tab synchronization
-  try {
-    window.addEventListener("storage", (e) => {
-      if (e.key === "mango_active_outfit") {
-        const val = e.newValue;
-        if (!val || val === "auto") {
-          currentOutfitOverride = null;
-        } else if (OUTFITS[val.toLowerCase()] || val === "normal") {
-          currentOutfitOverride = val.toLowerCase();
-        }
-        updateAllCats();
-        updateStatusPill();
-      }
-    });
-  } catch (e) { }
 
   const updateAllCats = () => {
     let active;
@@ -1099,12 +1183,47 @@
     const active = getActiveFestival(currentDateOverride || new Date());
     if (currentOutfitOverride) {
       const o = OUTFITS[currentOutfitOverride.toLowerCase()] || OUTFITS.normal;
-      pill.innerHTML = `<span class="status-dot is-override"></span><span>Preview Mode: <strong>${o.name}</strong> &middot; Click &ldquo;Auto (Calendar)&rdquo; to follow dates</span>`;
+      pill.innerHTML = `<span class="status-dot is-override"></span><span>Wearing <strong>${o.name}</strong></span>`;
     } else if (active.isActive) {
-      pill.innerHTML = `<span class="status-dot"></span><span>Celebrating: <strong>${active.name}</strong> (${active.diffDays === 0 ? "Today!" : (active.diffDays > 0 ? "+" + active.diffDays + "d" : active.diffDays + "d")})</span>`;
+      pill.innerHTML = `<span class="status-dot"></span><span>Celebrating <strong>${active.name}</strong></span>`;
     } else {
-      pill.innerHTML = `<span class="status-dot"></span><span>Today: <strong>Natural Everyday Fur</strong> &middot; Active automatically on festival dates</span>`;
+      pill.innerHTML = `<span class="status-dot"></span><span>Everyday Fur</span>`;
     }
+  };
+
+  const enableSmoothScroll = (container) => {
+    if (!container) return;
+    let target = container.scrollTop;
+    let current = container.scrollTop;
+    let isMoving = false;
+
+    container.addEventListener("wheel", (e) => {
+      // Allow trackpad fine deltas to behave naturally
+      if (Math.abs(e.deltaY) < 15 && e.deltaMode === 0) return;
+      const max = container.scrollHeight - container.clientHeight;
+      if (max <= 0) return;
+      if ((container.scrollTop <= 0 && e.deltaY < 0) || (container.scrollTop >= max && e.deltaY > 0)) {
+        return;
+      }
+      e.preventDefault();
+      target = Math.max(0, Math.min(max, target + e.deltaY * 0.9));
+      if (!isMoving) {
+        isMoving = true;
+        const step = () => {
+          const diff = target - current;
+          if (Math.abs(diff) > 0.5) {
+            current += diff * 0.16;
+            container.scrollTop = current;
+            requestAnimationFrame(step);
+          } else {
+            container.scrollTop = target;
+            current = target;
+            isMoving = false;
+          }
+        };
+        requestAnimationFrame(step);
+      }
+    }, { passive: false });
   };
 
   const openModal = () => {
@@ -1136,10 +1255,12 @@
   const selectOutfit = (outfitId) => {
     if (outfitId === "auto") {
       currentOutfitOverride = null;
-      safeStorage.remove("mango_active_outfit");
+      safeSessionStorage.remove("mango_active_outfit");
+      broadcastOutfitChange("auto");
     } else if (OUTFITS[outfitId]) {
       currentOutfitOverride = outfitId;
-      safeStorage.set("mango_active_outfit", outfitId);
+      safeSessionStorage.set("mango_active_outfit", outfitId);
+      broadcastOutfitChange(outfitId);
     }
     const active = updateAllCats();
     updateStatusPill();
@@ -1191,14 +1312,13 @@
     let cardsHtml = "";
     keys.forEach((k) => {
       const o = OUTFITS[k];
-      const span = (o.postDays && o.postDays > 5) ? `${o.postDays} Days` : "±5 Days";
       cardsHtml += `
         <button class="wardrobe-card" type="button" data-outfit-id="${k}">
-          <div class="wardrobe-card__swatch">${o.icon || "✨"}</div>
+          <div class="wardrobe-card__swatch">${o.icon || ICONS.cat}</div>
           <div class="wardrobe-card__info">
             <div class="wardrobe-card__head">
               <h4 class="wardrobe-card__name">${o.name}</h4>
-              <span class="wardrobe-card__tag">${span}</span>
+              <span class="wardrobe-card__tag">${o.dateTag || "Festival"}</span>
             </div>
             <p class="wardrobe-card__desc">${o.note}</p>
           </div>
@@ -1214,33 +1334,32 @@
         <div class="wardrobe-modal__head">
           <span class="wardrobe-kicker">Secret Wardrobe · Mango's Atelier</span>
           <h3 id="wardrobeModalTitle">Mango's <em>Festival Wardrobe</em></h3>
-          <p>Costumes handcrafted for celebrations across India. Automatically active on festival dates (±5 days; Ganpati &amp; Navratri extended), and rests in everyday fur on normal days.</p>
+          <p>Handcrafted attire celebrating festivals across India. Follows calendar dates automatically, resting in natural fur on everyday occasions.</p>
           <div class="wardrobe-status-pill" id="wardrobeStatusPill">
             <span class="status-dot"></span>
-            <span>Today: <strong>Natural Everyday Fur</strong> &middot; Follows festival dates automatically</span>
+            <span>Everyday Fur</span>
           </div>
         </div>
         <div class="wardrobe-modal__body">
           <div class="wardrobe-modes">
             <button class="wardrobe-mode-btn" type="button" data-outfit-id="auto">
-              <span class="mode-icon">🗓️</span>
+              <span class="mode-icon">${ICONS.calendar}</span>
               <div>
-                <strong>Auto (Calendar)</strong>
-                <small>Festivals by date · Normal fur today</small>
+                <strong>Festival Calendar</strong>
+                <small>Syncs with holiday dates</small>
               </div>
             </button>
             <button class="wardrobe-mode-btn" type="button" data-outfit-id="normal">
-              <span class="mode-icon">🐱</span>
+              <span class="mode-icon">${ICONS.cat}</span>
               <div>
-                <strong>Normal Fur</strong>
-                <small>Clean everyday soft fur</small>
+                <strong>Everyday Look</strong>
+                <small>Classic ginger coat</small>
               </div>
             </button>
           </div>
 
           <div class="wardrobe-section-label">
-            <span>Celebration Collection (12 Outfits)</span>
-            <span class="hint">Click any outfit to dress Mango</span>
+            <span>Celebration Collection</span>
           </div>
 
           <div class="wardrobe-opt-grid">
@@ -1248,13 +1367,16 @@
           </div>
         </div>
         <div class="wardrobe-modal__foot">
-          <span>Click any outfit to preview live on Mango</span>
-          <a href="wardrobe.html" target="_blank" rel="noopener">Full 12-Card Showcase &rarr;</a>
+          <span>Handcrafted for Mango</span>
+          <a href="wardrobe.html" target="_blank" rel="noopener">Showcase Gallery &rarr;</a>
         </div>
       </div>
     `;
 
     document.body.appendChild(modal);
+
+    const modalBody = modal.querySelector(".wardrobe-modal__body");
+    enableSmoothScroll(modalBody);
 
     const closeBtn = modal.querySelector(".wardrobe-modal__close");
     if (closeBtn) {
@@ -1343,7 +1465,8 @@
         const f = params.get("festival").toLowerCase();
         if (OUTFITS[f] || f === "normal") {
           currentOutfitOverride = f;
-          safeStorage.set("mango_active_outfit", f);
+          safeSessionStorage.set("mango_active_outfit", f);
+          broadcastOutfitChange(f);
         }
       }
       if (params.has("date")) {
@@ -1391,7 +1514,9 @@
     reset: () => {
       currentDateOverride = null;
       currentOutfitOverride = null;
-      safeStorage.remove("mango_active_outfit");
+      safeSessionStorage.remove("mango_active_outfit");
+      broadcastOutfitChange("auto");
+      try { localStorage.removeItem("mango_active_outfit"); } catch (e) { }
       try { localStorage.removeItem("mango_user_outfit"); } catch (e) { }
       updateStatusPill();
       return updateAllCats();

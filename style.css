@@ -1615,9 +1615,29 @@ html { scrollbar-gutter: stable; }
 .wardrobe-modal__body {
   padding: 18px 24px 22px;
   overflow-y: auto;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
   gap: 16px;
+  scroll-behavior: smooth;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: var(--sb-thumb) transparent;
+}
+.wardrobe-modal__body::-webkit-scrollbar {
+  width: 6px;
+}
+.wardrobe-modal__body::-webkit-scrollbar-track {
+  background: transparent;
+}
+.wardrobe-modal__body::-webkit-scrollbar-thumb {
+  background: var(--sb-thumb);
+  border-radius: 999px;
+}
+.wardrobe-modal__body::-webkit-scrollbar-thumb:hover {
+  background: var(--sb-thumb-hover);
 }
 
 /* Mode bar: Auto Calendar vs Normal Fur */
@@ -1650,8 +1670,18 @@ html { scrollbar-gutter: stable; }
   box-shadow: 0 0 0 1.5px var(--accent);
 }
 .wardrobe-mode-btn .mode-icon {
-  font-size: 24px;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
   flex-shrink: 0;
+}
+.wardrobe-mode-btn .mode-icon svg {
+  width: 26px;
+  height: 26px;
+  display: block;
+  pointer-events: none;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.08));
 }
 .wardrobe-mode-btn strong {
   display: block;
@@ -1724,8 +1754,14 @@ html { scrollbar-gutter: stable; }
   border: 1px solid var(--line);
   display: grid;
   place-items: center;
-  font-size: 22px;
   flex-shrink: 0;
+}
+.wardrobe-card__swatch svg {
+  width: 26px;
+  height: 26px;
+  display: block;
+  pointer-events: none;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.08));
 }
 .wardrobe-card__info {
   flex: 1;
@@ -1746,11 +1782,10 @@ html { scrollbar-gutter: stable; }
   line-height: 1.1;
 }
 .wardrobe-card__tag {
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  padding: 2px 7px;
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  padding: 2.5px 8px;
   border-radius: 999px;
   background: rgba(28, 27, 24, 0.06);
   color: var(--muted);
