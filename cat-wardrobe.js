@@ -845,15 +845,21 @@
   const normalizeDate = (d) => {
     if (!d) return null;
     if (typeof d === "string") {
-      const parts = d.split("-").map(Number);
-      if (parts.length === 3) return new Date(parts[0], parts[1] - 1, parts[2]);
+      const parts = d.trim().split("-").map(Number);
+      if (parts.length === 3 && !isNaN(parts[0]) && !isNaN(parts[1]) && !isNaN(parts[2])) {
+        const date = new Date(parts[0], parts[1] - 1, parts[2]);
+        if (!isNaN(date.getTime())) return date;
+      }
     }
-    return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+    if (d instanceof Date && !isNaN(d.getTime())) {
+      return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+    }
+    return null;
   };
 
   /* Check whether a date is within the active festival window */
   const getActiveFestival = (targetDate = new Date()) => {
-    const d = normalizeDate(targetDate) || normalizeDate(new Date());
+    const d = normalizeDate(targetDate) || normalizeDate(new Date()) || new Date();
     const year = d.getFullYear();
 
     const candidates = [];
@@ -998,17 +1004,38 @@
   let currentDateOverride = null;
   let currentOutfitOverride = null;
 
-  const loadStoredOutfit = () => {
-    try {
-      const stored = sessionStorage.getItem("mango_active_outfit") || localStorage.getItem("mango_active_outfit");
-      if (stored) {
-        if (stored === "auto") {
-          currentOutfitOverride = null;
-        } else if (OUTFITS[stored.toLowerCase()] || stored === "normal") {
-          currentOutfitOverride = stored.toLowerCase();
-        }
+  /* Safe Storage Wrapper */
+  const safeStorage = {
+    get: (key) => {
+      try {
+        const store = typeof window !== "undefined" ? (window.sessionStorage || window.localStorage) : null;
+        return (window.sessionStorage && window.sessionStorage.getItem(key)) ||
+               (window.localStorage && window.localStorage.getItem(key)) || null;
+      } catch (e) {
+        return null;
       }
-    } catch (e) { }
+    },
+    set: (key, val) => {
+      try { if (window.sessionStorage) window.sessionStorage.setItem(key, val); } catch (e) { }
+      try { if (window.localStorage) window.localStorage.setItem(key, val); } catch (e) { }
+    },
+    remove: (key) => {
+      try { if (window.sessionStorage) window.sessionStorage.removeItem(key); } catch (e) { }
+      try { if (window.localStorage) window.localStorage.removeItem(key); } catch (e) { }
+    }
+  };
+
+  const loadStoredOutfit = () => {
+    const stored = safeStorage.get("mango_active_outfit");
+    if (stored) {
+      if (stored === "auto") {
+        currentOutfitOverride = null;
+      } else if (OUTFITS[stored.toLowerCase()] || stored === "normal") {
+        currentOutfitOverride = stored.toLowerCase();
+      } else {
+        safeStorage.remove("mango_active_outfit");
+      }
+    }
   };
 
   // Cross-page and cross-tab synchronization
@@ -1057,11 +1084,9 @@
   const updateUIBadges = (active) => {
     document.querySelectorAll(".wardrobe-card, .wardrobe-mode-btn").forEach((btn) => {
       const optId = btn.dataset.outfitId;
-      if (currentOutfitOverride) {
-        btn.classList.toggle("is-selected", optId === currentOutfitOverride);
-      } else {
-        btn.classList.toggle("is-selected", optId === "auto");
-      }
+      const isSelected = currentOutfitOverride ? (optId === currentOutfitOverride) : (optId === "auto");
+      btn.classList.toggle("is-selected", isSelected);
+      btn.setAttribute("aria-pressed", isSelected ? "true" : "false");
     });
   };
 
@@ -1090,29 +1115,31 @@
     }
     if (modal) {
       modal.classList.add("is-open");
+      try { document.body.style.overflow = "hidden"; } catch (e) { }
       updateStatusPill();
       updateAllCats();
+      const closeBtn = modal.querySelector(".wardrobe-modal__close");
+      if (closeBtn && typeof closeBtn.focus === "function") {
+        try { closeBtn.focus(); } catch (e) { }
+      }
     }
   };
 
   const closeModal = () => {
     const modal = document.getElementById("mangoWardrobeModal");
-    if (modal) modal.classList.remove("is-open");
+    if (modal) {
+      modal.classList.remove("is-open");
+      try { document.body.style.overflow = ""; } catch (e) { }
+    }
   };
 
   const selectOutfit = (outfitId) => {
     if (outfitId === "auto") {
       currentOutfitOverride = null;
-      try {
-        sessionStorage.removeItem("mango_active_outfit");
-        localStorage.removeItem("mango_active_outfit");
-      } catch (e) { }
+      safeStorage.remove("mango_active_outfit");
     } else if (OUTFITS[outfitId]) {
       currentOutfitOverride = outfitId;
-      try {
-        sessionStorage.setItem("mango_active_outfit", outfitId);
-        localStorage.setItem("mango_active_outfit", outfitId);
-      } catch (e) { }
+      safeStorage.set("mango_active_outfit", outfitId);
     }
     const active = updateAllCats();
     updateStatusPill();
@@ -1153,7 +1180,8 @@
     modal.id = "mangoWardrobeModal";
     modal.className = "wardrobe-modal";
     modal.setAttribute("role", "dialog");
-    modal.setAttribute("aria-label", "Mango's Festival Wardrobe");
+    modal.setAttribute("aria-modal", "true");
+    modal.setAttribute("aria-labelledby", "wardrobeModalTitle");
 
     const keys = [
       "diwali", "holi", "ganesh", "navratri", "sankranti", "christmas",
@@ -1185,7 +1213,7 @@
         </button>
         <div class="wardrobe-modal__head">
           <span class="wardrobe-kicker">Secret Wardrobe · Mango's Atelier</span>
-          <h3>Mango's <em>Festival Wardrobe</em></h3>
+          <h3 id="wardrobeModalTitle">Mango's <em>Festival Wardrobe</em></h3>
           <p>Costumes handcrafted for celebrations across India. Automatically active on festival dates (±5 days; Ganpati &amp; Navratri extended), and rests in everyday fur on normal days.</p>
           <div class="wardrobe-status-pill" id="wardrobeStatusPill">
             <span class="status-dot"></span>
@@ -1292,43 +1320,13 @@
     // 1. Clean up any leftover buttons or pills
     document.querySelectorAll(".nav__wardrobe, .cat__wardrobe-pill, .nook-wardrobe-pill").forEach((el) => el.remove());
 
-    // 2. Secret trigger on the rotating circle badge (stealth cursor, exactly one click listener)
+    // 2. Secret trigger on the rotating circle badge ONLY
     const badge = document.querySelector(".badge");
     if (badge) {
-      badge.style.cursor = "default";
       badge.onclick = handleBadgeClick;
     }
 
-    // 3. Fallback easter egg: 5 clicks on Mango himself also unlocks wardrobe
-    const cat = document.getElementById("cat") || document.getElementById("catWrap");
-    if (cat) {
-      let catClicks = 0, catTimer = null;
-      cat.addEventListener("click", () => {
-        catClicks++;
-        clearTimeout(catTimer);
-        catTimer = setTimeout(() => { catClicks = 0; }, 4000);
-        if (catClicks >= 5) {
-          catClicks = 0;
-          triggerSecretWardrobe();
-        }
-      });
-    }
-
-    const nookCat = document.getElementById("nookCat") || document.getElementById("nookBtn");
-    if (nookCat) {
-      let nookClicks = 0, nookTimer = null;
-      nookCat.addEventListener("click", () => {
-        nookClicks++;
-        clearTimeout(nookTimer);
-        nookTimer = setTimeout(() => { nookClicks = 0; }, 4000);
-        if (nookClicks >= 5) {
-          nookClicks = 0;
-          triggerSecretWardrobe();
-        }
-      });
-    }
-
-    // 4. Secret keyboard shortcut: press 'w' anywhere on the page
+    // 3. Secret keyboard shortcut: press 'w' anywhere on the page
     window.addEventListener("keydown", (e) => {
       if (e.target && (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA")) return;
       if (e.key === "w" || e.key === "W") {
@@ -1345,10 +1343,7 @@
         const f = params.get("festival").toLowerCase();
         if (OUTFITS[f] || f === "normal") {
           currentOutfitOverride = f;
-          try {
-            sessionStorage.setItem("mango_active_outfit", f);
-            localStorage.setItem("mango_active_outfit", f);
-          } catch (e) { }
+          safeStorage.set("mango_active_outfit", f);
         }
       }
       if (params.has("date")) {
@@ -1396,11 +1391,8 @@
     reset: () => {
       currentDateOverride = null;
       currentOutfitOverride = null;
-      try {
-        sessionStorage.removeItem("mango_active_outfit");
-        localStorage.removeItem("mango_active_outfit");
-        localStorage.removeItem("mango_user_outfit");
-      } catch (e) { }
+      safeStorage.remove("mango_active_outfit");
+      try { localStorage.removeItem("mango_user_outfit"); } catch (e) { }
       updateStatusPill();
       return updateAllCats();
     },
