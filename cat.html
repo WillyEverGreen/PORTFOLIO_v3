@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mango the Cat</title>
+  <link rel="stylesheet" href="cat.css">
+</head>
+<body>
+
+  <!-- Mango the cat -->
+  <div class="catwrap is-here" id="catWrap">
+    <p class="cat__bubble" id="catBubble" role="status" aria-live="polite"></p>
+    <div class="zzz" aria-hidden="true"><span>z</span><span>z</span><span>Z</span></div>
+    <button class="cat" id="cat" type="button" aria-label="Pet Mango, the orange cat">
+      <svg class="cat__svg" viewBox="0 0 200 230" aria-hidden="true" focusable="false">
+        <g class="cat__tail">
+          <path d="M150 226C190 220 202 172 180 128" fill="none" stroke="#f08a24" stroke-width="24" stroke-linecap="round"/>
+          <path d="M170 196q10-3 15-11M178 166q9-2 13-9" fill="none" stroke="#c9631a" stroke-width="5" stroke-linecap="round"/>
+          <g class="slot-tail"></g>
+        </g>
+        <g class="cat__body">
+          <g class="slot-behind"></g>
+          <path d="M38 232C38 160 66 126 100 126s62 34 62 106z" fill="#f08a24"/>
+          <path d="M52 180q12-6 18-2M52 198q12-6 18-2M148 180q-12-6-18-2M148 198q-12-6-18-2" fill="none" stroke="#c9631a" stroke-width="5" stroke-linecap="round"/>
+          <ellipse cx="100" cy="196" rx="25" ry="40" fill="#fbe3c0"/>
+          <rect x="70" y="204" width="24" height="30" rx="12" fill="#fbe3c0"/>
+          <rect x="106" y="204" width="24" height="30" rx="12" fill="#fbe3c0"/>
+          <path d="M82 218v10M118 218v10" stroke="#e5c9a3" stroke-width="2.5" stroke-linecap="round"/>
+          <g class="slot-body"></g>
+        </g>
+        <g class="cat__head">
+          <path class="cat__ear cat__ear--l" d="M64 76L54 20l42 26z" fill="#f08a24"/>
+          <path class="earin" d="M66 54l-3-21 21 13z" fill="#f4a6a0"/>
+          <path class="cat__ear cat__ear--r" d="M136 76l10-56-42 26z" fill="#f08a24"/>
+          <path class="earin" d="M134 54l3-21-21 13z" fill="#f4a6a0"/>
+          <circle cx="100" cy="90" r="46" fill="#f08a24"/>
+          <path d="M100 46v16M86 49l3 14M114 49l-3 14" fill="none" stroke="#c9631a" stroke-width="5" stroke-linecap="round"/>
+          <ellipse cx="100" cy="108" rx="28" ry="19" fill="#fbe3c0"/>
+          <g class="cat__eye">
+            <ellipse cx="80" cy="88" rx="11" ry="12" fill="#fff"/>
+            <g transform="translate(80 88)"><g class="cat__pupil"><circle r="8" fill="#6aa84f"/><ellipse class="pup" rx="3.2" ry="6.6" fill="#1c1b18"/><circle cx="-2.6" cy="-3.2" r="2" fill="#fff"/></g></g>
+          </g>
+          <g class="cat__eye">
+            <ellipse cx="120" cy="88" rx="11" ry="12" fill="#fff"/>
+            <g transform="translate(120 88)"><g class="cat__pupil"><circle r="8" fill="#6aa84f"/><ellipse class="pup" rx="3.2" ry="6.6" fill="#1c1b18"/><circle cx="-2.6" cy="-3.2" r="2" fill="#fff"/></g></g>
+          </g>
+          <path class="cat__lid" d="M70 90q10 8 20 0M110 90q10 8 20 0" fill="none" stroke="#1c1b18" stroke-width="3" stroke-linecap="round"/>
+          <g class="e-lidhalf"><path d="M68.5 88a11.5 12.5 0 0 1 23 0z" fill="#f08a24"/><path d="M108.5 88a11.5 12.5 0 0 1 23 0z" fill="#f08a24"/></g>
+          <path class="e-brows" d="M66 75l25 8M134 75l-25 8" fill="none" stroke="#1c1b18" stroke-width="3.6" stroke-linecap="round"/>
+          <path class="e-happy" d="M69 93q11-14 22 0M109 93q11-14 22 0" fill="none" stroke="#1c1b18" stroke-width="3.6" stroke-linecap="round"/>
+          <g class="e-love"><path d="M80 99c-12-8-15-14-15-19a8 8 0 0 1 15-3 8 8 0 0 1 15 3c0 5-3 11-15 19z" fill="#e0455a"/><g transform="translate(40 0)"><path d="M80 99c-12-8-15-14-15-19a8 8 0 0 1 15-3 8 8 0 0 1 15 3c0 5-3 11-15 19z" fill="#e0455a"/></g></g>
+          <g class="e-dizzy" fill="none" stroke="#1c1b18" stroke-width="2.2" stroke-linecap="round"><path class="spin" d="M80 88a2.2 2.2 0 0 1 4.4 0 4.4 4.4 0 0 1-8.8 0 6.6 6.6 0 0 1 13.2 0 8.8 8.8 0 0 1-17.6 0"/><path class="spin" d="M120 88a2.2 2.2 0 0 1 4.4 0 4.4 4.4 0 0 1-8.8 0 6.6 6.6 0 0 1 13.2 0 8.8 8.8 0 0 1-17.6 0"/></g>
+          <ellipse class="blush" cx="67" cy="106" rx="8" ry="5" fill="#f4a6a0"/>
+          <ellipse class="blush" cx="133" cy="106" rx="8" ry="5" fill="#f4a6a0"/>
+          <path class="e-sadbrows" d="M66 84l25-9M134 84l-25-9" fill="none" stroke="#1c1b18" stroke-width="3.2" stroke-linecap="round"/>
+          <path class="tear" d="M73 99q-4.5 8 0 12 4.5-4 0-12z" fill="#7ec8e3"/>
+          <path class="sweat" d="M150 56q-7 11 0 15 7-4 0-15z" fill="#7ec8e3"/>
+          <path d="M94 98h12l-6 7z" fill="#f4a6a0"/>
+          <g class="mouths" fill="none" stroke="#1c1b18" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path class="m m-smile" d="M100 105q-5 8-12 4M100 105q5 8 12 4"/>
+            <path class="m m-flat" d="M91 109h18"/>
+            <path class="m m-sad" d="M90 112q10-10 20 0"/>
+            <path class="m m-wavy" d="M88 109q4-5 8 0t8 0 8 0"/>
+            <path class="m m-big" d="M90 106q10 18 20 0z" fill="#7a2a2a"/>
+            <g class="m m-open" stroke="none"><ellipse cx="100" cy="112" rx="6" ry="7.5" fill="#7a2a2a"/><ellipse cx="100" cy="116" rx="3.2" ry="2.6" fill="#f4a6a0"/></g>
+          </g>
+          <path d="M68 108L36 101M68 113L34 114M132 108l32-7M132 113l34 1" fill="none" stroke="#1c1b18" stroke-width="1.6" stroke-linecap="round" opacity=".55"/>
+          <g class="slot-head"></g>
+        </g>
+      </svg>
+    </button>
+  </div>
+
+  <script src="cat-wardrobe.js"></script>
+  <script src="cat.js"></script>
+</body>
+</html>

@@ -1368,7 +1368,8 @@
           setTimeout(() => setMood("happy", 1600), 950);
           say("mrrp?! oh, you're petting me...", 2400, "happy");
         } else {
-          const [text, mood] = lines[li++ % lines.length];
+          const activeQuips = (window.MangoWardrobe && window.MangoWardrobe.getQuips()) || lines;
+          const [text, mood] = activeQuips[li++ % activeQuips.length];
           say(text, 2800, mood);
         }
         triggerPurr();

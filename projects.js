@@ -586,7 +586,8 @@
         sfx("hiss");
         return;
       }
-      const [text, mood] = LINES[line++ % LINES.length];
+      const activeLines = (window.MangoWardrobe && window.MangoWardrobe.getNookQuips()) || LINES;
+      const [text, mood] = activeLines[line++ % activeLines.length];
       say(text, 2800, mood, { force: true });
       purr();
       hearts();

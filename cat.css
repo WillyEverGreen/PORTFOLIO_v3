@@ -1,0 +1,298 @@
+:root {
+  --ink: #1c1b18;
+  --paper: #f6eedb;
+  --paper-2: #faf4e8;
+  --muted: #736b5e;
+  --accent: #e0622f;
+  --serif: "Newsreader", Georgia, serif;
+  --ease: cubic-bezier(.25, .9, .3, 1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--paper);
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* ---------- Centered Mango Container ---------- */
+.catwrap {
+  position: relative;
+  width: 156px;
+  pointer-events: auto;
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.7s ease, transform 0.9s var(--ease);
+}
+
+.cat {
+  display: block;
+  width: 100%;
+  padding: 0;
+  pointer-events: auto;
+  cursor: pointer;
+  background: none;
+  border: none;
+  outline: none;
+  transform: translateY(30%);
+  transition: transform 0.6s var(--ease);
+  -webkit-tap-highlight-color: transparent;
+  border-radius: 40% 40% 0 0;
+}
+.cat:hover, .cat:focus-visible, .catwrap.is-up .cat {
+  transform: translateY(6%);
+}
+
+.cat__svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.cat__tail {
+  transform-box: fill-box;
+  transform-origin: 12% 96%;
+  animation: wag 1.9s ease-in-out infinite;
+}
+@keyframes wag {
+  0%, 100% { transform: rotate(-7deg); }
+  50% { transform: rotate(11deg); }
+}
+
+.cat__body {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: breathe 3.2s ease-in-out infinite;
+}
+@keyframes breathe {
+  0%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(1.02); }
+}
+
+.cat__head {
+  transform-box: fill-box;
+  transform-origin: 50% 85%;
+  transform: rotate(calc(var(--tilt, 0deg) + var(--mood-tilt, 0deg)));
+  transition: transform 0.3s ease;
+  will-change: transform;
+}
+
+.cat__eye {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  animation: blink 5.6s infinite;
+}
+@keyframes blink {
+  0%, 93%, 97%, 100% { transform: scaleY(1); }
+  95% { transform: scaleY(0.08); }
+}
+
+.cat__ear--r {
+  transform-box: fill-box;
+  transform-origin: 25% 100%;
+  animation: twitch 7.5s infinite;
+}
+@keyframes twitch {
+  0%, 88%, 100% { transform: none; }
+  91% { transform: rotate(9deg); }
+  94% { transform: rotate(-5deg); }
+  97% { transform: rotate(4deg); }
+}
+
+.cat__ear--l {
+  transform-box: fill-box;
+  transform-origin: 75% 100%;
+  transition: transform 0.3s ease;
+}
+
+/* outfits that cover the ears */
+.no-ears .cat__ear, .no-ears .earin {
+  display: none;
+}
+}
+
+.cat__pupil {
+  transform: translate(var(--px, 0px), var(--py, 0px));
+  transition: transform 0.12s ease-out;
+  will-change: transform;
+}
+.cat__lid {
+  opacity: 0;
+}
+
+.catwrap.is-purr .cat__svg {
+  animation: purr 0.11s linear 7;
+}
+@keyframes purr {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(1.6px); }
+}
+
+.catwrap.is-asleep .cat__eye { animation: none; opacity: 0; }
+.catwrap.is-asleep .cat__lid { opacity: 1; }
+.catwrap.is-asleep .cat__tail { animation-duration: 5s; }
+.catwrap.is-asleep { --mood-tilt: 9deg; }
+.catwrap.is-asleep .cat__head { --tilt: 0deg; }
+.catwrap.is-asleep .cat { transform: translateY(26%); }
+
+.zzz {
+  position: absolute;
+  right: 14%;
+  top: 4%;
+  font-family: var(--serif);
+  font-style: italic;
+  color: var(--muted);
+  pointer-events: none;
+}
+.zzz span {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  font-size: 18px;
+}
+.catwrap.is-asleep .zzz span { animation: zzz 3s ease-in-out infinite; }
+.catwrap.is-asleep .zzz span:nth-child(2) { animation-delay: 1s; font-size: 22px; }
+.catwrap.is-asleep .zzz span:nth-child(3) { animation-delay: 2s; font-size: 28px; }
+@keyframes zzz {
+  0% { opacity: 0; transform: translate(0, 10px); }
+  25% { opacity: 1; }
+  100% { opacity: 0; transform: translate(18px, -34px); }
+}
+
+.cat__bubble {
+  position: absolute;
+  right: 25%;
+  bottom: calc(100% - 6px);
+  max-width: min(300px, 78vw);
+  width: max-content;
+  margin: 0;
+  padding: 11px 16px;
+  background: var(--paper-2);
+  color: var(--ink);
+  border: 1.5px solid var(--ink);
+  border-radius: 18px 18px 4px 18px;
+  font-size: 13.5px;
+  font-weight: 500;
+  line-height: 1.45;
+  box-shadow: 0 8px 24px rgba(28, 27, 24, 0.12);
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(8px) scale(0.9);
+  transform-origin: 100% 100%;
+  transition: opacity 0.25s ease, transform 0.4s var(--ease);
+  z-index: 10;
+}
+.cat__bubble.is-on {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- Moods (Exact Complete Rules From style.css) ---------- */
+.cat__svg .e-lidhalf,
+.cat__svg .e-brows,
+.cat__svg .e-happy,
+.cat__svg .e-love,
+.cat__svg .e-dizzy,
+.cat__svg .blush,
+.cat__svg .sweat,
+.cat__svg .tear,
+.cat__svg .e-sadbrows {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.cat__svg .m {
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+.cat__svg .m-smile { opacity: 1; }
+.cat__eye ellipse:first-child { transform-box: fill-box; transform-origin: 50% 50%; transition: transform 0.2s ease; }
+.pup { transform-box: fill-box; transform-origin: 50% 50%; transition: transform 0.25s ease; }
+.cat__ear { transition: transform 0.3s ease; }
+.cat__ear--l { transform-box: fill-box; transform-origin: 75% 100%; }
+.cat__svg .spin { transform-box: fill-box; transform-origin: 50% 50%; animation: spin-eye 0.7s linear infinite; }
+@keyframes spin-eye { to { transform: rotate(360deg); } }
+
+/* night vision */
+.catwrap[data-night="true"] .pup { transform: scale(1.55, 1.12); }
+
+/* happy and excited */
+.catwrap:is([data-mood="happy"], [data-mood="excited"], [data-mood="love"], [data-mood="dizzy"]) .cat__eye { opacity: 0; animation: none; }
+.catwrap:is([data-mood="happy"], [data-mood="excited"]) .e-happy { opacity: 1; }
+.catwrap:is([data-mood="happy"], [data-mood="excited"], [data-mood="love"]) .blush { opacity: 0.8; }
+.catwrap:is([data-mood="happy"], [data-mood="excited"], [data-mood="love"]) .m-smile { opacity: 0; }
+.catwrap:is([data-mood="happy"], [data-mood="excited"], [data-mood="love"]) .m-big { opacity: 1; }
+.catwrap[data-mood="happy"] .cat__tail { animation-duration: 0.9s; }
+.catwrap[data-mood="excited"] .cat__tail { animation-duration: 0.4s; }
+.catwrap[data-mood="excited"] .cat__svg { animation: hop 0.45s ease-in-out 4; }
+@keyframes hop { 0%, 100% { transform: translateY(0); } 45% { transform: translateY(-14px); } }
+
+/* love */
+.catwrap[data-mood="love"] .e-love { opacity: 1; }
+.catwrap[data-mood="love"] .e-love path { transform-box: fill-box; transform-origin: 50% 60%; animation: heartbeat 0.7s ease-in-out infinite; }
+@keyframes heartbeat { 0%, 100% { transform: scale(1); } 40% { transform: scale(1.22); } }
+.catwrap[data-mood="love"] .cat__tail { animation-duration: 2.4s; }
+
+/* surprised */
+.catwrap[data-mood="surprised"] .cat__eye ellipse:first-child { transform: scale(1.2); }
+.catwrap[data-mood="surprised"] .pup { transform: scale(0.55, 0.6); }
+.catwrap[data-mood="surprised"] .m-smile { opacity: 0; }
+.catwrap[data-mood="surprised"] .m-open { opacity: 1; }
+.catwrap[data-mood="surprised"] .sweat { opacity: 1; }
+.catwrap[data-mood="surprised"] .cat__ear--l { transform: rotate(-7deg); }
+.catwrap[data-mood="surprised"] .cat__ear--r { animation: none; transform: rotate(7deg); }
+.catwrap[data-mood="surprised"] .cat__svg { animation: jolt 0.35s ease-out; }
+@keyframes jolt { 0% { transform: translateY(0); } 30% { transform: translateY(-12px); } 100% { transform: translateY(0); } }
+
+/* sleepy */
+.catwrap[data-mood="sleepy"] { --mood-tilt: 7deg; }
+.catwrap[data-mood="sleepy"] .e-lidhalf { opacity: 1; }
+.catwrap[data-mood="sleepy"] .m-smile { opacity: 0; }
+.catwrap[data-mood="sleepy"] .m-open { opacity: 1; }
+.catwrap[data-mood="sleepy"] .cat__tail { animation-duration: 4s; }
+
+/* annoyed */
+.catwrap[data-mood="annoyed"] .e-lidhalf, .catwrap[data-mood="annoyed"] .e-brows { opacity: 1; }
+.catwrap[data-mood="annoyed"] .m-smile { opacity: 0; }
+.catwrap[data-mood="annoyed"] .m-flat { opacity: 1; }
+.catwrap[data-mood="annoyed"] .cat__ear--l { transform: rotate(-17deg); }
+.catwrap[data-mood="annoyed"] .cat__ear--r { animation: none; transform: rotate(17deg); }
+.catwrap[data-mood="annoyed"] .cat__tail { animation: flick 0.32s ease-in-out infinite; }
+@keyframes flick { 0%, 100% { transform: rotate(-3deg); } 50% { transform: rotate(7deg); } }
+
+/* curious */
+.catwrap[data-mood="curious"] { --mood-tilt: 13deg; }
+.catwrap[data-mood="curious"] .cat__eye ellipse:first-child { transform: scale(1.1); }
+.catwrap[data-mood="curious"] .pup { transform: scale(1.2, 1.05); }
+.catwrap[data-mood="curious"] .cat__ear--r { animation: none; transform: rotate(10deg) translateY(-2px); }
+
+/* dizzy */
+.catwrap[data-mood="dizzy"] .e-dizzy { opacity: 1; }
+.catwrap[data-mood="dizzy"] .sweat { opacity: 1; }
+.catwrap[data-mood="dizzy"] .m-smile { opacity: 0; }
+.catwrap[data-mood="dizzy"] .m-wavy { opacity: 1; }
+.catwrap[data-mood="dizzy"] .cat__head { animation: wobble 0.6s ease-in-out infinite; }
+@keyframes wobble { 0%, 100% { transform: rotate(-9deg); } 50% { transform: rotate(9deg); } }
+
+/* sad */
+.catwrap[data-mood="sad"] { --mood-tilt: -3deg; }
+.catwrap[data-mood="sad"] .e-sadbrows, .catwrap[data-mood="sad"] .tear { opacity: 1; }
+.catwrap[data-mood="sad"] .tear { animation: tear 1.6s ease-in infinite; }
+@keyframes tear { 0% { transform: translateY(0); opacity: 0.9; } 100% { transform: translateY(9px); opacity: 0; } }
+.catwrap[data-mood="sad"] .m-smile { opacity: 0; }
+.catwrap[data-mood="sad"] .m-sad { opacity: 1; }
+.catwrap[data-mood="sad"] .pup { transform: scale(1.2, 1.15); }
+.catwrap[data-mood="sad"] .cat__eye ellipse:first-child { transform: scale(1.06); }
+.catwrap[data-mood="sad"] .cat__ear--l { transform: rotate(-11deg); }
+.catwrap[data-mood="sad"] .cat__ear--r { animation: none; transform: rotate(11deg); }
+.catwrap[data-mood="sad"] .cat__tail { animation-duration: 5.5s; }

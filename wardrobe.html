@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mango the Cat – Festival Wardrobe</title>
+  <style>
+    :root {
+      --ink: #1c1b18;
+      --paper: #f6eedb;
+      --paper-2: #faf4e8;
+      --muted: #736b5e;
+      --accent: #e0622f;
+      --serif: "Newsreader", Georgia, serif;
+      --ease: cubic-bezier(.25, .9, .3, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      padding: 36px 20px 64px;
+    }
+
+    header {
+      text-align: center;
+      max-width: 860px;
+      margin: 0 auto 28px;
+    }
+
+    header h1 {
+      font-family: var(--serif);
+      font-size: clamp(30px, 5.5vw, 44px);
+      font-weight: 600;
+      line-height: 1.15;
+    }
+
+    header p {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .header-links {
+      margin-top: 12px;
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      font-size: 14px;
+    }
+
+    .header-links a {
+      color: var(--ink);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .header-links a:hover {
+      color: var(--accent);
+    }
+
+    /* Control bar / date simulator */
+    .sim-panel {
+      max-width: 960px;
+      margin: 0 auto 36px;
+      background: var(--paper-2);
+      border: 1.5px solid rgba(28, 27, 24, 0.16);
+      border-radius: 20px;
+      padding: 22px 24px;
+      box-shadow: 0 4px 18px rgba(28, 27, 24, 0.05);
+    }
+
+    .sim-panel__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 18px;
+      padding-bottom: 14px;
+      border-bottom: 1px dashed rgba(28, 27, 24, 0.18);
+    }
+
+    .sim-panel__title {
+      font-family: var(--serif);
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .sim-panel__status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 13.5px;
+      font-weight: 600;
+      background: #fff;
+      border: 1px solid var(--ink);
+    }
+
+    .sim-panel__status.is-active {
+      background: #fdf2d0;
+      border-color: #d88918;
+      color: #8c4c00;
+    }
+
+    .sim-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .sim-controls label {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    .sim-controls input[type="date"] {
+      font: inherit;
+      font-size: 14px;
+      padding: 6px 12px;
+      border-radius: 10px;
+      border: 1.5px solid rgba(28, 27, 24, 0.25);
+      background: #fff;
+      color: var(--ink);
+    }
+
+    .sim-btn {
+      padding: 7px 14px;
+      font: inherit;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink);
+      background: #fff;
+      border: 1.5px solid rgba(28, 27, 24, 0.22);
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .sim-btn:hover {
+      background: var(--ink);
+      color: #fff;
+      border-color: var(--ink);
+    }
+
+    .sim-btn.is-today {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .sim-btn.is-today:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .quick-jumps {
+      margin-top: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .quick-jumps span {
+      font-size: 12.5px;
+      color: var(--muted);
+      font-weight: 600;
+      margin-right: 4px;
+    }
+
+    .quick-pill {
+      font: inherit;
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(28, 27, 24, 0.05);
+      border: 1px solid rgba(28, 27, 24, 0.12);
+      cursor: pointer;
+      color: var(--ink);
+    }
+
+    .quick-pill:hover {
+      background: #fff;
+      border-color: var(--ink);
+    }
+
+    /* Active preview hero */
+    .active-hero {
+      max-width: 960px;
+      margin: 0 auto 42px;
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      align-items: center;
+      gap: 28px;
+      background: #fff;
+      border: 2px solid var(--ink);
+      border-radius: 24px;
+      padding: 24px 32px;
+      box-shadow: 0 8px 30px rgba(28, 27, 24, 0.08);
+    }
+
+    @media (max-width: 640px) {
+      .active-hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+    }
+
+    .active-hero__info h2 {
+      font-family: var(--serif);
+      font-size: 26px;
+      font-weight: 600;
+    }
+
+    .active-hero__info p {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 14.5px;
+      line-height: 1.5;
+    }
+
+    .active-hero__rule {
+      margin-top: 14px;
+      display: inline-block;
+      padding: 6px 14px;
+      background: var(--paper-2);
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      border: 1px solid rgba(28, 27, 24, 0.12);
+    }
+
+    /* Section Title */
+    .gallery-title {
+      max-width: 1120px;
+      margin: 0 auto 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .gallery-title h2 {
+      font-family: var(--serif);
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    /* Grid of Cards */
+    .grid {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--paper-2);
+      border: 1.5px solid rgba(28, 27, 24, 0.14);
+      border-radius: 20px;
+      padding: 22px 12px 16px;
+      text-align: center;
+      position: relative;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 24px rgba(28, 27, 24, 0.08);
+    }
+
+    .card.is-current-active {
+      border-color: #d88918;
+      outline: 2px solid #d88918;
+      background: #fffcf4;
+    }
+
+    .card-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: #d88918;
+      color: #fff;
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 3px 8px;
+      border-radius: 999px;
+      display: none;
+    }
+
+    .card.is-current-active .card-badge {
+      display: block;
+    }
+
+    .card figcaption {
+      margin-top: 14px;
+    }
+
+    .card h3 {
+      font-family: var(--serif);
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .card p {
+      margin-top: 2px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* ---------- Mango SVG Rules ---------- */
+    .cat-art {
+      width: 170px;
+      margin: 0 auto;
+    }
+
+    .cat__svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      overflow: visible;
+    }
+
+    .card:hover .cat__svg,
+    .active-hero:hover .cat__svg {
+      animation: hop 0.5s ease-in-out 1;
+    }
+
+    @keyframes hop {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      45% {
+        transform: translateY(-10px);
+      }
+    }
+
+    .cat__tail {
+      transform-box: fill-box;
+      transform-origin: 12% 96%;
+      animation: wag 1.9s ease-in-out infinite;
+      animation-delay: var(--d, 0s);
+    }
+
+    @keyframes wag {
+
+      0%,
+      100% {
+        transform: rotate(-7deg);
+      }
+
+      50% {
+        transform: rotate(11deg);
+      }
+    }
+
+    .cat__body {
+      transform-box: fill-box;
+      transform-origin: 50% 100%;
+      animation: breathe 3.2s ease-in-out infinite;
+      animation-delay: var(--d, 0s);
+    }
+
+    @keyframes breathe {
+
+      0%,
+      100% {
+        transform: scaleY(1);
+      }
+
+      50% {
+        transform: scaleY(1.02);
+      }
+    }
+
+    .cat__eye {
+      transform-box: fill-box;
+      transform-origin: 50% 50%;
+      animation: blink 5.6s infinite;
+    }
+
+    @keyframes blink {
+
+      0%,
+      93%,
+      97%,
+      100% {
+        transform: scaleY(1);
+      }
+
+      95% {
+        transform: scaleY(0.08);
+      }
+    }
+
+    .cat__ear--r {
+      transform-box: fill-box;
+      transform-origin: 25% 100%;
+      animation: twitch 7.5s infinite;
+    }
+
+    @keyframes twitch {
+
+      0%,
+      88%,
+      100% {
+        transform: none;
+      }
+
+      91% {
+        transform: rotate(9deg);
+      }
+
+      94% {
+        transform: rotate(-5deg);
+      }
+
+      97% {
+        transform: rotate(4deg);
+      }
+    }
+
+    .cat__lid {
+      opacity: 0;
+    }
+
+    .cat__svg .e-lidhalf,
+    .cat__svg .e-brows,
+    .cat__svg .e-happy,
+    .cat__svg .e-love,
+    .cat__svg .e-dizzy,
+    .cat__svg .blush,
+    .cat__svg .sweat,
+    .cat__svg .tear,
+    .cat__svg .e-sadbrows {
+      opacity: 0;
+    }
+
+    .cat__svg .m {
+      opacity: 0;
+    }
+
+    .cat__svg .m-smile {
+      opacity: 1;
+    }
+
+    /* happy face */
+    .cat-art[data-mood="happy"] .cat__eye {
+      opacity: 0;
+      animation: none;
+    }
+
+    .cat-art[data-mood="happy"] .e-happy {
+      opacity: 1;
+    }
+
+    .cat-art[data-mood="happy"] .blush {
+      opacity: 0.8;
+    }
+
+    .cat-art[data-mood="happy"] .m-smile {
+      opacity: 0;
+    }
+
+    .cat-art[data-mood="happy"] .m-big {
+      opacity: 1;
+    }
+
+    .cat-art[data-mood="happy"] .cat__tail {
+      animation-duration: 0.9s;
+    }
+
+    /* outfits that cover the ears */
+    .no-ears .cat__ear,
+    .no-ears .earin {
+      display: none;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      .cat__tail,
+      .cat__body,
+      .cat__eye,
+      .cat__ear--r {
+        animation: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>Mango's Festival Wardrobe</h1>
+    <p>
+      Automatic festival dressing system: Mango wears custom outfits starting <strong>5 days before</strong> an occasion
+      and keeps wearing it until <strong>5 days later</strong>. For longer celebrations like <strong>Ganpati (10 days of
+        Ganeshotsav)</strong>, <strong>Navratri (9 nights)</strong>, <strong>Diwali</strong>, and the <strong>Christmas
+        season</strong>, he stays dressed for the entire festive occasion!
+    </p>
+    <div class="header-links">
+      <a href="index.html">&larr; Back to Portfolio</a>
+      <a href="projects.html">Mango's Reading Nook (Projects)</a>
+      <a href="cat.html">Mango Widget</a>
+    </div>
+  </header>
+
+  <!-- Interactive Date Simulator & Live Checker -->
+  <section class="sim-panel" aria-label="Festival Calendar Simulator">
+    <div class="sim-panel__header">
+      <div class="sim-panel__title">Live Festival Calendar Tester</div>
+      <div class="sim-panel__status" id="liveStatus">
+        <span id="statusIndicator">●</span>
+        <span id="statusText">Checking date...</span>
+      </div>
+    </div>
+
+    <div class="sim-controls">
+      <label for="datePicker">Simulate Date:</label>
+      <input type="date" id="datePicker">
+      <button class="sim-btn is-today" id="todayBtn" type="button">Set to Today</button>
+      <button class="sim-btn" id="toggleEyesBtn" type="button">Eyes: happy</button>
+    </div>
+
+    <div class="quick-jumps">
+      <span>Jump to Festival:</span>
+      <button class="quick-pill" type="button" data-date="2026-01-14">Makar Sankranti (Jan 14)</button>
+      <button class="quick-pill" type="button" data-date="2026-03-04">Holi (Mar 4)</button>
+      <button class="quick-pill" type="button" data-date="2026-03-19">Gudi Padwa (Mar 19)</button>
+      <button class="quick-pill" type="button" data-date="2026-03-20">Eid (Mar 20)</button>
+      <button class="quick-pill" type="button" data-date="2026-08-15">Independence Day (Aug 15)</button>
+      <button class="quick-pill" type="button" data-date="2026-08-28">Raksha Bandhan (Aug 28)</button>
+      <button class="quick-pill" type="button" data-date="2026-09-04">Janmashtami (Sep 4)</button>
+      <button class="quick-pill" type="button" data-date="2026-09-14">Ganesh Chaturthi (Sep 14)</button>
+      <button class="quick-pill" type="button" data-date="2026-10-11">Navratri (Oct 11)</button>
+      <button class="quick-pill" type="button" data-date="2026-10-21">Dussehra (Oct 21)</button>
+      <button class="quick-pill" type="button" data-date="2026-11-08">Diwali (Nov 8)</button>
+      <button class="quick-pill" type="button" data-date="2026-12-25">Christmas (Dec 25)</button>
+      <button class="quick-pill" type="button" data-date="2026-06-15" style="border-style:dashed;">Normal Day (Jun
+        15)</button>
+    </div>
+  </section>
+
+  <!-- Live Active Mascot for the selected date -->
+  <section class="active-hero" aria-label="Currently Active Dress">
+    <div class="cat-art" id="activeArt" data-mood="happy"></div>
+    <div class="active-hero__info">
+      <h2 id="heroTitle">Current Outfit: Loading...</h2>
+      <p id="heroDesc">Calculating festival proximity...</p>
+      <div class="active-hero__rule" id="heroRule">Rule: 10 days prior to 10 days after, normal otherwise.</div>
+    </div>
+  </section>
+
+  <div class="gallery-title">
+    <h2>All 12 Wardrobe Outfits</h2>
+    <span style="font-size: 13px; color: var(--muted);">Hover any card for a happy hop</span>
+  </div>
+
+  <main class="grid" id="grid"></main>
+
+  <!-- Mango Template Base -->
+  <template id="cat-tpl">
+    <svg class="cat__svg" viewBox="0 0 200 230" role="img" focusable="false">
+      <g class="cat__tail">
+        <path d="M150 226C190 220 202 172 180 128" fill="none" stroke="#f08a24" stroke-width="24"
+          stroke-linecap="round" />
+        <path d="M170 196q10-3 15-11M178 166q9-2 13-9" fill="none" stroke="#c9631a" stroke-width="5"
+          stroke-linecap="round" />
+        <g class="slot-tail"></g>
+      </g>
+      <g class="cat__body">
+        <g class="slot-behind"></g>
+        <path d="M38 232C38 160 66 126 100 126s62 34 62 106z" fill="#f08a24" />
+        <path d="M52 180q12-6 18-2M52 198q12-6 18-2M148 180q-12-6-18-2M148 198q-12-6-18-2" fill="none" stroke="#c9631a"
+          stroke-width="5" stroke-linecap="round" />
+        <ellipse cx="100" cy="196" rx="25" ry="40" fill="#fbe3c0" />
+        <rect x="70" y="204" width="24" height="30" rx="12" fill="#fbe3c0" />
+        <rect x="106" y="204" width="24" height="30" rx="12" fill="#fbe3c0" />
+        <path d="M82 218v10M118 218v10" stroke="#e5c9a3" stroke-width="2.5" stroke-linecap="round" />
+        <g class="slot-body"></g>
+      </g>
+      <g class="cat__head">
+        <path class="cat__ear cat__ear--l" d="M64 76L54 20l42 26z" fill="#f08a24" />
+        <path class="earin" d="M66 54l-3-21 21 13z" fill="#f4a6a0" />
+        <path class="cat__ear cat__ear--r" d="M136 76l10-56-42 26z" fill="#f08a24" />
+        <path class="earin" d="M134 54l3-21-21 13z" fill="#f4a6a0" />
+        <circle cx="100" cy="90" r="46" fill="#f08a24" />
+        <path d="M100 46v16M86 49l3 14M114 49l-3 14" fill="none" stroke="#c9631a" stroke-width="5"
+          stroke-linecap="round" />
+        <ellipse cx="100" cy="108" rx="28" ry="19" fill="#fbe3c0" />
+        <g class="cat__eye">
+          <ellipse cx="80" cy="88" rx="11" ry="12" fill="#fff" />
+          <g transform="translate(80 88)">
+            <g class="cat__pupil">
+              <circle r="8" fill="#6aa84f" />
+              <ellipse class="pup" rx="3.2" ry="6.6" fill="#1c1b18" />
+              <circle cx="-2.6" cy="-3.2" r="2" fill="#fff" />
+            </g>
+          </g>
+        </g>
+        <g class="cat__eye">
+          <ellipse cx="120" cy="88" rx="11" ry="12" fill="#fff" />
+          <g transform="translate(120 88)">
+            <g class="cat__pupil">
+              <circle r="8" fill="#6aa84f" />
+              <ellipse class="pup" rx="3.2" ry="6.6" fill="#1c1b18" />
+              <circle cx="-2.6" cy="-3.2" r="2" fill="#fff" />
+            </g>
+          </g>
+        </g>
+        <path class="cat__lid" d="M70 90q10 8 20 0M110 90q10 8 20 0" fill="none" stroke="#1c1b18" stroke-width="3"
+          stroke-linecap="round" />
+        <g class="e-lidhalf">
+          <path d="M68.5 88a11.5 12.5 0 0 1 23 0z" fill="#f08a24" />
+          <path d="M108.5 88a11.5 12.5 0 0 1 23 0z" fill="#f08a24" />
+        </g>
+        <path class="e-brows" d="M66 75l25 8M134 75l-25 8" fill="none" stroke="#1c1b18" stroke-width="3.6"
+          stroke-linecap="round" />
+        <path class="e-happy" d="M69 93q11-14 22 0M109 93q11-14 22 0" fill="none" stroke="#1c1b18" stroke-width="3.6"
+          stroke-linecap="round" />
+        <g class="e-love">
+          <path d="M80 99c-12-8-15-14-15-19a8 8 0 0 1 15-3 8 8 0 0 1 15 3c0 5-3 11-15 19z" fill="#e0455a" />
+          <g transform="translate(40 0)">
+            <path d="M80 99c-12-8-15-14-15-19a8 8 0 0 1 15-3 8 8 0 0 1 15 3c0 5-3 11-15 19z" fill="#e0455a" />
+          </g>
+        </g>
+        <g class="e-dizzy" fill="none" stroke="#1c1b18" stroke-width="2.2" stroke-linecap="round">
+          <path class="spin"
+            d="M80 88a2.2 2.2 0 0 1 4.4 0 4.4 4.4 0 0 1-8.8 0 6.6 6.6 0 0 1 13.2 0 8.8 8.8 0 0 1-17.6 0" />
+          <path class="spin"
+            d="M120 88a2.2 2.2 0 0 1 4.4 0 4.4 4.4 0 0 1-8.8 0 6.6 6.6 0 0 1 13.2 0 8.8 8.8 0 0 1-17.6 0" />
+        </g>
+        <ellipse class="blush" cx="67" cy="106" rx="8" ry="5" fill="#f4a6a0" />
+        <ellipse class="blush" cx="133" cy="106" rx="8" ry="5" fill="#f4a6a0" />
+        <path class="e-sadbrows" d="M66 84l25-9M134 84l-25-9" fill="none" stroke="#1c1b18" stroke-width="3.2"
+          stroke-linecap="round" />
+        <path class="tear" d="M73 99q-4.5 8 0 12 4.5-4 0-12z" fill="#7ec8e3" />
+        <path class="sweat" d="M150 56q-7 11 0 15 7-4 0-15z" fill="#7ec8e3" />
+        <path d="M94 98h12l-6 7z" fill="#f4a6a0" />
+        <g class="mouths" fill="none" stroke="#1c1b18" stroke-width="2.4" stroke-linecap="round"
+          stroke-linejoin="round">
+          <path class="m m-smile" d="M100 105q-5 8-12 4M100 105q5 8 12 4" />
+          <path class="m m-flat" d="M91 109h18" />
+          <path class="m m-sad" d="M90 112q10-10 20 0" />
+          <path class="m m-wavy" d="M88 109q4-5 8 0t8 0 8 0" />
+          <path class="m m-big" d="M90 106q10 18 20 0z" fill="#7a2a2a" />
+          <g class="m m-open" stroke="none">
+            <ellipse cx="100" cy="112" rx="6" ry="7.5" fill="#7a2a2a" />
+            <ellipse cx="100" cy="116" rx="3.2" ry="2.6" fill="#f4a6a0" />
+          </g>
+        </g>
+        <path d="M68 108L36 101M68 113L34 114M132 108l32-7M132 113l34 1" fill="none" stroke="#1c1b18" stroke-width="1.6"
+          stroke-linecap="round" opacity=".55" />
+        <g class="slot-head"></g>
+      </g>
+    </svg>
+  </template>
+
+  <script src="cat-wardrobe.js"></script>
+  <script>
+    const tpl = document.getElementById("cat-tpl");
+    const grid = document.getElementById("grid");
+    const activeArt = document.getElementById("activeArt");
+    const datePicker = document.getElementById("datePicker");
+    const todayBtn = document.getElementById("todayBtn");
+    const toggleEyesBtn = document.getElementById("toggleEyesBtn");
+    const liveStatus = document.getElementById("liveStatus");
+    const statusText = document.getElementById("statusText");
+    const heroTitle = document.getElementById("heroTitle");
+    const heroDesc = document.getElementById("heroDesc");
+    const heroRule = document.getElementById("heroRule");
+
+    // Format YYYY-MM-DD
+    const formatDate = (d) => {
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, "0");
+      const day = String(d.getDate()).padStart(2, "0");
+      return `${y}-${m}-${day}`;
+    };
+
+    // Build the hero mascot
+    const heroSvgWrap = tpl.content.cloneNode(true);
+    activeArt.appendChild(heroSvgWrap);
+    const heroSvg = activeArt.querySelector("svg");
+
+    // Build the 12 festival cards + normal card
+    const outfitKeys = [
+      "diwali", "holi", "ganesh", "navratri", "sankranti", "christmas",
+      "eid", "gudipadwa", "raksha", "janmashtami", "dussehra", "independence"
+    ];
+
+    const cardsMap = {};
+
+    outfitKeys.forEach((key, i) => {
+      const o = window.MangoWardrobe.OUTFITS[key];
+      if (!o) return;
+
+      const fig = document.createElement("figure");
+      fig.className = "card";
+      fig.dataset.outfitKey = key;
+
+      const badge = document.createElement("span");
+      badge.className = "card-badge";
+      badge.textContent = "Active Now";
+      fig.appendChild(badge);
+
+      const art = document.createElement("div");
+      art.className = "cat-art";
+      art.dataset.mood = "happy";
+      art.appendChild(tpl.content.cloneNode(true));
+
+      const svg = art.querySelector("svg");
+      svg.dataset.fixedOutfit = key;
+      svg.setAttribute("aria-label", "Mango the cat dressed for " + o.name);
+      svg.style.setProperty("--d", "-" + ((i * 0.37) % 1.9).toFixed(2) + "s");
+
+      window.MangoWardrobe.applyOutfit(svg, o);
+
+      const cap = document.createElement("figcaption");
+      cap.innerHTML = "<h3></h3><p></p>";
+      cap.querySelector("h3").textContent = o.name;
+      cap.querySelector("p").textContent = o.note;
+
+      fig.append(art, cap);
+      grid.appendChild(fig);
+      cardsMap[key] = fig;
+    });
+
+    // Update active state when date changes
+    const evaluateDate = (dStr) => {
+      const targetDate = dStr ? new Date(dStr + "T00:00:00") : new Date();
+      datePicker.value = formatDate(targetDate);
+
+      const active = window.MangoWardrobe.getActiveFestival(targetDate);
+      window.MangoWardrobe.applyOutfit(heroSvg, active.outfit);
+
+      // Highlight active card
+      Object.keys(cardsMap).forEach((k) => cardsMap[k].classList.remove("is-current-active"));
+
+      if (active.isActive) {
+        liveStatus.classList.add("is-active");
+        const diffText = active.diffDays === 0
+          ? "Today is the festival!"
+          : (active.diffDays > 0 ? `${active.diffDays} days after` : `${Math.abs(active.diffDays)} days prior`);
+        statusText.textContent = `✨ ${active.name} (${diffText})`;
+
+        heroTitle.textContent = `Active Dress: ${active.name}`;
+        heroDesc.textContent = `${active.note}. Festival Date: ${active.festivalDate} (${diffText}).`;
+        heroRule.textContent = `Within active window [${active.diffDays >= 0 ? "+" : ""}${active.diffDays} days from festival (window: -${active.preDays} to +${active.postDays} days)].`;
+
+        if (cardsMap[active.id]) {
+          cardsMap[active.id].classList.add("is-current-active");
+        }
+      } else {
+        liveStatus.classList.remove("is-active");
+        statusText.textContent = "Normal Everyday Fur (No festival active)";
+        heroTitle.textContent = "Current Outfit: Normal Everyday Mango";
+        heroDesc.textContent = "No festival occurs within the active window (5 days before to 5 days after). Mango enjoys his regular soft orange fur.";
+        heroRule.textContent = "Normal state active (rest of the year).";
+      }
+    };
+
+    // Date picker event
+    datePicker.addEventListener("change", (e) => evaluateDate(e.target.value));
+
+    // Reset to today
+    todayBtn.addEventListener("click", () => evaluateDate(formatDate(new Date())));
+
+    // Quick jump pills
+    document.querySelectorAll(".quick-pill").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const d = btn.dataset.date;
+        evaluateDate(d);
+      });
+    });
+
+    // Eye toggle
+    toggleEyesBtn.addEventListener("click", () => {
+      const happy = toggleEyesBtn.textContent.includes("happy");
+      document.querySelectorAll(".cat-art").forEach((a) => (a.dataset.mood = happy ? "neutral" : "happy"));
+      toggleEyesBtn.textContent = happy ? "Eyes: open" : "Eyes: happy";
+    });
+
+    // Initialize with today or URL params
+    const params = new URLSearchParams(window.location.search);
+    const initialDate = params.get("date") || formatDate(new Date());
+    evaluateDate(initialDate);
+  </script>
+</body>
+
+</html>
