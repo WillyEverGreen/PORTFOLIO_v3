@@ -537,7 +537,11 @@
       if (opts.key) said.add(opts.key);
       quietUntil = now + ms + 3500;
       wake();
-      bubble.textContent = text;
+      const isMobile = typeof window !== "undefined" && window.innerWidth <= 600;
+      const displayText = isMobile && typeof window.mangoCondense === "function"
+        ? window.mangoCondense(text)
+        : (isMobile && text.length > 44 ? ((text.match(/^([^.!?]+[.!?])/) || [])[1] || text.slice(0, 42).replace(/\s+[^\s]*$/, "...")) : text);
+      bubble.textContent = displayText;
       bubble.classList.remove("is-on");
       void bubble.offsetWidth;
       bubble.classList.add("is-on");

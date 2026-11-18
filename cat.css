@@ -119,7 +119,6 @@ body {
 .no-ears .cat__ear, .no-ears .earin {
   display: none;
 }
-}
 
 .cat__pupil {
   transform: translate(var(--px, 0px), var(--py, 0px));

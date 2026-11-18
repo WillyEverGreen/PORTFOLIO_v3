@@ -987,6 +987,32 @@
         head.appendChild(gHead);
       }
 
+      // Group ears so animations & mood rotations move both outer and inner ears together
+      const earL = head.querySelector("path.cat__ear--l");
+      if (earL) {
+        const earInL = head.querySelector("path.earin, path[d*='M66 54l-3-21']");
+        if (earInL && earInL.parentElement === head) {
+          const gL = document.createElementNS("http://www.w3.org/2000/svg", "g");
+          gL.setAttribute("class", "cat__ear cat__ear--l");
+          earL.classList.remove("cat__ear", "cat__ear--l");
+          head.insertBefore(gL, earL);
+          gL.appendChild(earL);
+          gL.appendChild(earInL);
+        }
+      }
+      const earR = head.querySelector("path.cat__ear--r");
+      if (earR) {
+        const earInR = head.querySelector("path[d*='M134 54l3-21']");
+        if (earInR && earInR.parentElement === head) {
+          const gR = document.createElementNS("http://www.w3.org/2000/svg", "g");
+          gR.setAttribute("class", "cat__ear cat__ear--r");
+          earR.classList.remove("cat__ear", "cat__ear--r");
+          head.insertBefore(gR, earR);
+          gR.appendChild(earR);
+          gR.appendChild(earInR);
+        }
+      }
+
       const earPaths = head.querySelectorAll("path");
       earPaths.forEach((p) => {
         const d = p.getAttribute("d") || "";
@@ -1277,7 +1303,11 @@
         const bubble = document.getElementById("catBubble") || document.getElementById("nookBubble");
         const wrap = document.getElementById("catWrap") || document.getElementById("nookCat");
         if (bubble && wrap) {
-          bubble.textContent = firstLine[0];
+          const isMobile = typeof window !== "undefined" && window.innerWidth <= 600;
+          const lineText = isMobile && typeof window.mangoCondense === "function"
+            ? window.mangoCondense(firstLine[0])
+            : firstLine[0];
+          bubble.textContent = lineText;
           bubble.classList.remove("is-on");
           void bubble.offsetWidth;
           bubble.classList.add("is-on");

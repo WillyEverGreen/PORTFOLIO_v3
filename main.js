@@ -1240,6 +1240,79 @@
       if (hits()) bubble.classList.add("is-hidden");
     };
 
+    /* Mobile comment condenser: keeps comments punchy (<= 45 chars) specifically on mobile devices (<= 600px) */
+    const isMobileDevice = () => typeof window !== "undefined" && window.innerWidth <= 600;
+
+    const MOBILE_QUIPS_MAP = {
+      // Tour
+      "Hi! I'm Mango, Sai's official supervisor. Scroll down and I'll give you the grand tour of my human!": "Hi, I'm Mango! Scroll down for the tour.",
+      "This is Sai! Computer engineering student in Mumbai. He codes full-stack apps and gives 10/10 chin scratches.": "Meet Sai! Full-stack dev & chin scratcher.",
+      "His grind zone: Frontend Intern at XIRCLS & tech member at Project Cell! He builds real stuff while I nap 16 hours a day.": "Frontend Intern at XIRCLS & Project Cell!",
+      "His proudest creations! Clip, Campus Circular, CapitalAI... Click any card! I helped by sitting directly on the spacebar.": "Sai's creations! Tap any card to explore.",
+      "Look at this stack: React, Next.js, Node, Supabase, Python... Lots of brainpower, but he still can't catch the laser dot.": "React, Next.js, Python... still no fish.",
+      "Beyond coursework: Music Blocks open source contributor, and 6th rank at the All India Inter-University chess championship! (Though I'm still the master of knocking pieces down).": "Music Blocks contributor & chess player!",
+      "Wanna build something cool or hire Sai? Drop him an email! (P.S. Make sure your offer mentions cat treats)": "Wanna hire Sai? Drop him an email!",
+
+      // Projects modal
+      "Clip! Client-side zero-knowledge encryption. Even I can't read what's in there!": "Clip! Zero-knowledge encrypted pad.",
+      "Campus Circular! Won 1st Runner Up at Web Fusion 2.0. Proud cat moment!": "Campus Circular! Hackathon winner!",
+      "CapitalAI! Autonomous quant risk safeguards. Smarter than my banker.": "CapitalAI! Autonomous quant safeguards.",
+      "LegalAI! RAG engine for Indian criminal statutes. Clean record here, promise!": "LegalAI! Indian criminal law RAG.",
+      "Loop! Autonomous SRE dashboard. Watches server vitals while I sleep.": "Loop! Autonomous SRE dashboard.",
+      "GeoClash! Sai and a friend built a run-a-loop territory game. I only chase lasers, not runners.": "GeoClash! Run-a-loop territory game.",
+      "Ooh, details! Tap the links to test the live demo!": "Ooh, tap links to try the demo!",
+      "Liked that one? Poke another card!": "Liked that? Poke another card!",
+
+      // Actions & Milestones
+      "That's my human! Computer engineer & top-tier cat servant.": "That's my human! Top-tier coder.",
+      "Sai's resume is on its way to you! Open to internships.": "Sai's resume is on its way! Open to roles.",
+      "Sai's resume is on its way! Open to roles.": "Sai's resume is on its way! Open to roles.",
+      "Message delivered! Now go and refill my bowl.": "Message delivered! Now feed me.",
+      "All 5 daily puzzles solved! Master Sai would be proud. Come back tomorrow for 5 new puzzles!": "All 5 solved! Master Sai is proud.",
+      "Checkmate! Outstanding tactical vision! Spotting mates is like spotting tuna!": "Checkmate! Spotting mates like tuna!",
+      "Not quite mate! The defender can still wriggle away. Keep hunting!": "Not quite! Defender can wriggle away.",
+      "Board reset! Take your time and find that killer move.": "Board reset! Find that killer move.",
+      "Psst! Even top players take a hint now and then. Look closely!": "Psst! Even pros take hints. Look close!",
+      "Sugar Labs Music Blocks! Bug fixes, memory leak patches, and plugin hooks.": "Music Blocks! Bug fixes & plugin hooks.",
+      "No more footprints? Aww, I was tracking you!": "No tracks? Aww, I was following!",
+      "Footprints back on! Pitter-patter!": "Footprints on! Pitter-patter!",
+      "Looking for Sai's resume? He is ready for opportunities!": "Sai's resume! Ready for opportunities.",
+      "Ooh, projects! Clip, Campus Circular, CapitalAI... click to see!": "Ooh, projects! Tap to explore.",
+      "Sai's GitHub! Projects, open-source work, and clean code.": "Sai's GitHub! Clean code & projects.",
+      "Sai on LinkedIn! Great place to connect or chat about internships.": "Sai on LinkedIn! Great place to connect.",
+      "Drop Sai a line! (P.S. Make sure to mention cat treats)": "Drop Sai a line! Mention cat treats.",
+      "Spot the winning checkmate! Master Sai would be proud.": "Spot the mate! Master Sai is proud.",
+      "HISSSS! Personal space, human!": "HISSS! Personal space!",
+      "okay okay, watch the fur!": "watch the fur, human!",
+      "mrrp?! oh, you're petting me...": "mrrp?! oh, scratches...",
+
+      // Festivals
+      "Happy Diwali! ✨ Wishing you joy, warmth & prosperity!": "Happy Diwali! ✨ Joy & warmth to you!",
+      "Purrrrr! Don't I look dapper in my maroon & gold shawl?": "Purrrr! Dapper in maroon & gold!",
+      "Happy Holi! 🎨 Look at all the colours on my fur!": "Happy Holi! 🎨 Colours on my fur!",
+      "Bura na mano, Holi hai! Gulal splashes everywhere!": "Holi hai! Gulal splashes everywhere!",
+      "Ganpati Bappa Morya! 🙏 Dressed in my festive angavastram!": "Ganpati Bappa Morya! 🙏 Modaks please!",
+      "Happy Navratri! 🪘 Ready for dandiya & garba all night!": "Happy Navratri! 🪘 Garba time!",
+      "Happy Makar Sankranti! 🪁 Tilgul ghya, god god bola!": "Makar Sankranti! 🪁 Tilgul ghya!",
+      "Merry Christmas! 🎄 Ho ho ho, where are my catnip gifts?": "Merry Christmas! 🎄 Ho ho ho!",
+      "Eid Mubarak! 🌙 Wishing you peace, light & festive sweets!": "Eid Mubarak! 🌙 Peace & sweets!",
+      "Happy Gudi Padwa! 🚩 Auspicious beginnings for the new year!": "Happy Gudi Padwa! 🚩 Happy new year!",
+      "Happy Raksha Bandhan! 🧵 Look at the pretty rakhi on my tail!": "Raksha Bandhan! 🧵 Rakhi on my tail!",
+      "Happy Krishna Janmashtami! 🦚 Peacock feather crown on!": "Janmashtami! 🦚 Peacock feather on!",
+      "Happy Dussehra! 🏹 Triumph of righteousness over evil!": "Happy Dussehra! 🏹 Victory today!",
+      "Happy Independence Day! 🇮🇳 Waving our Tiranga with pride!": "Happy Independence Day! 🇮🇳 Jai Hind!"
+    };
+
+    const condenseForMobile = (str) => {
+      if (!str || typeof str !== "string" || !isMobileDevice()) return str;
+      if (MOBILE_QUIPS_MAP[str]) return MOBILE_QUIPS_MAP[str];
+      if (str.length <= 44) return str;
+      const m = str.match(/^([^.!?]+[.!?])/);
+      if (m && m[1].length <= 46 && m[1].length >= 10) return m[1];
+      return str.slice(0, 42).replace(/\s+[^\s]*$/, "...");
+    };
+    window.mangoCondense = condenseForMobile;
+
     const say = (text, ms = 3800, mood) => {
       if (asleep) {
         asleep = false;
@@ -1247,7 +1320,8 @@
       }
       armSleep();
 
-      bubble.textContent = text;
+      const displayText = condenseForMobile(text);
+      bubble.textContent = displayText;
       bubble.classList.remove("is-on");
       void bubble.offsetWidth;
       bubble.classList.add("is-on");
@@ -1455,6 +1529,16 @@
       },
     };
 
+    const tourMobile = {
+      hero: { text: "Hi, I'm Mango! Scroll down for the tour.", mood: "happy", ms: 3200 },
+      about: { text: "Meet Sai! Full-stack dev & chin scratcher.", mood: "love", ms: 3400 },
+      experience: { text: "Frontend Intern at XIRCLS & Project Cell!", mood: "curious", ms: 3400 },
+      work: { text: "Sai's creations! Tap any card to explore.", mood: "excited", ms: 3600 },
+      skills: { text: "React, Next.js, Python... still no fish.", mood: "surprised", ms: 3400 },
+      beyond: { text: "Music Blocks contributor & chess player!", mood: "happy", ms: 3400 },
+      contact: { text: "Wanna hire Sai? Drop him an email!", mood: "love", ms: 3400 },
+    };
+
     /* quick quips for subsequent visits once the first scroll tour is complete */
     const revisitedTalk = {
       hero: ["Back at the top! Ready for round two?", "happy", 2600],
@@ -1482,7 +1566,7 @@
       armSleep();
 
       const item = isFirstTour
-        ? tour[id]
+        ? (isMobileDevice() && tourMobile[id] ? tourMobile[id] : tour[id])
         : (revisitedTalk[id] ? { text: revisitedTalk[id][0], mood: revisitedTalk[id][1], ms: revisitedTalk[id][2] } : null);
       if (!item) return;
 
@@ -1721,7 +1805,7 @@
       triggerPurr();
       const r = catBtn.getBoundingClientRect();
       pawBurst(r.left + r.width * 0.5, r.top + r.height * 0.25);
-      say("Sai's resume is on its way to you! Open to internships.", 3600, "love");
+      say(isMobileDevice() ? "Sai's resume is on its way! Open to roles." : "Sai's resume is on its way to you! Open to internships.", 3400, "love");
     });
 
     /* reaction to chess milestones */
@@ -1732,12 +1816,12 @@
           triggerPurr();
           const r = catBtn.getBoundingClientRect();
           pawBurst(r.left + r.width * 0.5, r.top + r.height * 0.25);
-          say("All 5 daily puzzles solved! Master Sai would be proud. Come back tomorrow for 5 new puzzles!", 5000, "excited");
+          say(isMobileDevice() ? "All 5 puzzles solved! Master Sai is proud." : "All 5 daily puzzles solved! Master Sai would be proud. Come back tomorrow for 5 new puzzles!", 4500, "excited");
         } else {
           triggerPurr();
           const r = catBtn.getBoundingClientRect();
           pawBurst(r.left + r.width * 0.5, r.top + r.height * 0.25);
-          say("Checkmate! Outstanding tactical vision! Spotting mates is like spotting tuna!", 3800, "excited");
+          say(isMobileDevice() ? "Checkmate! Spotting mates like tuna!" : "Checkmate! Outstanding tactical vision! Spotting mates is like spotting tuna!", 3800, "excited");
         }
       } else if (data.action === "wrong") {
         say("Not quite mate! The defender can still wriggle away. Keep hunting!", 3000, "curious");
